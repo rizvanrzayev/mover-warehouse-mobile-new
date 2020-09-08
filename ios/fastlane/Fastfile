@@ -1,0 +1,42 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    increment_build_number(xcodeproj: "MoverWarehouse.xcodeproj")
+    build_app(workspace: "MoverWarehouse.xcworkspace", scheme: "MoverWarehouse")
+    upload_to_testflight
+  end
+  desc 'Push a new beta build to Firebase'
+  lane :firebase do
+        build_app(workspace: "MoverWarehouse.xcworkspace", scheme: "MoverWarehouse")
+        firebase_app_distribution(
+            app: "1:823640362472:ios:17e536159c79a2dc72a85d",
+            testers: "rizvanrzayev0@gmail.com",
+            release_notes: "Lots of amazing new features to test out!"
+        )
+
+  end
+
+  desc 'Fetch certificates and provisioning profiles'
+  lane :certificates do
+    match(app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), type: 'development', readonly: true)
+    match(app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), type: 'appstore', readonly: true)
+  end
+end
