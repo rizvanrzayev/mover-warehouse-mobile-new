@@ -1,5 +1,11 @@
-import React, {useEffect} from 'react';
-import {SafeAreaView, View, PermissionsAndroid, Alert} from 'react-native';
+import React, {useCallback, useEffect} from 'react';
+import {
+  SafeAreaView,
+  View,
+  PermissionsAndroid,
+  Alert,
+  DeviceEventEmitter,
+} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import QRScanScreenStyles from './qrScan.styles';
@@ -54,7 +60,24 @@ const QRScanOrderScreen = ({
     setTimeout(() => {
       setShowCamera(true);
     }, 300);
-  }, []);
+    DeviceEventEmitter.addListener('Scan', (event) => onScanFromDevice(event));
+    return () => {
+      DeviceEventEmitter.removeAllListeners();
+    };
+  }, [onScanFromDevice]);
+
+  const onScanFromDevice = useCallback(
+    (event) => {
+      const {code} = event;
+      let orderId = code.split('{')[0].split('-')[0];
+      if (code.includes('505')) {
+        orderId = orderId + '-505';
+      }
+      // console.log(orderId);
+      takeOrder(orderId);
+    },
+    [takeOrder],
+  );
 
   useEffect(() => {
     if (qrRef !== null && isLoading === false) {
@@ -85,6 +108,10 @@ const QRScanOrderScreen = ({
     if (orderToken === '505') {
       orderId = orderId + '-505';
     }
+    takeOrder(orderId);
+  };
+
+  const takeOrder = (orderId) => {
     tookOrderAction(
       orderId,
       0,
@@ -111,6 +138,8 @@ const QRScanOrderScreen = ({
           customMarker={<BarcodeMask />}
           // flashMode={RNCamera.Constants.FlashMode.torch}
           topContent={TopContent}
+          bottomViewStyle={{backgroundColor: 'white'}}
+          topViewStyle={{backgroundColor: 'white', zIndex: 99}}
           bottomContent={<Button onPress={() => navigation.pop()}>Geri</Button>}
         />
       )}

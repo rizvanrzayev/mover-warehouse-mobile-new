@@ -41,6 +41,8 @@ const notificationSound = new Sound(
 const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
   const {signOut} = useAuth();
 
+  const [hasActiveQueue, setHasActiveQueue] = React.useState(false);
+
   React.useLayoutEffect(() => {
     const listener = firebase.notifications().onNotification((notification) => {
       notificationSound.play();
@@ -55,6 +57,18 @@ const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
   React.useLayoutEffect(() => {
     fetchQueueList();
   }, [fetchQueueList]);
+
+  React.useEffect(() => {
+    if (queues && queues.length > 0) {
+      const activeQueue = queues.find((queue) => queue.is_active);
+      console.log(activeQueue);
+      if (activeQueue !== undefined) {
+        setHasActiveQueue(true);
+      } else {
+        setHasActiveQueue(false);
+      }
+    }
+  }, [queues]);
 
   const MenuIcon = (props) => {
     return <Icon name="menu-2-outline" {...props} />;
@@ -87,7 +101,13 @@ const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
   };
 
   const renderItem = ({item}) => {
-    return <QueueItem item={item} onPressItem={() => onPressItem(item)} />;
+    return (
+      <QueueItem
+        hasActiveQueue={hasActiveQueue}
+        item={item}
+        onPressItem={() => onPressItem(item)}
+      />
+    );
   };
 
   return (

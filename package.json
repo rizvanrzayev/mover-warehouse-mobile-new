@@ -10,7 +10,9 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx",
     "pod-install": "npx pod-install ios",
-    "android-release": "cd android && ./gradlew assembleRelease"
+    "android-release": "cd android && ./gradlew assembleRelease",
+    "code-push-ios": "appcenter codepush release-react -a moverarge-gmail.com/MOVER_WAREHOUSE-iOS -d Production",
+    "code-push-android": "appcenter codepush release-react -a moverarge-gmail.com/MOVER_WAREHOUSE-Android -d Production"
   },
   "dependencies": {
     "@eva-design/eva": "2.0.0",

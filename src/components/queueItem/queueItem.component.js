@@ -8,7 +8,7 @@ import {fetchQueueList} from 'actions/queue';
 import {ApiClient, API_ROUTES} from 'config/Api';
 import {useNavigation} from '@react-navigation/native';
 
-const QueueItem = ({item, onPressItem, fetchQueueList}) => {
+const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
   const {customer_name, started_at, is_active, created_at, id, isNew} = item;
 
   const navigation = useNavigation();
@@ -77,13 +77,15 @@ const QueueItem = ({item, onPressItem, fetchQueueList}) => {
                 YENİ!
               </Text>
             )}
-            <Button
-              accessoryLeft={renderStartButtonLeft}
-              status="info"
-              size="tiny"
-              onPress={onPressStartQueue}>
-              Start
-            </Button>
+            {!hasActiveQueue && (
+              <Button
+                accessoryLeft={renderStartButtonLeft}
+                status="info"
+                size="tiny"
+                onPress={onPressStartQueue}>
+                Start
+              </Button>
+            )}
           </View>
         )}
       </View>

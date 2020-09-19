@@ -1,6 +1,14 @@
 import React from 'react';
-import { SafeAreaView, View, Platform } from 'react-native';
-import { TopNavigation, TopNavigationAction, Divider, Icon, Text, Spinner, Button } from '@ui-kitten/components';
+import {SafeAreaView, View, Platform} from 'react-native';
+import {
+  TopNavigation,
+  TopNavigationAction,
+  Divider,
+  Icon,
+  Text,
+  Spinner,
+  Button,
+} from '@ui-kitten/components';
 import CodePush from 'react-native-code-push';
 import AnimatedNumbers from 'react-native-animated-numbers';
 import UpdateScreenStyles from './update.styles';
@@ -36,9 +44,9 @@ const UpdateScreen = ({navigation}) => {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
-  const onPressBack = () => navigation.pop()
+  const onPressBack = () => navigation.pop();
 
   const BackIcon = (props) => {
     return <Icon name="chevron-left-outline" {...props} />;
@@ -53,29 +61,37 @@ const UpdateScreen = ({navigation}) => {
     //   setAnimateToNumber(parseInt((receivedBytes / totalBytes) * 100)),
     // );
     // downloaded.install(CodePush.InstallMode.IMMEDIATE);
-    CodePush.sync({updateDialog: true}, (status) => {
-      switch (status) {
-        case CodePush.SyncStatus.CHECKING_FOR_UPDATE:
-          setText('Yoxlanılır')
-          break;
-        case CodePush.SyncStatus.DOWNLOADING_PACKAGE:
-          setText('Paket endirilir...')
-          break;
-        case CodePush.SyncStatus.INSTALLING_UPDATE:
-          setText('Paket yüklənir...')
-          break;
-        case CodePush.SyncStatus.UPDATE_INSTALLED:
-          setText('Paket yükləndi')
-          CodePush.restartApp();
-          break;
+    CodePush.sync(
+      {updateDialog: true},
+      (status) => {
+        switch (status) {
+          case CodePush.SyncStatus.CHECKING_FOR_UPDATE:
+            setText('Yoxlanılır');
+            break;
+          case CodePush.SyncStatus.DOWNLOADING_PACKAGE:
+            setText('Paket endirilir...');
+            break;
+          case CodePush.SyncStatus.INSTALLING_UPDATE:
+            setText('Paket yüklənir...');
+            break;
+          case CodePush.SyncStatus.UPDATE_INSTALLED:
+            setText('Paket yükləndi');
+            CodePush.restartApp();
+            break;
 
-        default:
-          break;
-      }
-    }).then(resp => {
-      // setText(resp)
-    }).catch(error => console.log(error));
-  }
+          default:
+            break;
+        }
+      },
+      (progress) => {
+        console.log(progress);
+      },
+    )
+      .then((resp) => {
+        // setText(resp)
+      })
+      .catch((error) => console.log(error));
+  };
 
   // const onPressInstall = async () => {
   //   const installedPackage = await downloadedPackage.current.install(CodePush.InstallMode.IMMEDIATE);
@@ -85,7 +101,7 @@ const UpdateScreen = ({navigation}) => {
   const renderContent = () => {
     const isDownloaded = animateToNumber === 100;
     if (isLoading) {
-      return <Spinner animating />
+      return <Spinner animating />;
     } else if (updateData === null) {
       return (
         <View>
@@ -93,11 +109,21 @@ const UpdateScreen = ({navigation}) => {
         </View>
       );
     } else {
-      const {label, appVersion, isMandatory, packageSize, downloadUrl, isPending, failedInstall} = updateData;
+      const {
+        label,
+        appVersion,
+        isMandatory,
+        packageSize,
+        downloadUrl,
+        isPending,
+        failedInstall,
+      } = updateData;
       return (
         <>
           <Text>{label}</Text>
-          <Text category="h4" style={{marginVertical: 20}}>{text}</Text>
+          <Text category="h4" style={{marginVertical: 20}}>
+            {text}
+          </Text>
           {/* <View style={UpdateScreenStyles.countContainer}>
             {!isDownloaded ? (
               <AnimatedNumbers
@@ -117,7 +143,7 @@ const UpdateScreen = ({navigation}) => {
         </>
       );
     }
-  }
+  };
 
   return (
     <SafeAreaView style={UpdateScreenStyles.container}>
@@ -133,4 +159,4 @@ const UpdateScreen = ({navigation}) => {
   );
 };
 
-export default UpdateScreen
+export default UpdateScreen;

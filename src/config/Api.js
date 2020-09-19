@@ -7,7 +7,7 @@ const BASE_URL = 'https://dev.mover.az/api/worker/';
 export const ApiClient = axios.create({
   baseURL: BASE_URL,
   validateStatus: (status) => status > 199 && status < 300,
-  timeout: 10000,
+  timeout: 5000,
 });
 
 export const API_ROUTES = {
@@ -48,7 +48,7 @@ ApiClient.interceptors.response.use(
       // console.log(error.response.headers);
     } else if (error.request) {
       // The request was made but no response was received
-      console.log('test: ', error.request);
+      message = error.request._response;
     } else {
       // Something happened in setting up the request that triggered an Error
       message = error.message;

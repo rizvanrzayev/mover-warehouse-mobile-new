@@ -43,7 +43,7 @@ const QueueDetailScreen = ({
   preparedParcel,
 }) => {
   const {item} = route.params;
-  const {id, customer_name} = item;
+  const {id, customer_name, customer_id} = item;
   React.useLayoutEffect(() => {
     fetchSingleQueue(id);
     // fetchActiveQueue();
@@ -92,7 +92,6 @@ const QueueDetailScreen = ({
   };
 
   const onPressNotFound = (orderId) => {
-    console.log(orderId);
     tookOrderAction(
       orderId,
       1,
@@ -131,7 +130,7 @@ const QueueDetailScreen = ({
   };
 
   const renderItem = ({item, prepared}) => {
-    const {shop, parcel, date5, pivot, id} = item;
+    const {shop, parcel, date5, pivot, id: orderId} = item;
     let title = !prepared ? shop : 'Toplanmış bağlamalar';
     const {took_at, not_found} = pivot;
     const sectionName =
@@ -237,7 +236,9 @@ const QueueDetailScreen = ({
         accessoryLeft={BackAction}
       />
       <Divider />
-      <Text category="h4" style={{alignSelf: 'center', marginVertical: 10}}>{customer_name}</Text>
+      <Text category="h5" style={{alignSelf: 'center', marginVertical: 10}}>
+        {`${customer_name} - ${customer_id || 'ID'}`}
+      </Text>
       <List
         data={(!prepared ? queue?.orders : preparedParcel) || []}
         renderItem={({item}) => renderItem({item, prepared})}

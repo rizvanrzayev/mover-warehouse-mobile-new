@@ -1,5 +1,11 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, View, PermissionsAndroid, Alert} from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  PermissionsAndroid,
+  Alert,
+  DeviceEventEmitter,
+} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import QRScanScreenStyles from './qrScan.styles';
@@ -52,6 +58,16 @@ const QRScanScreen = ({
     setTimeout(() => {
       setShowCamera(true);
     }, 300);
+    // DeviceEventEmitter.addListener('Scan', (event) => {
+    //   const {code} = event;
+    //   let newCode = code.split('{')[0].split('-')[0];
+    //   // return;
+    //   onSuccessScan?.({data: newCode});
+    //   navigation.pop();
+    // });
+    // return () => {
+    //   DeviceEventEmitter.removeAllListeners();
+    // };
   }, []);
 
   useEffect(() => {
@@ -92,6 +108,8 @@ const QRScanScreen = ({
           // flashMode={RNCamera.Constants.FlashMode.torch}
           topContent={TopContent}
           bottomContent={<Button onPress={() => navigation.pop()}>Geri</Button>}
+          bottomViewStyle={{backgroundColor: 'white'}}
+          topViewStyle={{backgroundColor: 'white', zIndex: 99}}
         />
       )}
       <AwesomeAlert

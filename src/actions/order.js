@@ -34,6 +34,7 @@ export const giveOrderAction = (
         }
       },
       (error) => {
+        onError();
         throw error;
       },
     )
