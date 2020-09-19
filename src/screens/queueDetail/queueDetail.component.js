@@ -48,7 +48,6 @@ const QueueDetailScreen = ({
     fetchSingleQueue(id);
     // fetchActiveQueue();
   }, []);
-
   React.useEffect(() => {
     let hasError = false;
     let ordersParsed = prepared ? preparedParcel : queue?.orders;

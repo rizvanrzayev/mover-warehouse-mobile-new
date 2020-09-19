@@ -60,7 +60,7 @@ const QRScanOrderScreen = ({
     setTimeout(() => {
       setShowCamera(true);
     }, 300);
-    DeviceEventEmitter.addListener('Scan', (event) => onScanFromDevice(event));
+    DeviceEventEmitter.addListener('Scan', onScanFromDevice);
     return () => {
       DeviceEventEmitter.removeAllListeners();
     };
@@ -111,22 +111,29 @@ const QRScanOrderScreen = ({
     takeOrder(orderId);
   };
 
-  const takeOrder = (orderId) => {
-    tookOrderAction(
-      orderId,
-      0,
-      queueId,
-      (can_give) => {
-        navigation.pop();
-        fetchSingleQueue(queueId);
-        onCanGive?.(can_give);
-      },
-      (message) => {
-        errorSound.play();
-        setError(`${message}`);
-      },
-    );
-  };
+  const takeOrder = useCallback(
+    (orderId) => {
+      tookOrderAction(
+        orderId,
+        0,
+        queueId,
+        (can_give) => {
+          requestAnimationFrame(() => {
+            navigation.pop();
+            onCanGive?.(can_give);
+            setTimeout(() => {
+              fetchSingleQueue(queueId);
+            }, 200);
+          });
+        },
+        (message) => {
+          errorSound.play();
+          setError(`${message}`);
+        },
+      );
+    },
+    [fetchSingleQueue, navigation, onCanGive, queueId, tookOrderAction],
+  );
 
   return (
     <SafeAreaView style={QRScanScreenStyles.container}>

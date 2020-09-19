@@ -30,6 +30,7 @@ import {Provider as StoreProvider} from 'react-redux';
 import AuthContext from 'contexts/AuthContext';
 import {getToken, setToken, removeToken} from 'helpers/AsyncStorage';
 import FlashMessage from 'react-native-flash-message';
+import {View} from 'react-native';
 
 if (__DEV__) {
   import('config/ReactotronConfig').then(() =>
@@ -98,15 +99,17 @@ const App = () => {
 
   return (
     <StoreProvider store={store}>
-      <FlashMessage />
-      <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
-        <AuthContext.Provider value={authContext}>
-          <AppNavigator />
-        </AuthContext.Provider>
-      </ApplicationProvider>
+      <View style={{flex: 1}}>
+        <IconRegistry icons={EvaIconsPack} />
+        <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
+          <AuthContext.Provider value={authContext}>
+            <AppNavigator />
+          </AuthContext.Provider>
+        </ApplicationProvider>
+        <FlashMessage position="top" />
+      </View>
     </StoreProvider>
   );
 };
 
-export default codePush({ checkFrequency: codePush.CheckFrequency.MANUAL })(App);
+export default codePush({checkFrequency: codePush.CheckFrequency.MANUAL})(App);

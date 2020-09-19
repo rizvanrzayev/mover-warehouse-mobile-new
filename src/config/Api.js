@@ -7,7 +7,7 @@ const BASE_URL = 'https://dev.mover.az/api/worker/';
 export const ApiClient = axios.create({
   baseURL: BASE_URL,
   validateStatus: (status) => status > 199 && status < 300,
-  timeout: 5000,
+  timeout: 10000,
 });
 
 export const API_ROUTES = {
@@ -34,7 +34,6 @@ ApiClient.interceptors.request.use(async (config) => {
 
 ApiClient.interceptors.response.use(
   function (response) {
-    // console.log('response: ', response);
     // Do something with response data
     return response;
   },

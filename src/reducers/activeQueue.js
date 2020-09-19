@@ -25,7 +25,7 @@ const activeQueue = (state = initialState, action) => {
       };
     case FETCH_SINGLE_QUEUE_SUCCESS: {
       const {queue, prepared, preparedParcel} = action?.payload?.data;
-      console.log(action?.payload?.data);
+      // console.log(action?.payload?.data);
       return {
         ...state,
         queue,

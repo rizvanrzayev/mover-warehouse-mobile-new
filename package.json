@@ -23,7 +23,7 @@
     "@react-navigation/stack": "^5.9.0",
     "@ui-kitten/components": "5.0.0",
     "@ui-kitten/eva-icons": "5.0.0",
-    "axios": "^0.19.2",
+    "axios": "^0.20.0",
     "jsc-android": "^241213.1.0",
     "moment": "^2.27.0",
     "react": "16.13.1",

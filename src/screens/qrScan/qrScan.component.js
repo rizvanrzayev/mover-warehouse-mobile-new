@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -58,17 +58,22 @@ const QRScanScreen = ({
     setTimeout(() => {
       setShowCamera(true);
     }, 300);
-    // DeviceEventEmitter.addListener('Scan', (event) => {
-    //   const {code} = event;
-    //   let newCode = code.split('{')[0].split('-')[0];
-    //   // return;
-    //   onSuccessScan?.({data: newCode});
-    //   navigation.pop();
-    // });
-    // return () => {
-    //   DeviceEventEmitter.removeAllListeners();
-    // };
-  }, []);
+    DeviceEventEmitter.addListener('Scan', onScanFromDevice);
+    return () => {
+      DeviceEventEmitter.removeAllListeners();
+    };
+  }, [onScanFromDevice]);
+
+  const onScanFromDevice = useCallback(
+    (event) => {
+      const {code} = event;
+      let newCode = code.split('{')[0].split('-')[0];
+      // return;
+      onSuccessScan?.({data: newCode});
+      navigation.pop();
+    },
+    [navigation, onSuccessScan],
+  );
 
   useEffect(() => {
     if (qrRef !== null && isLoading === false) {
