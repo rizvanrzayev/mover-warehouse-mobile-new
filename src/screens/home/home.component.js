@@ -95,7 +95,7 @@ const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
   );
 
   const onPressItem = (item) => {
-    alert(JSON.stringify(item));
+    alert(JSON.stringify(item.from_type));
     return;
     navigation.navigate('QueueDetail', {item});
   };

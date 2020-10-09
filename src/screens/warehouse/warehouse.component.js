@@ -12,7 +12,6 @@ import {
 } from '@ui-kitten/components';
 import {SafeAreaView, View} from 'react-native';
 import {ApiClient} from 'config/Api';
-import {getOffice, officePrompt} from 'helpers/AsyncStorage';
 import {showMessage} from 'react-native-flash-message';
 import MenuButton from 'components/menuButton/menuButton.component';
 import SignOutButton from 'components/signOutButton/signOutButton.component';
@@ -53,33 +52,46 @@ const WarehouseScreen = ({onSuccessTaked}) => {
     return response;
   };
 
+  const isSection = (data) => {
+    const length = data.length;
+    const firstChar = data.charAt(0);
+    if (
+      (length === 4 || length === 5 || length === 6) &&
+      (firstChar === 'A' || firstChar === 'F' || firstChar === 'E')
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const onSuccess = async (data) => {
     // successSound.play();
     setIsLoading(true);
     try {
       let response = null;
-      if (currentSection === null || /[a-zA-Z]/g.test(data)) {
-        response = await postSectionData(data);
-        const {status, data: sectionData} = response.data;
-        alert(JSON.stringify(data));
-        if (status === true) {
-          setCurrentSection(sectionData);
+      if (currentSection === null) {
+        if (isSection(data)) {
+          response = await postSectionData(data);
+          const {status, data: sectionData} = response.data;
+          if (status === true) {
+            setCurrentSection(sectionData);
+          }
         }
       } else {
-        alert(data);
-        // const orderId = data.split('-')[0];
-        // response = await postBundleData(orderId);
-        // if (response?.data?.success === false) {
-        //   showMessage({
-        //     message: 'Əlavə olunmadı',
-        //     type: 'danger',
-        //   });
-        // } else {
-        //   showMessage({
-        //     message: 'Uğurla əlavə olundu',
-        //     type: 'success',
-        //   });
-        // }
+        const orderId = data.split('-')[0];
+        response = await postBundleData(orderId);
+        if (response?.data?.success === false) {
+          showMessage({
+            message: 'Əlavə olunmadı',
+            type: 'danger',
+          });
+        } else {
+          showMessage({
+            message: 'Uğurla əlavə olundu',
+            type: 'success',
+          });
+        }
       }
     } catch (e) {
       // console.log(e.response.data);

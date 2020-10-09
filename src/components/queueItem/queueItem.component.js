@@ -93,7 +93,7 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
 
   return (
     <ListItem
-      disabled={!is_active}
+      // disabled={!is_active}
       title={customer_name}
       description={moment(created_at).format('DD.MM.YYYY hh:mm:ss')}
       onPress={onPressItem}

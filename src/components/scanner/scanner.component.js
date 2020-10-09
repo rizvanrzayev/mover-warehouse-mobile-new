@@ -32,13 +32,13 @@ const Scanner = ({topContent, onScan}) => {
     }
   }, [isFocused]);
 
-  React.useLayoutEffect(() => {
-    if (currentScanner !== null && currentScanner.id === 1) {
-      setupInfraredScanner();
-    }
-    return () => DeviceEventEmitter.removeAllListeners();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentScanner]);
+  // React.useLayoutEffect(() => {
+  //   if (currentScanner !== null && currentScanner.id === 1) {
+  //     setupInfraredScanner();
+  //   }
+  //   return () => DeviceEventEmitter.removeAllListeners();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [currentScanner]);
 
   const setupInfraredScanner = () => {
     DeviceEventEmitter.addListener('Scan', onScanInfraredScanner);
@@ -52,6 +52,9 @@ const Scanner = ({topContent, onScan}) => {
   const onScanCamera = (data) => {
     // const orderId = getOrderIdFromScannerData(data.data);
     onScan?.(data.data);
+    setTimeout(() => {
+      qrRef.current.reactivate();
+    }, 500);
   };
 
   const fetchCurrentScanner = async () => {
