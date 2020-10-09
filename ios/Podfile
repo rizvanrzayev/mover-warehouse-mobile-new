@@ -13,6 +13,13 @@ target 'MoverWarehouse' do
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
 
+  # REACT-NATIVE-CAMERA
+  pod 'react-native-camera', path: '../node_modules/react-native-camera', subspecs: [
+  'TextDetector',
+  # 'FaceDetectorMLKit',
+  'BarcodeDetectorMLKit'
+]
+
   # FIREBASE V5
   pod 'Firebase/Analytics'
   pod 'Firebase/Messaging', '~> 6.13.0'

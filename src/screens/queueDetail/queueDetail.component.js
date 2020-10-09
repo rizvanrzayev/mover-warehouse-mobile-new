@@ -17,21 +17,17 @@ import {SafeAreaView, View, RefreshControl, Alert} from 'react-native';
 import QueueDetailScreenStyles from './queueDetail.styles';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import {
-  fetchSingleQueue,
-  fetchActiveQueue,
-  fetchQueueList,
-} from 'actions/queue';
+import {fetchSingleQueue, fetchQueueList} from 'actions/queue';
 import {giveOrderAction, tookOrderAction, giveOrder} from 'actions/order';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import {ApiClient, API_ROUTES} from 'config/Api';
 import {showMessage} from 'react-native-flash-message';
+import {useIsFocused} from '@react-navigation/native';
 
 const QueueDetailScreen = ({
   navigation,
   route,
   fetchSingleQueue,
-  fetchActiveQueue,
   orders,
   queue,
   isLoading,
@@ -44,10 +40,21 @@ const QueueDetailScreen = ({
 }) => {
   const {item} = route.params;
   const {id, customer_name, customer_id} = item;
+
+  const isFocused = useIsFocused();
+
   React.useLayoutEffect(() => {
     fetchSingleQueue(id);
-    // fetchActiveQueue();
   }, []);
+
+  React.useEffect(() => {
+    if (isFocused) {
+      setTimeout(() => {
+        fetchSingleQueue(id);
+      }, 300);
+    }
+  }, [isFocused, fetchSingleQueue, id]);
+
   React.useEffect(() => {
     let hasError = false;
     let ordersParsed = prepared ? preparedParcel : queue?.orders;
@@ -100,7 +107,7 @@ const QueueDetailScreen = ({
         fetchSingleQueue(id);
       },
       (message) => {
-        alert(message);
+        Alert.alert('Diqqət!', message);
       },
     );
   };
@@ -111,7 +118,7 @@ const QueueDetailScreen = ({
     return (
       <View style={QueueDetailScreenStyles.itemRightContainer}>
         <Text category="p2" style={QueueDetailScreenStyles.itemRightWeight}>
-          {weight} kq
+          {Number(weight).toFixed(2)} kq
         </Text>
         <View style={QueueDetailScreenStyles.itemRightQueueContainer}>
           <Text category="h6">{sectionName}</Text>
@@ -137,7 +144,7 @@ const QueueDetailScreen = ({
     return (
       <ListItem
         disabled={took_at}
-        title={title}
+        title={orderId}
         description={
           date5 === '0000-00-00' ? '-' : moment(date5).format('DD MM YYYY')
         }
@@ -157,7 +164,7 @@ const QueueDetailScreen = ({
     setCanGive(newCanGive);
   };
 
-  const onPressQRScan = () => {
+  const onPressQRScan = async () => {
     navigation.navigate('QRScanOrder', {onCanGive, queueId: id});
   };
 
@@ -169,7 +176,6 @@ const QueueDetailScreen = ({
     setPostingCustomerGone(true);
     try {
       const response = await ApiClient.post(`${API_ROUTES.customerGone}/${id}`);
-      console.log(response.data);
       fetchQueueList();
       navigation.pop();
     } catch (e) {
@@ -180,26 +186,32 @@ const QueueDetailScreen = ({
   };
 
   const onSuccessScan = (data) => {
-    setShowGiveAlert(true);
-    giveOrderAction(
-      data.data,
-      (message) => {
-        fetchQueueList();
-        setShowGiveAlert(false);
-        navigation.pop();
-      },
-      (message) => {
-        setShowGiveAlert(false);
-        setTimeout(() => {
-          Alert.alert('Diqqət!', message);
-        }, 300);
-      },
-    );
+    setTimeout(() => {
+      setShowGiveAlert(true);
+      giveOrderAction(
+        data.data,
+        (message) => {
+          setTimeout(() => {
+            fetchQueueList();
+          }, 300);
+          setShowGiveAlert(false);
+          navigation.pop();
+        },
+        (message) => {
+          setShowGiveAlert(false);
+          setTimeout(() => {
+            Alert.alert('Diqqət!', message);
+          }, 300);
+        },
+      );
+    }, 300);
   };
 
   const onPressTookOrder = () => {
-    navigation.navigate('QRScan', {onSuccessScan});
     setShowGiveAlert(false);
+    setTimeout(() => {
+      navigation.navigate('QRScan', {onSuccessScan});
+    }, 350);
   };
 
   const alertLoading = isLoadingOrder || postingCustomerGone;
@@ -212,12 +224,14 @@ const QueueDetailScreen = ({
           <Spinner animating size="medium" />
         </View>
       )}
-      <Button
-        disabled={alertLoading}
-        onPress={onPressCustomerGone}
-        style={QueueDetailScreenStyles.alertConfirmButton}>
-        Müştəri gedib
-      </Button>
+      {queue.type !== 2 && (
+        <Button
+          disabled={alertLoading}
+          onPress={onPressCustomerGone}
+          style={QueueDetailScreenStyles.alertConfirmButton}>
+          Müştəri gedib
+        </Button>
+      )}
       <Button
         status="success"
         disabled={alertLoading}
@@ -288,7 +302,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   fetchQueueList,
   fetchSingleQueue,
-  fetchActiveQueue,
   giveOrderAction,
   tookOrderAction,
 };

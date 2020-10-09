@@ -33,13 +33,3 @@ export const fetchSingleQueue = (queueId) => {
     },
   };
 };
-
-export const fetchActiveQueue = () => ({
-  type: FETCH_ACTIVE_QUEUE,
-  payload: {
-    request: {
-      method: 'GET',
-      url: API_ROUTES.activeQueue,
-    },
-  },
-});

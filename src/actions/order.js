@@ -71,7 +71,6 @@ export const tookOrderAction = (
         onSuccess(can_give);
       } else {
         onError(message);
-        console.log(action?.payload?.data);
       }
     },
     (error) => {

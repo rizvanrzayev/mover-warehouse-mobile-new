@@ -37,7 +37,6 @@ const UpdateScreen = ({navigation}) => {
           ? 'BDICIqYEsquLexDJspnZpZ0j0e_O_Cbr0vUHD'
           : 'lxaj-AelDzx77gjsOly04YXqDjxSTmCqIUkAz',
       );
-      // alert(JSON.stringify(newUpdateData))
       setUpdateData(newUpdateData);
     } catch (error) {
       console.log(error);
@@ -48,6 +47,8 @@ const UpdateScreen = ({navigation}) => {
 
   const onPressBack = () => navigation.pop();
 
+  const onPressCheckUpdate = () => checkUpdate();
+
   const BackIcon = (props) => {
     return <Icon name="chevron-left-outline" {...props} />;
   };
@@ -56,37 +57,45 @@ const UpdateScreen = ({navigation}) => {
     <TopNavigationAction icon={BackIcon} onPress={onPressBack} />
   );
 
+  const ReloadIcon = (props) => {
+    return <Icon name="repeat-outline" {...props} />;
+  };
+
+  const ReloadAction = () => (
+    <TopNavigationAction
+      hitSlop={{left: 10, right: 10, top: 10, bottom: 10}}
+      icon={ReloadIcon}
+      onPress={onPressCheckUpdate}
+    />
+  );
+
   const onPressDownload = async () => {
     // const downloaded = await updateData.download(({receivedBytes, totalBytes}) =>
     //   setAnimateToNumber(parseInt((receivedBytes / totalBytes) * 100)),
     // );
     // downloaded.install(CodePush.InstallMode.IMMEDIATE);
-    CodePush.sync(
-      {updateDialog: true},
-      (status) => {
-        switch (status) {
-          case CodePush.SyncStatus.CHECKING_FOR_UPDATE:
-            setText('Yoxlanılır');
-            break;
-          case CodePush.SyncStatus.DOWNLOADING_PACKAGE:
-            setText('Paket endirilir...');
-            break;
-          case CodePush.SyncStatus.INSTALLING_UPDATE:
-            setText('Paket yüklənir...');
-            break;
-          case CodePush.SyncStatus.UPDATE_INSTALLED:
-            setText('Paket yükləndi');
-            CodePush.restartApp();
-            break;
+    CodePush.sync({updateDialog: true}, (status) => {
+      switch (status) {
+        case CodePush.SyncStatus.CHECKING_FOR_UPDATE:
+          setText('Yoxlanılır');
+          break;
+        case CodePush.SyncStatus.DOWNLOADING_PACKAGE:
+          setText('Paket endirilir...');
+          break;
+        case CodePush.SyncStatus.INSTALLING_UPDATE:
+          setText('Paket yüklənir...');
+          break;
+        case CodePush.SyncStatus.UPDATE_INSTALLED:
+          setText('Paket yükləndi');
+          CodePush.restartApp();
+          break;
+        case CodePush.SyncStatus.UPDATE_IGNORED:
+          setText('Yeniləmə dayandırıldı');
 
-          default:
-            break;
-        }
-      },
-      (progress) => {
-        console.log(progress);
-      },
-    )
+        default:
+          break;
+      }
+    })
       .then((resp) => {
         // setText(resp)
       })
@@ -148,10 +157,10 @@ const UpdateScreen = ({navigation}) => {
   return (
     <SafeAreaView style={UpdateScreenStyles.container}>
       <TopNavigation
-        title={!isLoading ? 'Update' : 'Checking for update...'}
+        title={!isLoading ? 'Yeniləmə' : 'Yeni versiya yoxlanılır...'}
         alignment="center"
         accessoryLeft={BackAction}
-        // accessoryRight={UpdateAction}
+        accessoryRight={ReloadAction}
       />
       <Divider />
       <View style={UpdateScreenStyles.content}>{renderContent()}</View>

@@ -53,7 +53,6 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
     setIsStarting(true);
     try {
       const response = await ApiClient.post(`${API_ROUTES.startQueue}/${id}`);
-      console.log(response.data);
     } catch (e) {
     } finally {
       navigation.navigate('QueueDetail', {item});

@@ -15,15 +15,15 @@ const initialState = {
 
 const order = (state = initialState, action) => {
   switch (action.type) {
-    case GIVE_ORDER:
+    case GIVE_ORDER: {
       return {
         ...state,
         isLoading: true,
         hasError: false,
       };
+    }
     case GIVE_ORDER_SUCCESS: {
       // const {queue} = action?.payload?.data;
-      console.log(action?.payload?.data);
       return {
         ...state,
         isLoading: false,
@@ -45,7 +45,6 @@ const order = (state = initialState, action) => {
       };
     case TOOK_ORDER_SUCCESS: {
       // const {queue} = action?.payload?.data;
-      console.log('took:', action?.payload?.data);
       return {
         ...state,
         isLoading: false,
@@ -53,7 +52,6 @@ const order = (state = initialState, action) => {
       };
     }
     case TOOK_ORDER_FAIL: {
-      console.log('took:', action?.payload?.data);
       return {
         ...state,
         isLoading: false,

@@ -14,20 +14,13 @@ import BarcodeMask from 'react-native-barcode-mask';
 import {connect} from 'react-redux';
 import {giveOrder, tookOrder, tookOrderAction} from 'actions/order';
 import AwesomeAlert from 'react-native-awesome-alerts';
-import {fetchActiveQueue, fetchSingleQueue} from 'actions/queue';
+import {fetchSingleQueue} from 'actions/queue';
 import Sound from 'react-native-sound';
 import order from 'reducers/order';
-
-const successSound = new Sound('section.mp3', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error);
-    return;
-  }
-});
+import Scanner from 'components/scanner/scanner.component';
 
 const errorSound = new Sound('unknown.mp3', Sound.MAIN_BUNDLE, (error) => {
   if (error) {
-    console.log('failed to load the sound', error);
     return;
   }
 });
@@ -48,7 +41,6 @@ const QRScanOrderScreen = ({
     </View>
   );
 
-  const qrRef = React.useRef(null);
   const [error, setError] = React.useState('');
   const [showCamera, setShowCamera] = React.useState(false);
 
@@ -73,17 +65,16 @@ const QRScanOrderScreen = ({
       if (code.includes('505')) {
         orderId = orderId + '-505';
       }
-      // console.log(orderId);
       takeOrder(orderId);
     },
     [takeOrder],
   );
 
-  useEffect(() => {
-    if (qrRef !== null && isLoading === false) {
-      // qrRef.current.reactivate();
-    }
-  }, [isLoading]);
+  // useEffect(() => {
+  //   if (qrRef !== null && isLoading === false) {
+  //     // qrRef.current.reactivate();
+  //   }
+  // }, [isLoading]);
 
   const TopContent = (
     <View>
@@ -101,7 +92,6 @@ const QRScanOrderScreen = ({
   );
 
   const onSuccess = (data) => {
-    successSound.play();
     const splitedData = data.data.split('-');
     let orderId = splitedData[0];
     const orderToken = splitedData[1];
@@ -121,9 +111,6 @@ const QRScanOrderScreen = ({
           requestAnimationFrame(() => {
             navigation.pop();
             onCanGive?.(can_give);
-            setTimeout(() => {
-              fetchSingleQueue(queueId);
-            }, 200);
           });
         },
         (message) => {
@@ -132,24 +119,12 @@ const QRScanOrderScreen = ({
         },
       );
     },
-    [fetchSingleQueue, navigation, onCanGive, queueId, tookOrderAction],
+    [navigation, onCanGive, queueId, tookOrderAction],
   );
 
   return (
     <SafeAreaView style={QRScanScreenStyles.container}>
-      {showCamera && (
-        <QRCodeScanner
-          ref={qrRef}
-          onRead={onSuccess}
-          showMarker
-          customMarker={<BarcodeMask />}
-          // flashMode={RNCamera.Constants.FlashMode.torch}
-          topContent={TopContent}
-          bottomViewStyle={{backgroundColor: 'white'}}
-          topViewStyle={{backgroundColor: 'white', zIndex: 99}}
-          bottomContent={<Button onPress={() => navigation.pop()}>Geri</Button>}
-        />
-      )}
+      <Scanner topContent={TopContent} />
       <AwesomeAlert
         show={error !== ''}
         showProgress={false}

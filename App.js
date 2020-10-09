@@ -25,7 +25,7 @@ import {createStore, applyMiddleware} from 'redux';
 import rootReducer from 'reducers';
 import thunk from 'redux-thunk';
 import axiosMiddleware from 'redux-axios-middleware';
-import {ApiClient} from 'config/Api';
+import {ApiClient, configureResponseInterceptors} from 'config/Api';
 import {Provider as StoreProvider} from 'react-redux';
 import AuthContext from 'contexts/AuthContext';
 import {getToken, setToken, removeToken} from 'helpers/AsyncStorage';
@@ -38,9 +38,16 @@ if (__DEV__) {
   );
 }
 
+const logger = (store) => (next) => (action) => {
+  console.log('dispatching', action);
+  let result = next(action);
+  console.log('next state', store.getState());
+  return result;
+};
+
 const store = createStore(
   rootReducer,
-  applyMiddleware(thunk, axiosMiddleware(ApiClient)),
+  applyMiddleware(thunk, axiosMiddleware(ApiClient), logger),
 );
 
 const initialState = {
@@ -93,8 +100,13 @@ const App = () => {
     dispatch({type: 'RESTORE_TOKEN', token: userToken});
   };
 
+  const onUnauth = () => {
+    authContext.signOut();
+  };
+
   useLayoutEffect(() => {
     startApp();
+    configureResponseInterceptors(onUnauth);
   }, []);
 
   return (

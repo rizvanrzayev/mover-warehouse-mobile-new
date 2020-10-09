@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 const QRScanScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
   notAuthContainer: {
     flex: 1,

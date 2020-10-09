@@ -11,6 +11,7 @@ import SplashScreen from 'screens/splash/splash.component';
 import SettingsScreen from 'screens/settings/settings.component';
 import QRScanOrderScreen from 'screens/qrScan/qrScanOrder.component';
 import UpdateScreen from 'screens/update/update.component';
+import WarehouseScreen from 'screens/warehouse/warehouse.component';
 
 const {
   Navigator: DrawerNavigator,
@@ -19,7 +20,7 @@ const {
 const {Navigator, Screen} = createStackNavigator();
 
 const HomeStack = () => (
-  <Navigator headerMode="none">
+  <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
     <Screen name="Home" component={HomeScreen} />
     <Screen name="QueueDetail" component={QueueDetailScreen} />
     <Screen name="QRScan" component={QRScanScreen} />
@@ -28,21 +29,28 @@ const HomeStack = () => (
 );
 
 const SettingsStack = () => (
-  <Navigator headerMode="none">
+  <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
     <Screen name="Settings" component={SettingsScreen} />
     <Screen name="Update" component={UpdateScreen} />
   </Navigator>
 );
 
+const WarehouseStack = () => (
+  <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
+    <Screen name="Warehouse" component={WarehouseScreen} />
+  </Navigator>
+);
+
 const HomeNavigator = () => (
-  <DrawerNavigator headerMode="none">
+  <DrawerNavigator headerMode="none" screenOptions={{animationEnabled: false}}>
     <DrawerScreen name="Home" component={HomeStack} />
     <DrawerScreen name="Settings" component={SettingsStack} />
+    <DrawerScreen name="Warehouse" component={WarehouseStack} />
   </DrawerNavigator>
 );
 
 const SingInNavigator = () => (
-  <Navigator headerMode="none">
+  <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
     <Screen name="SignIn" component={SignInScreen} />
   </Navigator>
 );
@@ -56,7 +64,7 @@ export const AppNavigator = () => {
 
   return (
     <NavigationContainer>
-      <Navigator headerMode="none">
+      <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
         {userToken == null ? (
           <Screen
             name="SingIn"
@@ -66,7 +74,11 @@ export const AppNavigator = () => {
             }}
           />
         ) : (
-          <Screen name="Home" component={HomeNavigator} />
+          <Screen
+            name="Home"
+            component={HomeNavigator}
+            options={{animationEnabled: false}}
+          />
         )}
       </Navigator>
     </NavigationContainer>

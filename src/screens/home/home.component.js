@@ -32,7 +32,6 @@ const notificationSound = new Sound(
   Sound.MAIN_BUNDLE,
   (error) => {
     if (error) {
-      console.log('failed to load the sound', error);
       return;
     }
   },
@@ -61,7 +60,6 @@ const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
   React.useEffect(() => {
     if (queues && queues.length > 0) {
       const activeQueue = queues.find((queue) => queue.is_active);
-      console.log(activeQueue);
       if (activeQueue !== undefined) {
         setHasActiveQueue(true);
       } else {
@@ -97,6 +95,8 @@ const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
   );
 
   const onPressItem = (item) => {
+    alert(JSON.stringify(item));
+    return;
     navigation.navigate('QueueDetail', {item});
   };
 

@@ -9,7 +9,6 @@ import com.facebook.react.ReactApplication;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.microsoft.codepush.react.CodePush;
-import com.microsoft.codepush.react.CodePush;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -70,6 +69,7 @@ public class MainApplication extends Application implements ReactApplication {
                     scanBroadcastReceiver = new ScanBroadcastReceiver(getReactNativeHost().getReactInstanceManager().getCurrentReactContext());
                     IntentFilter intentFilter = new IntentFilter();
                     intentFilter.addAction("com.zkc.scancode");
+                    intentFilter.addAction("com.sunmi.scanner.ACTION_DATA_CODE_RECEIVED");
                     registerReceiver(scanBroadcastReceiver, intentFilter);
                 }
             });

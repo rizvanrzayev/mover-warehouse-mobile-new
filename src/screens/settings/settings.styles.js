@@ -5,6 +5,10 @@ const SettingsScreenStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  scannerContainer: {},
+  scannerSelectContainer: {
+    flex: 1,
+  },
 });
 
 export default SettingsScreenStyles;

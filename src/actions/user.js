@@ -21,6 +21,9 @@ export const postSignInAction = (data, onSuccess = (token) => {}) => (
 ) =>
   dispatch(postSignIn(data)).then(
     (action) => {
+      if (!action?.payload?.data) {
+        return;
+      }
       const {status, message, user} = action?.payload?.data;
       if (status) {
         onSuccess(user.token);

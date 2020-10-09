@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
 const TOKEN_KEY = '@mover/token';
+const SCANNER_KEY = '@mover/scanner';
 
 const writeItemToStorage = async (key, value) => {
   const currentValue = await AsyncStorage.getItem(key);
@@ -47,5 +48,20 @@ export const setToken = async (token) => {
 
 export const removeToken = async () => {
   const result = await AsyncStorage.removeItem(TOKEN_KEY);
+  return result;
+};
+
+export const getCurrentScanner = async () => {
+  const result = await readItemFromStorage(SCANNER_KEY);
+  return result;
+};
+
+export const setCurrentScanner = async (scanner) => {
+  const result = await writeItemToStorage(SCANNER_KEY, scanner);
+  return result;
+};
+
+export const removeCurrentScanner = async () => {
+  const result = await AsyncStorage.removeItem(SCANNER_KEY);
   return result;
 };

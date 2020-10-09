@@ -10,9 +10,14 @@ import {
   Toggle,
   Text,
   Spinner,
+  Select,
+  SelectItem,
+  IndexPath,
 } from '@ui-kitten/components';
 import SettingsScreenStyles from './settings.styles';
 import {ApiClient} from 'config/Api';
+import {SCANNERS} from 'helpers/scanner';
+import {getCurrentScanner, setCurrentScanner} from 'helpers/AsyncStorage';
 
 const SettingsScreen = ({navigation}) => {
   const SETTINGS = [
@@ -20,12 +25,41 @@ const SettingsScreen = ({navigation}) => {
       id: 0,
       title: 'Online status',
       description: 'Status tənzimləməsi sizin .....',
-      status: true,
+      status: false,
     },
   ];
   const [settings, setSettings] = React.useState(SETTINGS);
 
+  const [selectedScanner, setSelectedScanner] = React.useState();
+
+  const displayValueScanner = SCANNERS[selectedScanner?.row]?.title;
+
   const [loadingIndex, setLoadingIndex] = React.useState(null);
+
+  React.useLayoutEffect(() => {
+    fetchSettings();
+    fetchCurrentScanner();
+  }, []);
+
+  const fetchCurrentScanner = async () => {
+    const currentScanner = await getCurrentScanner();
+    if (currentScanner !== null) {
+      setSelectedScanner(new IndexPath(currentScanner.id));
+    }
+  };
+
+  const fetchSettings = async () => {
+    setLoadingIndex(0);
+    try {
+      const response = await ApiClient.get('status');
+      const newSettings = [...settings];
+      newSettings[0].status = response.data.status === 1 ? true : false;
+      setSettings(newSettings);
+    } catch (error) {
+    } finally {
+      setLoadingIndex(null);
+    }
+  };
 
   const changeOnline = async (status, index) => {
     setLoadingIndex(index);
@@ -43,8 +77,8 @@ const SettingsScreen = ({navigation}) => {
   };
 
   const onPressUpdate = () => {
-    navigation.navigate('Update')
-  }
+    navigation.navigate('Update');
+  };
 
   const DownloadIcon = (props) => {
     return <Icon name="download-outline" {...props} />;
@@ -77,6 +111,29 @@ const SettingsScreen = ({navigation}) => {
       <Toggle onChange={(status) => onChange(status, index)} checked={status} />
     );
 
+  const renderSelectItem = (item, index) => (
+    <SelectItem key={item.id} title={item.title} />
+  );
+
+  const onSelectScanner = async (section) => {
+    const scanner = SCANNERS[section.row];
+    await setCurrentScanner(scanner);
+    fetchCurrentScanner();
+  };
+
+  const ScannerTypeSelect = () => {
+    return (
+      <Select
+        placeholder="Skanner seçin"
+        selectedIndex={selectedScanner}
+        value={displayValueScanner}
+        onSelect={onSelectScanner}
+        style={SettingsScreenStyles.scannerSelectContainer}>
+        {SCANNERS.map(renderSelectItem)}
+      </Select>
+    );
+  };
+
   const SettingsIcon = (props) => <Icon name="settings-2-outline" {...props} />;
 
   const renderItem = ({item, index}) => {
@@ -98,6 +155,14 @@ const SettingsScreen = ({navigation}) => {
         alignment="center"
         accessoryLeft={BackAction}
         accessoryRight={UpdateAction}
+      />
+      <Divider />
+      <ListItem
+        title="Skanner tipi"
+        description="Skannerin tipini təyin edin"
+        accessoryLeft={SettingsIcon}
+        accessoryRight={(props) => ScannerTypeSelect(props)}
+        style={SettingsScreenStyles.scannerContainer}
       />
       <Divider />
       <List

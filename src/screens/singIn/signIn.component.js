@@ -14,6 +14,9 @@ const SignInScreen = ({postSignInAction, isLoading}) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
+  const emailInputRef = React.useRef();
+  const passwordInputRef = React.useRef();
+
   const startApp = async () => {
     const enabled = await firebase.messaging().hasPermission();
     if (enabled) {
@@ -25,6 +28,10 @@ const SignInScreen = ({postSignInAction, isLoading}) => {
         // User has rejected permissions
       }
     }
+  };
+
+  const focusPasswordInput = () => {
+    passwordInputRef.current.focus();
   };
 
   React.useLayoutEffect(() => {
@@ -53,18 +60,23 @@ const SignInScreen = ({postSignInAction, isLoading}) => {
         </Text>
         <Layout style={{width: '100%'}}>
           <Input
+            ref={emailInputRef}
             value={email}
             onChangeText={setEmail}
             placeholder="Email daxil edin"
             keyboardType="email-address"
             disabled={isLoading}
+            autoCapitalize="none"
+            onSubmitEditing={focusPasswordInput}
           />
           <Input
+            ref={passwordInputRef}
             placeholder="Şifrə daxil edin"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
             disabled={isLoading}
+            onSubmitEditing={onPressSignIn}
           />
         </Layout>
         <ButtonWithLoader
