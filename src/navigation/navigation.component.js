@@ -12,6 +12,8 @@ import SettingsScreen from 'screens/settings/settings.component';
 import QRScanOrderScreen from 'screens/qrScan/qrScanOrder.component';
 import UpdateScreen from 'screens/update/update.component';
 import WarehouseScreen from 'screens/warehouse/warehouse.component';
+import ShelfPreparedOrdersScreen from 'screens/shelfPreparedOrders/shelfPreparedOrders.components';
+import ShelfOrdersScreen from 'screens/shelfOrders/shelfOrders.component';
 
 const {
   Navigator: DrawerNavigator,
@@ -25,6 +27,8 @@ const HomeStack = () => (
     <Screen name="QueueDetail" component={QueueDetailScreen} />
     <Screen name="QRScan" component={QRScanScreen} />
     <Screen name="QRScanOrder" component={QRScanOrderScreen} />
+    <Screen name="ShelfPreparedOrders" component={ShelfPreparedOrdersScreen} />
+    <Screen name="ShelfOrders" component={ShelfOrdersScreen} />
   </Navigator>
 );
 
@@ -42,7 +46,10 @@ const WarehouseStack = () => (
 );
 
 const HomeNavigator = () => (
-  <DrawerNavigator headerMode="none" screenOptions={{animationEnabled: false}}>
+  <DrawerNavigator
+    backBehavior="none"
+    headerMode="none"
+    screenOptions={{animationEnabled: false}}>
     <DrawerScreen name="Home" component={HomeStack} />
     <DrawerScreen name="Settings" component={SettingsStack} />
     <DrawerScreen name="Warehouse" component={WarehouseStack} />

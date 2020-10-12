@@ -2,19 +2,14 @@ import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {Button, Card, Icon, Modal, Text} from '@ui-kitten/components';
 import {getCurrentScanner} from 'helpers/AsyncStorage';
 import {SCANNERS} from 'helpers/scanner';
-import React from 'react';
-import {DeviceEventEmitter, View} from 'react-native';
+import React, {useCallback} from 'react';
+import {DeviceEventEmitter, Platform, View} from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Sound from 'react-native-sound';
 import ScannerStyles from './scanner.styles';
 import LottieView from 'lottie-react-native';
-
-const successSound = new Sound('section.mp3', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    return;
-  }
-});
+import SelectScanner from 'components/selectScanner/selectScanner.component';
 
 const Scanner = ({topContent, onScan}) => {
   const qrRef = React.useRef(null);
@@ -23,49 +18,56 @@ const Scanner = ({topContent, onScan}) => {
   const [showHelper, setShowHelper] = React.useState(false);
   const [flashOn, setFlashOn] = React.useState(false);
 
-  const navigation = useNavigation();
   const isFocused = useIsFocused();
 
   React.useEffect(() => {
     if (isFocused) {
       fetchCurrentScanner();
+    } else {
+      removeInfraredScannerListener();
     }
-  }, [isFocused]);
-
-  // React.useLayoutEffect(() => {
-  //   if (currentScanner !== null && currentScanner.id === 1) {
-  //     setupInfraredScanner();
-  //   }
-  //   return () => DeviceEventEmitter.removeAllListeners();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [currentScanner]);
-
-  const setupInfraredScanner = () => {
-    DeviceEventEmitter.addListener('Scan', onScanInfraredScanner);
-  };
-
-  const onScanInfraredScanner = (event) => {
-    // const orderId = getOrderIdFromScannerData(event.code);
-    onScan?.(event.code);
-  };
+    return () => {
+      removeInfraredScannerListener();
+    };
+  }, [fetchCurrentScanner, isFocused, onScan, removeInfraredScannerListener]);
 
   const onScanCamera = (data) => {
-    // const orderId = getOrderIdFromScannerData(data.data);
     onScan?.(data.data);
     setTimeout(() => {
-      qrRef.current.reactivate();
-    }, 500);
+      qrRef?.current?.reactivate?.();
+    }, 1000);
   };
 
-  const fetchCurrentScanner = async () => {
+  const onScanInfraredScanner = React.useCallback(({code}) => onScan?.(code), [
+    onScan,
+  ]);
+
+  const removeInfraredScannerListener = useCallback(() => {
+    if (currentScanner !== null && currentScanner?.id === SCANNERS[1].id) {
+      if (Platform.OS === 'android') {
+        DeviceEventEmitter.removeAllListeners();
+      }
+    }
+  }, [currentScanner]);
+
+  const setupInfraredScanner = React.useCallback(() => {
+    if (Platform.OS === 'android') {
+      DeviceEventEmitter.addListener('Scan', onScanInfraredScanner);
+    }
+  }, [onScanInfraredScanner]);
+
+  const fetchCurrentScanner = React.useCallback(async () => {
     const newCurrentScanner = await getCurrentScanner();
     if (newCurrentScanner !== null) {
       if (newCurrentScanner.id === SCANNERS[0].id) {
         setShowHelper(true);
       }
+      if (newCurrentScanner.id === SCANNERS[1].id) {
+        setupInfraredScanner();
+      }
       setCurrentScanner(newCurrentScanner);
     }
-  };
+  }, [setupInfraredScanner]);
 
   const FlashIcon = (props) => (
     <Icon {...props} name={flashOn ? 'flash-outline' : 'flash-off-outline'} />
@@ -82,7 +84,7 @@ const Scanner = ({topContent, onScan}) => {
     </View>
   );
 
-  const renderNoScanner = null;
+  const renderNoScanner = <SelectScanner />;
 
   const renderCameraScanner = (
     <QRCodeScanner
@@ -90,10 +92,10 @@ const Scanner = ({topContent, onScan}) => {
       onRead={onScanCamera}
       showMarker
       customMarker={<BarcodeMask />}
-      flashMode={flashOn ? 2 : 0}
+      flashMode={flashOn ? (Platform.OS === 'ios' ? 3 : 2) : 0}
       topContent={topContent}
-      bottomViewStyle={{backgroundColor: 'white'}}
-      topViewStyle={{backgroundColor: 'white', zIndex: 99}}
+      bottomViewStyle={ScannerStyles.cameraBottomView}
+      topViewStyle={ScannerStyles.cameraTopView}
       bottomContent={BottomContent}
     />
   );
@@ -147,7 +149,7 @@ const Scanner = ({topContent, onScan}) => {
   return (
     <View style={ScannerStyles.container}>
       {renderScanner()}
-      {showHelper && renderHelperView()}
+      {/* {showHelper && renderHelperView()} */}
     </View>
   );
 };

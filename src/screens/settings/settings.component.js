@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View, SafeAreaView} from 'react-native';
 import {
   TopNavigation,
@@ -18,6 +18,7 @@ import SettingsScreenStyles from './settings.styles';
 import {ApiClient} from 'config/Api';
 import {SCANNERS} from 'helpers/scanner';
 import {getCurrentScanner, setCurrentScanner} from 'helpers/AsyncStorage';
+import MenuButton from 'components/menuButton/menuButton.component';
 
 const SettingsScreen = ({navigation}) => {
   const SETTINGS = [
@@ -36,10 +37,10 @@ const SettingsScreen = ({navigation}) => {
 
   const [loadingIndex, setLoadingIndex] = React.useState(null);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     fetchSettings();
     fetchCurrentScanner();
-  }, []);
+  }, [fetchSettings]);
 
   const fetchCurrentScanner = async () => {
     const currentScanner = await getCurrentScanner();
@@ -48,7 +49,7 @@ const SettingsScreen = ({navigation}) => {
     }
   };
 
-  const fetchSettings = async () => {
+  const fetchSettings = useCallback(async () => {
     setLoadingIndex(0);
     try {
       const response = await ApiClient.get('status');
@@ -59,7 +60,7 @@ const SettingsScreen = ({navigation}) => {
     } finally {
       setLoadingIndex(null);
     }
-  };
+  }, [settings]);
 
   const changeOnline = async (status, index) => {
     setLoadingIndex(index);
@@ -83,18 +84,6 @@ const SettingsScreen = ({navigation}) => {
   const DownloadIcon = (props) => {
     return <Icon name="download-outline" {...props} />;
   };
-
-  const MenuIcon = (props) => {
-    return <Icon name="menu-2-outline" {...props} />;
-  };
-
-  const openDrawer = () => {
-    navigation.openDrawer();
-  };
-
-  const BackAction = () => (
-    <TopNavigationAction icon={MenuIcon} onPress={openDrawer} />
-  );
 
   const UpdateAction = () => (
     <TopNavigationAction icon={DownloadIcon} onPress={onPressUpdate} />
@@ -153,7 +142,7 @@ const SettingsScreen = ({navigation}) => {
       <TopNavigation
         title="Settings"
         alignment="center"
-        accessoryLeft={BackAction}
+        accessoryLeft={MenuButton}
         accessoryRight={UpdateAction}
       />
       <Divider />

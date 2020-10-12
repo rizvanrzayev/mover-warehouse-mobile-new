@@ -44,10 +44,10 @@ const WarehouseScreen = ({onSuccessTaked}) => {
     return response;
   };
 
-  const postBundleData = async (orderId, officeId) => {
+  const postBundleData = async (orderId) => {
     const response = await ApiClient.post('add-to-shelf', {
       packageBarcode: orderId,
-      sectionId: currentSection.section_id,
+      sectionId: String(currentSection.section_id),
     });
     return response;
   };
@@ -70,20 +70,18 @@ const WarehouseScreen = ({onSuccessTaked}) => {
     setIsLoading(true);
     try {
       let response = null;
-      if (currentSection === null) {
-        if (isSection(data)) {
-          response = await postSectionData(data);
-          const {status, data: sectionData} = response.data;
-          if (status === true) {
-            setCurrentSection(sectionData);
-          }
+      if (currentSection === null || isSection(data)) {
+        response = await postSectionData(data);
+        const {status, data: sectionData} = response.data;
+        if (status === true) {
+          setCurrentSection(sectionData);
         }
       } else {
-        const orderId = data.split('-')[0];
+        const orderId = `${data.split('-')[0]}-346`;
         response = await postBundleData(orderId);
-        if (response?.data?.success === false) {
+        if (response?.data?.status === false) {
           showMessage({
-            message: 'Əlavə olunmadı',
+            message: response?.data?.message,
             type: 'danger',
           });
         } else {

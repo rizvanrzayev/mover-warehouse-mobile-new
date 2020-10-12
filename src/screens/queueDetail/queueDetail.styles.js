@@ -5,9 +5,6 @@ const QueueDetailScreenStyles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
   },
-  itemRightContainer: {
-    flexDirection: 'row',
-  },
   itemRightQueueContainer: {
     // width: 40,
     // height: 40,
@@ -17,6 +14,9 @@ const QueueDetailScreenStyles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     marginRight: 16,
+  },
+  itemRightContainer: {
+    flexDirection: 'row',
   },
   itemRightWeight: {
     alignSelf: 'center',

@@ -9,7 +9,7 @@ import {
 import {RNCamera} from 'react-native-camera';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import QRScanScreenStyles from './qrScan.styles';
-import {Text, Button, Spinner} from '@ui-kitten/components';
+import {Text, Button, Spinner, TopNavigation} from '@ui-kitten/components';
 import BarcodeMask from 'react-native-barcode-mask';
 import {connect} from 'react-redux';
 import {giveOrder, tookOrder, tookOrderAction} from 'actions/order';
@@ -18,6 +18,8 @@ import {fetchSingleQueue} from 'actions/queue';
 import Sound from 'react-native-sound';
 import order from 'reducers/order';
 import Scanner from 'components/scanner/scanner.component';
+import BackButton from 'components/backButton/backButton.component';
+import {showMessage} from 'react-native-flash-message';
 
 const errorSound = new Sound('unknown.mp3', Sound.MAIN_BUNDLE, (error) => {
   if (error) {
@@ -42,33 +44,34 @@ const QRScanOrderScreen = ({
   );
 
   const [error, setError] = React.useState('');
-  const [showCamera, setShowCamera] = React.useState(false);
+
+  const qrRef = React.useRef(null);
 
   const onCanGive = route.params?.onCanGive;
 
   const queueId = route.params?.queueId;
 
-  React.useLayoutEffect(() => {
-    setTimeout(() => {
-      setShowCamera(true);
-    }, 300);
-    DeviceEventEmitter.addListener('Scan', onScanFromDevice);
-    return () => {
-      DeviceEventEmitter.removeAllListeners();
-    };
-  }, [onScanFromDevice]);
+  // React.useLayoutEffect(() => {
+  //   setTimeout(() => {
+  //     setShowCamera(true);
+  //   }, 300);
+  //   DeviceEventEmitter.addListener('Scan', onScanFromDevice);
+  //   return () => {
+  //     DeviceEventEmitter.removeAllListeners();
+  //   };
+  // }, [onScanFromDevice]);
 
-  const onScanFromDevice = useCallback(
-    (event) => {
-      const {code} = event;
-      let orderId = code.split('{')[0].split('-')[0];
-      if (code.includes('505')) {
-        orderId = orderId + '-505';
-      }
-      takeOrder(orderId);
-    },
-    [takeOrder],
-  );
+  // const onScanFromDevice = useCallback(
+  //   (event) => {
+  //     const {code} = event;
+  //     let orderId = code.split('{')[0].split('-')[0];
+  //     if (code.includes('505')) {
+  //       orderId = orderId + '-505';
+  //     }
+  //     takeOrder(orderId);
+  //   },
+  //   [takeOrder],
+  // );
 
   // useEffect(() => {
   //   if (qrRef !== null && isLoading === false) {
@@ -92,7 +95,7 @@ const QRScanOrderScreen = ({
   );
 
   const onSuccess = (data) => {
-    const splitedData = data.data.split('-');
+    const splitedData = data.split('-');
     let orderId = splitedData[0];
     const orderToken = splitedData[1];
     if (orderToken === '505') {
@@ -108,10 +111,14 @@ const QRScanOrderScreen = ({
         0,
         queueId,
         (can_give) => {
-          requestAnimationFrame(() => {
+          showMessage({
+            message: 'Uğurlu əməliyyat',
+            type: 'success',
+          });
+          if (can_give) {
             navigation.pop();
             onCanGive?.(can_give);
-          });
+          }
         },
         (message) => {
           errorSound.play();
@@ -124,7 +131,12 @@ const QRScanOrderScreen = ({
 
   return (
     <SafeAreaView style={QRScanScreenStyles.container}>
-      <Scanner topContent={TopContent} />
+      <TopNavigation
+        accessoryLeft={BackButton}
+        title="Bağlama"
+        alignment="center"
+      />
+      <Scanner topContent={TopContent} onScan={onSuccess} />
       <AwesomeAlert
         show={error !== ''}
         showProgress={false}

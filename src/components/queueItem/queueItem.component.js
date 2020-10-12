@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {ListItem, Text, Button, Spinner} from '@ui-kitten/components';
 import moment from 'moment';
 import {View} from 'react-native';
@@ -19,9 +19,9 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
       calculateStartDate();
     }, 1000);
     return () => clearInterval(interval);
-  }, [item]);
+  }, [calculateStartDate, item]);
 
-  const calculateStartDate = () => {
+  const calculateStartDate = useCallback(() => {
     if (started_at !== null) {
       const diff = moment(moment.now()).diff(started_at);
       const duration = moment.duration(diff);
@@ -33,7 +33,7 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
       const timerData = `${daysString} ${dateString}`;
       setTimer(timerData);
     }
-  };
+  }, [started_at]);
 
   const [timer, setTimer] = React.useState('');
   const [isStarting, setIsStarting] = React.useState(false);
@@ -93,7 +93,7 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
 
   return (
     <ListItem
-      // disabled={!is_active}
+      disabled={!is_active}
       title={customer_name}
       description={moment(created_at).format('DD.MM.YYYY hh:mm:ss')}
       onPress={onPressItem}

@@ -1,31 +1,17 @@
 import React, {useState} from 'react';
-import {
-  Divider,
-  Icon,
-  Layout,
-  List,
-  ListItem,
-  TopNavigation,
-  TopNavigationAction,
-  Text,
-} from '@ui-kitten/components';
+import {Divider, Layout, List, TopNavigation} from '@ui-kitten/components';
 import EmptyItem from 'components/emptyItem/emptyItem.component';
-import {
-  SafeAreaView,
-  RefreshControl,
-  View,
-  StatusBar,
-  Alert,
-} from 'react-native';
+import {SafeAreaView, RefreshControl, StatusBar} from 'react-native';
 
 import HomeStyles from './home.styles';
-import {useAuth} from 'contexts/AuthContext';
 import {connect, useDispatch} from 'react-redux';
 import {fetchQueueList} from 'actions/queue';
 import QueueItem from 'components/queueItem/queueItem.component';
 import firebase from 'react-native-firebase';
 
 import Sound from 'react-native-sound';
+import SignOutButton from 'components/signOutButton/signOutButton.component';
+import MenuButton from 'components/menuButton/menuButton.component';
 
 const notificationSound = new Sound(
   'notification.mp3',
@@ -38,8 +24,6 @@ const notificationSound = new Sound(
 );
 
 const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
-  const {signOut} = useAuth();
-
   const [hasActiveQueue, setHasActiveQueue] = React.useState(false);
 
   React.useLayoutEffect(() => {
@@ -68,36 +52,12 @@ const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
     }
   }, [queues]);
 
-  const MenuIcon = (props) => {
-    return <Icon name="menu-2-outline" {...props} />;
-  };
-  const ExitIcon = (props) => {
-    return <Icon name="log-out-outline" {...props} />;
-  };
-
-  const openDrawer = () => {
-    navigation.openDrawer();
-  };
-
-  const BackAction = () => (
-    <TopNavigationAction icon={MenuIcon} onPress={openDrawer} />
-  );
-
-  const onPressExit = () => {
-    Alert.alert('Diqqət', 'Çıxış etmək istədiyinizdən əminsiniz?', [
-      {text: 'XEYR'},
-      {text: 'BƏLİ', onPress: signOut, style: 'destructive'},
-    ]);
-  };
-
-  const ExitAction = () => (
-    <TopNavigationAction icon={ExitIcon} onPress={onPressExit} />
-  );
-
   const onPressItem = (item) => {
-    alert(JSON.stringify(item.from_type));
-    return;
-    navigation.navigate('QueueDetail', {item});
+    if (item.from_type === 1) {
+      navigation.navigate('ShelfPreparedOrders', {item});
+    } else {
+      navigation.navigate('QueueDetail', {item});
+    }
   };
 
   const renderItem = ({item}) => {
@@ -116,8 +76,8 @@ const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
       <TopNavigation
         title="Home page"
         alignment="center"
-        accessoryLeft={BackAction}
-        accessoryRight={ExitAction}
+        accessoryLeft={MenuButton}
+        accessoryRight={SignOutButton}
       />
       <Divider />
       <Layout style={HomeStyles.content}>

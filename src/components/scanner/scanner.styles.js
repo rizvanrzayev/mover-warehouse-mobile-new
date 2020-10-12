@@ -37,6 +37,13 @@ const ScannerStyles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
   },
+  cameraBottomView: {
+    backgroundColor: 'white',
+  },
+  cameraTopView: {
+    backgroundColor: 'white',
+    zIndex: 99,
+  },
 });
 
 export default ScannerStyles;

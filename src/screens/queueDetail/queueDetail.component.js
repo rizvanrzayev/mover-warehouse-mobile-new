@@ -23,6 +23,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 import {ApiClient, API_ROUTES} from 'config/Api';
 import {showMessage} from 'react-native-flash-message';
 import {useIsFocused} from '@react-navigation/native';
+import BackButton from 'components/backButton/backButton.component';
 
 const QueueDetailScreen = ({
   navigation,
@@ -39,7 +40,7 @@ const QueueDetailScreen = ({
   preparedParcel,
 }) => {
   const {item} = route.params;
-  const {id, customer_name, customer_id} = item;
+  const {id, customer_name, customer_id, novbe_id} = item;
 
   const isFocused = useIsFocused();
 
@@ -75,17 +76,6 @@ const QueueDetailScreen = ({
   const [canGive, setCanGive] = React.useState(false);
   const [showGiveAlert, setShowGiveAlert] = React.useState(false);
   const [postingCustomerGone, setPostingCustomerGone] = React.useState(false);
-
-  const MenuIcon = (props) => {
-    return <Icon {...props} name="arrow-back" />;
-  };
-  const openDrawer = () => {
-    navigation.goBack();
-  };
-
-  const BackAction = () => (
-    <TopNavigationAction icon={MenuIcon} onPress={openDrawer} />
-  );
 
   const Left = (props, took_at, not_found) => {
     return (
@@ -199,9 +189,10 @@ const QueueDetailScreen = ({
         },
         (message) => {
           setShowGiveAlert(false);
-          setTimeout(() => {
-            Alert.alert('Diqqət!', message);
-          }, 300);
+          showMessage({
+            message,
+            type: 'danger',
+          });
         },
       );
     }, 300);
@@ -246,16 +237,19 @@ const QueueDetailScreen = ({
       <TopNavigation
         title="Queue Detail"
         alignment="center"
-        accessoryLeft={BackAction}
+        accessoryLeft={BackButton}
       />
       <Divider />
+      <Text category="h5" style={{alignSelf: 'center'}}>
+        {novbe_id}
+      </Text>
       <Text category="h5" style={{alignSelf: 'center', marginVertical: 10}}>
         {`${customer_name} - ${customer_id || 'ID'}`}
       </Text>
       <List
         data={(!prepared ? queue?.orders : preparedParcel) || []}
         renderItem={({item}) => renderItem({item, prepared})}
-        style={QueueDetailScreen.list}
+        style={QueueDetailScreenStyles.list}
         refreshControl={
           <RefreshControl
             tintColor="#009BD8"
