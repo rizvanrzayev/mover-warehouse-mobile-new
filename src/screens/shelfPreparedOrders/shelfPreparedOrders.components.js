@@ -133,7 +133,7 @@ const ShelfPreparedOrdersScreen = ({
   return (
     <SafeAreaView style={ShelfPreparedOrdersStyles.container}>
       <TopNavigation
-        title="Toplanmış bağlamaları rəflə"
+        title={`Toplanmış bağlamaları rəflə - ${novbe_id}`}
         alignment="center"
         accessoryLeft={BackButton}
       />

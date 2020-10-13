@@ -1,29 +1,13 @@
 import React from 'react';
 import Sound from 'react-native-sound';
-import BarcodeMask from 'react-native-barcode-mask';
 import WarehouseScreenStyles from './shelfOrders.styles';
-import QRCodeScanner from 'react-native-qrcode-scanner';
-import {
-  Button,
-  Divider,
-  Spinner,
-  Text,
-  TopNavigation,
-} from '@ui-kitten/components';
+import {Divider, Spinner, Text, TopNavigation} from '@ui-kitten/components';
 import {SafeAreaView, View} from 'react-native';
 import {ApiClient} from 'config/Api';
 import {showMessage} from 'react-native-flash-message';
-import MenuButton from 'components/menuButton/menuButton.component';
 import SignOutButton from 'components/signOutButton/signOutButton.component';
 import Scanner from 'components/scanner/scanner.component';
 import BackButton from 'components/backButton/backButton.component';
-
-const successSound = new Sound('section.mp3', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error);
-    return;
-  }
-});
 
 const ShelfOrders = ({route, navigation}) => {
   const qrRef = React.useRef(null);
@@ -66,6 +50,14 @@ const ShelfOrders = ({route, navigation}) => {
     }
   };
 
+  const onSelectSection = (sectionData) => {
+    showMessage({
+      message: currentSection === null ? 'Rəf seçildi' : 'Rəf dəyişdirildi',
+      type: 'info',
+    });
+    setCurrentSection(sectionData);
+  };
+
   const onSuccess = async (data) => {
     // successSound.play();
     setIsLoading(true);
@@ -75,20 +67,26 @@ const ShelfOrders = ({route, navigation}) => {
         response = await postSectionData(data);
         const {status, data: sectionData} = response.data;
         if (status === true) {
-          setCurrentSection(sectionData);
+          onSelectSection(sectionData);
+        } else {
+          showMessage({
+            message: 'Zəhmət olmasa düzgün rəf oxudun',
+            type: 'warning',
+          });
         }
       } else {
         const orderId = data.split('-')[0];
         response = await postBundleData(orderId);
-        // alert(JSON.stringify(response.data));
         if (response?.data?.status === false) {
           showMessage({
             message: 'Sehv',
             type: 'danger',
           });
         } else {
-          onSuccessShelf(currentSection);
-          navigation.pop();
+          if (response?.data?.completed) {
+            onSuccessShelf(currentSection);
+            navigation.pop();
+          }
           showMessage({
             message: 'Uğurla əlavə olundu',
             type: 'success',

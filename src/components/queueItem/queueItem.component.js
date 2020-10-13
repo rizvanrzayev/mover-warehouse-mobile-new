@@ -9,7 +9,16 @@ import {ApiClient, API_ROUTES} from 'config/Api';
 import {useNavigation} from '@react-navigation/native';
 
 const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
-  const {customer_name, started_at, is_active, created_at, id, isNew} = item;
+  const {
+    customer_name,
+    started_at,
+    is_active,
+    created_at,
+    id,
+    isNew,
+    type,
+    from_type,
+  } = item;
 
   const navigation = useNavigation();
 
@@ -38,14 +47,27 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
   const [timer, setTimer] = React.useState('');
   const [isStarting, setIsStarting] = React.useState(false);
 
-  const renderItemLeft = (isActive) => {
+  const renderItemLeft = () => {
+    const isPacker = type === 0 && from_type === 1; // Refle
+    const isUser = type === 1 && from_type === 0; // Mushteri
+    const isPreprareOrder = type === 0 && from_type === 0; // Paketle
+
+    const typeTitle =
+      (isPacker && 'Rəflə') ||
+      (isUser && 'Müştəri') ||
+      (isPreprareOrder && 'Paketlə');
+    const title = is_active ? typeTitle : 'Gözləmədə';
+
+    const typeStatus =
+      (isPacker && 'warning') ||
+      (isUser && 'success') ||
+      (isPreprareOrder && 'info');
+    const status = is_active ? typeStatus : 'danger';
+
     return (
-      <View
-        style={[
-          QueueItemStyles.activeItemContainer,
-          {backgroundColor: isActive ? '#5DEAA4' : '#A3193B'},
-        ]}
-      />
+      <Text status={status} style={QueueItemStyles.queueTitle}>
+        {title}
+      </Text>
     );
   };
 
@@ -67,8 +89,13 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
   const renderItemRight = () => {
     return (
       <View style={QueueItemStyles.rightContainer}>
+        <View style={QueueItemStyles.queueContainer}>
+          <Text style={QueueItemStyles.queueText}>{item.novbe_id}</Text>
+        </View>
         {is_active ? (
-          <Text category="s2">{timer}</Text>
+          <View style={QueueItemStyles.timerContainer}>
+            <Text category="s2">{timer}</Text>
+          </View>
         ) : (
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             {isNew && (
@@ -97,7 +124,7 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
       title={customer_name}
       description={moment(created_at).format('DD.MM.YYYY hh:mm:ss')}
       onPress={onPressItem}
-      accessoryLeft={() => renderItemLeft(is_active)}
+      accessoryLeft={() => renderItemLeft()}
       accessoryRight={() => renderItemRight()}
     />
   );

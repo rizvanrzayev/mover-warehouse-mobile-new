@@ -20,6 +20,7 @@ export const API_ROUTES = {
   took: 'took',
   customerGone: 'customer-gone',
   settings: 'settings',
+  approveReceivePacket: 'approve-receive-packet',
 };
 
 const notAuthRequiredUrls = ['login'];

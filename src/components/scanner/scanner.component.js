@@ -1,15 +1,17 @@
+// /* eslint-disable react-hooks/exhaustive-deps */
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {Button, Card, Icon, Modal, Text} from '@ui-kitten/components';
 import {getCurrentScanner} from 'helpers/AsyncStorage';
 import {SCANNERS} from 'helpers/scanner';
 import React, {useCallback} from 'react';
-import {DeviceEventEmitter, Platform, View} from 'react-native';
+import {Alert, DeviceEventEmitter, Linking, Platform, View} from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import Sound from 'react-native-sound';
 import ScannerStyles from './scanner.styles';
 import LottieView from 'lottie-react-native';
 import SelectScanner from 'components/selectScanner/selectScanner.component';
+import KeepAwake from 'react-native-keep-awake';
+import CameraNotAuthorized from 'components/cameraNotAuthorized/cameraNotAuthorized.component';
 
 const Scanner = ({topContent, onScan}) => {
   const qrRef = React.useRef(null);
@@ -19,6 +21,11 @@ const Scanner = ({topContent, onScan}) => {
   const [flashOn, setFlashOn] = React.useState(false);
 
   const isFocused = useIsFocused();
+
+  React.useEffect(() => {
+    // changeKeepAwake(true);
+    // return () => changeKeepAwake(false);
+  }, []);
 
   React.useEffect(() => {
     if (isFocused) {
@@ -35,12 +42,20 @@ const Scanner = ({topContent, onScan}) => {
     onScan?.(data.data);
     setTimeout(() => {
       qrRef?.current?.reactivate?.();
-    }, 1000);
+    }, 2000);
   };
 
   const onScanInfraredScanner = React.useCallback(({code}) => onScan?.(code), [
     onScan,
   ]);
+
+  const changeKeepAwake = (shouldBeAwake) => {
+    if (shouldBeAwake) {
+      KeepAwake.activate();
+    } else {
+      KeepAwake.deactivate();
+    }
+  };
 
   const removeInfraredScannerListener = useCallback(() => {
     if (currentScanner !== null && currentScanner?.id === SCANNERS[1].id) {
@@ -86,6 +101,14 @@ const Scanner = ({topContent, onScan}) => {
 
   const renderNoScanner = <SelectScanner />;
 
+  const onRefreshAuth = () => {
+    try {
+      Linking.openSettings();
+    } catch (error) {
+      Alert.alert('Diqqət!', 'Ayarlar keçid mümkün olmadı');
+    }
+  };
+
   const renderCameraScanner = (
     <QRCodeScanner
       ref={qrRef}
@@ -97,21 +120,27 @@ const Scanner = ({topContent, onScan}) => {
       bottomViewStyle={ScannerStyles.cameraBottomView}
       topViewStyle={ScannerStyles.cameraTopView}
       bottomContent={BottomContent}
+      notAuthorizedView={<CameraNotAuthorized onRefreshAuth={onRefreshAuth} />}
+      cameraProps={{
+        captureAudio: false,
+      }}
     />
   );
 
   const renderInfraredScanner = (
     <View style={ScannerStyles.infraredScannerContent}>
-      {topContent}
-      <Text category="h4" style={ScannerStyles.infraredScannerTitle}>
-        Infrared vasitəsi ilə bağlamanı oxudun
-      </Text>
-      <View style={ScannerStyles.barcodeLottieContainer}>
-        <LottieView
-          source={require('assets/lotties/barcode.json')}
-          autoPlay
-          loop
-        />
+      <View style={ScannerStyles.infraredScannerTopContent}>{topContent}</View>
+      <View style={ScannerStyles.infraredScannerBottomContent}>
+        <Text category="h4" style={ScannerStyles.infraredScannerTitle}>
+          Infrared vasitəsi ilə bağlamanı oxudun
+        </Text>
+        <View style={ScannerStyles.barcodeLottieContainer}>
+          <LottieView
+            source={require('assets/lotties/barcode.json')}
+            autoPlay
+            loop
+          />
+        </View>
       </View>
     </View>
   );
@@ -119,14 +148,15 @@ const Scanner = ({topContent, onScan}) => {
   const renderScanner = () => {
     if (currentScanner === null) {
       return renderNoScanner;
-    }
-    switch (currentScanner.id) {
-      case SCANNERS[0].id:
-        return renderCameraScanner;
-      case SCANNERS[1].id:
-        return renderInfraredScanner;
-      default:
-        return null;
+    } else {
+      switch (currentScanner.id) {
+        case SCANNERS[0].id:
+          return renderCameraScanner;
+        case SCANNERS[1].id:
+          return renderInfraredScanner;
+        default:
+          return null;
+      }
     }
   };
 

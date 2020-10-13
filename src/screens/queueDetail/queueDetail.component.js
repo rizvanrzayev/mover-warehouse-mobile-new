@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {
   Layout,
   TopNavigation,
@@ -40,7 +40,9 @@ const QueueDetailScreen = ({
   preparedParcel,
 }) => {
   const {item} = route.params;
-  const {id, customer_name, customer_id, novbe_id} = item;
+  const {id, customer_name, customer_id, novbe_id, type, from_type} = item;
+
+  // alert(JSON.stringify(item));
 
   const isFocused = useIsFocused();
 
@@ -179,7 +181,7 @@ const QueueDetailScreen = ({
     setTimeout(() => {
       setShowGiveAlert(true);
       giveOrderAction(
-        data.data,
+        data,
         (message) => {
           setTimeout(() => {
             fetchQueueList();
@@ -195,19 +197,31 @@ const QueueDetailScreen = ({
           });
         },
       );
-    }, 300);
+    }, 500);
   };
 
   const onPressTookOrder = () => {
-    setShowGiveAlert(false);
-    setTimeout(() => {
-      navigation.navigate('QRScan', {onSuccessScan});
-    }, 350);
+    requestAnimationFrame(() => {
+      setShowGiveAlert(false);
+      setTimeout(() => {
+        navigation.navigate('QRScan', {onSuccessScan});
+      }, 400);
+    });
   };
 
   const alertLoading = isLoadingOrder || postingCustomerGone;
 
-  const renderCustomAlertContent = (
+  const isPacker = type === 1; // Paketchi
+  const isUser = type === 0;
+  //  && from_type === 0; // Mushteri
+  // const isPreprareOrder = type === 0
+  //  && from_type === 1; // Baglama topla
+
+  const tookOrderTitle = isUser && 'Müştəriyə təhvil ver';
+
+  const tookOrderTitle2 = isUser && 'Paketçiyə təhvil ver';
+
+  const renderCustomAlertContent = useCallback(
     <View style={QueueDetailScreenStyles.alertContainer}>
       <Text style={QueueDetailScreenStyles.alertTitle}>Seçim edin</Text>
       {alertLoading && (
@@ -227,22 +241,30 @@ const QueueDetailScreen = ({
         status="success"
         disabled={alertLoading}
         onPress={onPressTookOrder}>
-        Təhvil ver
+        {tookOrderTitle}
       </Button>
-    </View>
+      <Button
+        style={{marginTop: 10}}
+        status="success"
+        disabled={alertLoading}
+        onPress={onPressTookOrder}>
+        {tookOrderTitle2}
+      </Button>
+    </View>,
+    [alertLoading],
   );
 
   return (
     <SafeAreaView style={QueueDetailScreenStyles.container}>
       <TopNavigation
-        title="Queue Detail"
+        title={`Növbə - ${novbe_id}`}
         alignment="center"
         accessoryLeft={BackButton}
       />
       <Divider />
-      <Text category="h5" style={{alignSelf: 'center'}}>
+      {/* <Text category="h5" style={{alignSelf: 'center'}}>
         {novbe_id}
-      </Text>
+      </Text> */}
       <Text category="h5" style={{alignSelf: 'center', marginVertical: 10}}>
         {`${customer_name} - ${customer_id || 'ID'}`}
       </Text>
@@ -275,12 +297,17 @@ const QueueDetailScreen = ({
           Tamamla
         </Button>
       </View>
-      <AwesomeAlert
-        show={showGiveAlert}
-        closeOnTouchOutside={false}
-        closeOnHardwareBackPress={false}
-        customView={renderCustomAlertContent}
-      />
+      {useMemo(
+        () => (
+          <AwesomeAlert
+            show={showGiveAlert}
+            closeOnTouchOutside={false}
+            closeOnHardwareBackPress={false}
+            customView={renderCustomAlertContent}
+          />
+        ),
+        [showGiveAlert, renderCustomAlertContent],
+      )}
     </SafeAreaView>
   );
 };

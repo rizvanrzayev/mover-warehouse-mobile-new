@@ -1,15 +1,7 @@
 import React from 'react';
 import Sound from 'react-native-sound';
-import BarcodeMask from 'react-native-barcode-mask';
 import WarehouseScreenStyles from './warehouse.styles';
-import QRCodeScanner from 'react-native-qrcode-scanner';
-import {
-  Button,
-  Divider,
-  Spinner,
-  Text,
-  TopNavigation,
-} from '@ui-kitten/components';
+import {Divider, Spinner, Text, TopNavigation} from '@ui-kitten/components';
 import {SafeAreaView, View} from 'react-native';
 import {ApiClient} from 'config/Api';
 import {showMessage} from 'react-native-flash-message';
@@ -25,17 +17,8 @@ const successSound = new Sound('section.mp3', Sound.MAIN_BUNDLE, (error) => {
 });
 
 const WarehouseScreen = ({onSuccessTaked}) => {
-  const qrRef = React.useRef(null);
-
   const [isLoading, setIsLoading] = React.useState(false);
   const [currentSection, setCurrentSection] = React.useState(null);
-  const [showCamera, setShowCamera] = React.useState(false);
-
-  React.useLayoutEffect(() => {
-    setTimeout(() => {
-      setShowCamera(true);
-    }, 300);
-  }, []);
 
   const postSectionData = async (sectionName) => {
     const response = await ApiClient.post('select-shelf', {
@@ -65,6 +48,14 @@ const WarehouseScreen = ({onSuccessTaked}) => {
     }
   };
 
+  const onSelectSection = (sectionData) => {
+    showMessage({
+      message: currentSection === null ? 'Rəf seçildi' : 'Rəf dəyişdirildi',
+      type: 'info',
+    });
+    setCurrentSection(sectionData);
+  };
+
   const onSuccess = async (data) => {
     // successSound.play();
     setIsLoading(true);
@@ -74,7 +65,12 @@ const WarehouseScreen = ({onSuccessTaked}) => {
         response = await postSectionData(data);
         const {status, data: sectionData} = response.data;
         if (status === true) {
-          setCurrentSection(sectionData);
+          onSelectSection(sectionData);
+        } else {
+          showMessage({
+            message: 'Zəhmət olmasa düzgün rəf oxudun',
+            type: 'warning',
+          });
         }
       } else {
         const orderId = `${data.split('-')[0]}-346`;
@@ -134,10 +130,7 @@ const WarehouseScreen = ({onSuccessTaked}) => {
     </View>
   );
 
-  const BottomContent = null;
-
   const onScan = (data) => {
-    // alert(data);
     onSuccess(data);
   };
 

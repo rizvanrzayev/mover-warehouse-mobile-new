@@ -44,6 +44,15 @@ const ScannerStyles = StyleSheet.create({
     backgroundColor: 'white',
     zIndex: 99,
   },
+  infraredScannerTopContent: {
+    flex: 0.3,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  infraredScannerBottomContent: {
+    flex: 0.7,
+    alignItems: 'center',
+  },
 });
 
 export default ScannerStyles;
