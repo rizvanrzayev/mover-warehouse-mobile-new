@@ -136,7 +136,7 @@ const QueueDetailScreen = ({
     return (
       <ListItem
         disabled={took_at}
-        title={orderId}
+        title={title}
         description={
           date5 === '0000-00-00' ? '-' : moment(date5).format('DD MM YYYY')
         }
