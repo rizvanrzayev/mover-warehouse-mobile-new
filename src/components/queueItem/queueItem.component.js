@@ -51,17 +51,21 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
     const isPacker = type === 0 && from_type === 1; // Refle
     const isUser = type === 1 && from_type === 0; // Mushteri
     const isPreprareOrder = type === 0 && from_type === 0; // Paketle
+    const isPreprareOrder2 = type === 1 && from_type === 1; // Paketle
 
     const typeTitle =
       (isPacker && 'Rəflə') ||
       (isUser && 'Müştəri') ||
-      (isPreprareOrder && 'Paketlə');
+      (isPreprareOrder && 'Paketlə') ||
+      (isPreprareOrder2 && 'Paketlə');
     const title = is_active ? typeTitle : 'Gözləmədə';
 
     const typeStatus =
       (isPacker && 'warning') ||
       (isUser && 'success') ||
-      (isPreprareOrder && 'info');
+      (isPreprareOrder && 'info') ||
+      (isPreprareOrder2 && 'info');
+
     const status = is_active ? typeStatus : 'danger';
 
     return (
@@ -77,7 +81,7 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
       const response = await ApiClient.post(`${API_ROUTES.startQueue}/${id}`);
     } catch (e) {
     } finally {
-      navigation.navigate('QueueDetail', {item});
+      onPressItem(item);
       setIsStarting(false);
       fetchQueueList();
     }
@@ -89,9 +93,6 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
   const renderItemRight = () => {
     return (
       <View style={QueueItemStyles.rightContainer}>
-        <View style={QueueItemStyles.queueContainer}>
-          <Text style={QueueItemStyles.queueText}>{item.novbe_id}</Text>
-        </View>
         {is_active ? (
           <View style={QueueItemStyles.timerContainer}>
             <Text category="s2">{timer}</Text>
@@ -114,6 +115,9 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
             )}
           </View>
         )}
+        <View style={QueueItemStyles.queueContainer}>
+          <Text style={QueueItemStyles.queueText}>{item.novbe_id}</Text>
+        </View>
       </View>
     );
   };

@@ -15,7 +15,7 @@ const QueueItemStyles = StyleSheet.create({
     backgroundColor: '#5DEAA4',
     padding: 5,
     borderRadius: 5,
-    marginRight: 5,
+    marginLeft: 5,
   },
   queueText: {
     color: 'white',
