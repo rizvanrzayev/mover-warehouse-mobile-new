@@ -21,6 +21,7 @@ export const API_ROUTES = {
   customerGone: 'customer-gone',
   settings: 'settings',
   approveReceivePacket: 'approve-receive-packet',
+  me: 'me',
 };
 
 const notAuthRequiredUrls = ['login'];

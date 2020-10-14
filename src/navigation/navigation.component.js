@@ -15,6 +15,7 @@ import WarehouseScreen from 'screens/warehouse/warehouse.component';
 import ShelfPreparedOrdersScreen from 'screens/shelfPreparedOrders/shelfPreparedOrders.components';
 import ShelfOrdersScreen from 'screens/shelfOrders/shelfOrders.component';
 import AcceptOrderScreen from 'screens/acceptOrder/acceptOrder.component';
+import UserDetailScreen from 'screens/userDetail/userDetail.component';
 
 const {
   Navigator: DrawerNavigator,
@@ -47,17 +48,36 @@ const WarehouseStack = () => (
   </Navigator>
 );
 
+const UserDetailStack = () => (
+  <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
+    <Screen name="UserDetail" component={UserDetailScreen} />
+  </Navigator>
+);
+
 const HomeNavigator = () => (
   <DrawerNavigator
     backBehavior="none"
     headerMode="none"
     screenOptions={{animationEnabled: false}}>
-    <DrawerScreen name="Home" component={HomeStack} />
-    <DrawerScreen name="Settings" component={SettingsStack} />
+    <DrawerScreen
+      name="Home"
+      component={HomeStack}
+      options={{title: 'Növbələr'}}
+    />
+    <DrawerScreen
+      name="Settings"
+      component={SettingsStack}
+      options={{title: 'Ayarlar'}}
+    />
     <DrawerScreen
       name="Warehouse"
       component={WarehouseStack}
-      options={{unmountOnBlur: true}}
+      options={{unmountOnBlur: true, title: 'Bağlamaları rəflə'}}
+    />
+    <DrawerScreen
+      name="UserDetail"
+      component={UserDetailStack}
+      options={{title: 'İstifadəçi məlumatları'}}
     />
   </DrawerNavigator>
 );

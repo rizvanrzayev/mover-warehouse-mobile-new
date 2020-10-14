@@ -13,7 +13,13 @@ const MenuButton = () => {
     navigation.openDrawer();
   };
 
-  return <TopNavigationAction icon={MenuIcon} onPress={openDrawer} />;
+  return (
+    <TopNavigationAction
+      icon={MenuIcon}
+      onPress={openDrawer}
+      hitSlop={{bottom: 20, left: 20, right: 20, top: 20}}
+    />
+  );
 };
 
 export default MenuButton;

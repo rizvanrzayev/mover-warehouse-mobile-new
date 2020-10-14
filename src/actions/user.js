@@ -5,6 +5,20 @@ export const SIGN_IN = 'SIGN_IN';
 export const SIGN_IN_FAIL = 'SIGN_IN_FAIL';
 export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
 
+export const FETCH_USER = 'FETCH_USER';
+export const FETCH_USER_FAIL = 'FETCH_USER_FAIL';
+export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
+
+export const fetchUser = () => ({
+  type: FETCH_USER,
+  payload: {
+    request: {
+      method: 'GET',
+      url: API_ROUTES.me,
+    },
+  },
+});
+
 export const postSignIn = (data) => ({
   type: SIGN_IN,
   payload: {

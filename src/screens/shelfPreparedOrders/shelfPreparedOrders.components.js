@@ -62,7 +62,7 @@ const ShelfPreparedOrdersScreen = ({
     return (
       <View style={ShelfPreparedOrdersStyles.itemRightContainer}>
         <Text category="p2" style={ShelfPreparedOrdersStyles.itemRightWeight}>
-          {`${item.orders.length} bağ.`}
+          {`${item?.orders?.length} bağ.`}
         </Text>
         <View style={ShelfPreparedOrdersStyles.itemRightQueueContainer}>
           <Text category="h6">{sectionName}</Text>

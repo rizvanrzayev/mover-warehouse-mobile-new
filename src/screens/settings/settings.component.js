@@ -140,7 +140,7 @@ const SettingsScreen = ({navigation}) => {
   return (
     <SafeAreaView style={SettingsScreenStyles.container}>
       <TopNavigation
-        title="Settings"
+        title="Ayarlar"
         alignment="center"
         accessoryLeft={MenuButton}
         accessoryRight={UpdateAction}
