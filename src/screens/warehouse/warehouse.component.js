@@ -9,7 +9,7 @@ import MenuButton from 'components/menuButton/menuButton.component';
 import SignOutButton from 'components/signOutButton/signOutButton.component';
 import Scanner from 'components/scanner/scanner.component';
 
-const successSound = new Sound('section.mp3', Sound.MAIN_BUNDLE, (error) => {
+const errorSound = new Sound('unknown.mp3', Sound.MAIN_BUNDLE, (error) => {
   if (error) {
     console.log('failed to load the sound', error);
     return;
@@ -67,6 +67,7 @@ const WarehouseScreen = ({onSuccessTaked}) => {
         if (status === true) {
           onSelectSection(sectionData);
         } else {
+          errorSound.play();
           showMessage({
             message: 'Zəhmət olmasa düzgün rəf oxudun',
             type: 'warning',
@@ -80,10 +81,16 @@ const WarehouseScreen = ({onSuccessTaked}) => {
             message: response?.data?.message,
             type: 'danger',
           });
+          errorSound.play();
         } else {
+          const {name, surname} = response?.data?.user;
+          const {weight, shop, width, height, length} = response?.data?.order;
           showMessage({
-            message: 'Uğurla əlavə olundu',
+            titleStyle: {fontSize: 18},
+            message: `Uğurla əlavə olundu\n\n${name} ${surname}\n\nMağaza: ${shop}\n\nÇəki: ${weight} kq\n\nÖlçü: ${width}x${height}x${length} sm`,
             type: 'success',
+            duration: 3000,
+            textStyle: {fontSize: 18},
           });
         }
       }

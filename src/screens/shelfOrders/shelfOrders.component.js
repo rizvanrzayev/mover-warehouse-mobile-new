@@ -9,21 +9,19 @@ import SignOutButton from 'components/signOutButton/signOutButton.component';
 import Scanner from 'components/scanner/scanner.component';
 import BackButton from 'components/backButton/backButton.component';
 
-const ShelfOrders = ({route, navigation}) => {
-  const qrRef = React.useRef(null);
+const errorSound = new Sound('unknown.mp3', Sound.MAIN_BUNDLE, (error) => {
+  if (error) {
+    console.log('failed to load the sound', error);
+    return;
+  }
+});
 
+const ShelfOrders = ({route, navigation}) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [currentSection, setCurrentSection] = React.useState(null);
-  const [showCamera, setShowCamera] = React.useState(false);
 
   const onSuccessShelf = route?.params?.onSuccessShelf;
-  const item = route?.params?.item;
-
-  React.useLayoutEffect(() => {
-    setTimeout(() => {
-      setShowCamera(true);
-    }, 300);
-  }, []);
+  const item = route?.params?.item || {};
 
   const postSectionData = async (sectionName) => {
     const response = await ApiClient.post('select-shelf-total', {
@@ -51,15 +49,14 @@ const ShelfOrders = ({route, navigation}) => {
   };
 
   const onSelectSection = (sectionData) => {
+    setCurrentSection(sectionData);
     showMessage({
       message: currentSection === null ? 'Rəf seçildi' : 'Rəf dəyişdirildi',
       type: 'info',
     });
-    setCurrentSection(sectionData);
   };
 
   const onSuccess = async (data) => {
-    // successSound.play();
     setIsLoading(true);
     try {
       let response = null;
@@ -69,6 +66,7 @@ const ShelfOrders = ({route, navigation}) => {
         if (status === true) {
           onSelectSection(sectionData);
         } else {
+          errorSound.play();
           showMessage({
             message: 'Zəhmət olmasa düzgün rəf oxudun',
             type: 'warning',
@@ -78,8 +76,9 @@ const ShelfOrders = ({route, navigation}) => {
         const orderId = data.split('-')[0];
         response = await postBundleData(orderId);
         if (response?.data?.status === false) {
+          errorSound.play();
           showMessage({
-            message: 'Sehv',
+            message: response?.data?.message,
             type: 'danger',
           });
         } else {
@@ -88,7 +87,8 @@ const ShelfOrders = ({route, navigation}) => {
             navigation.pop();
           }
           showMessage({
-            message: 'Uğurla əlavə olundu',
+            duration: 3000,
+            message: `Uğurla əlavə olundu\n${item.customer_name}`,
             type: 'success',
           });
         }
@@ -147,7 +147,7 @@ const ShelfOrders = ({route, navigation}) => {
         title="Bağlamaları rəflə"
         alignment="center"
         accessoryLeft={BackButton}
-        accessoryRight={SignOutButton}
+        // accessoryRight={SignOutButton}
       />
       <Divider />
       <Scanner onScan={onScan} topContent={TopContent} />

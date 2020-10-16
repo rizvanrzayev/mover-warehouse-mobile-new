@@ -53,12 +53,16 @@ const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
   }, [queues]);
 
   const onPressItem = (item) => {
+    if (item.accepted_by_worker === 0) {
+      navigation.navigate('AcceptOrder', {item});
+      return;
+    }
+    if (item.from_type === 3) {
+      navigation.navigate('QueueDetail', {item});
+      return;
+    }
     if (item.from_type === 1 && item.type === 0) {
-      if (item.accepted_by_worker === 0) {
-        navigation.navigate('AcceptOrder', {item});
-      } else {
-        navigation.navigate('ShelfPreparedOrders', {item});
-      }
+      navigation.navigate('ShelfPreparedOrders', {item});
     } else {
       navigation.navigate('QueueDetail', {item});
     }

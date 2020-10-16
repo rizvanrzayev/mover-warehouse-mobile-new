@@ -12,14 +12,6 @@ import LottieView from 'lottie-react-native';
 import SelectScanner from 'components/selectScanner/selectScanner.component';
 import KeepAwake from 'react-native-keep-awake';
 import CameraNotAuthorized from 'components/cameraNotAuthorized/cameraNotAuthorized.component';
-import Sound from 'react-native-sound';
-
-const successSound = new Sound('section.mp3', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error);
-    return;
-  }
-});
 
 const Scanner = ({topContent, onScan}) => {
   const qrRef = React.useRef(null);
@@ -28,35 +20,25 @@ const Scanner = ({topContent, onScan}) => {
   const [showHelper, setShowHelper] = React.useState(false);
   const [flashOn, setFlashOn] = React.useState(false);
 
-  const isFocused = useIsFocused();
-
   React.useEffect(() => {
-    // changeKeepAwake(true);
-    // return () => changeKeepAwake(false);
-  }, []);
-
-  React.useEffect(() => {
-    if (isFocused) {
-      fetchCurrentScanner();
-    } else {
-      removeInfraredScannerListener();
-    }
-    return () => {
-      removeInfraredScannerListener();
-    };
-  }, [fetchCurrentScanner, isFocused, onScan, removeInfraredScannerListener]);
+    fetchCurrentScanner();
+    DeviceEventEmitter.removeAllListeners('Scan');
+    return () => removeInfraredScannerListener();
+  }, [fetchCurrentScanner, removeInfraredScannerListener]);
 
   const onScanCamera = (data) => {
-    successSound.play();
     onScan?.(data.data);
     setTimeout(() => {
       qrRef?.current?.reactivate?.();
     }, 2000);
   };
 
-  const onScanInfraredScanner = React.useCallback(({code}) => onScan?.(code), [
-    onScan,
-  ]);
+  const onScanInfraredScanner = React.useCallback(
+    ({code}) => {
+      onScan?.(code);
+    },
+    [onScan],
+  );
 
   const changeKeepAwake = (shouldBeAwake) => {
     if (shouldBeAwake) {
@@ -67,17 +49,11 @@ const Scanner = ({topContent, onScan}) => {
   };
 
   const removeInfraredScannerListener = useCallback(() => {
-    if (currentScanner !== null && currentScanner?.id === SCANNERS[1].id) {
-      if (Platform.OS === 'android') {
-        DeviceEventEmitter.removeAllListeners();
-      }
-    }
-  }, [currentScanner]);
+    DeviceEventEmitter.removeAllListeners('Scan');
+  }, []);
 
   const setupInfraredScanner = React.useCallback(() => {
-    if (Platform.OS === 'android') {
-      DeviceEventEmitter.addListener('Scan', onScanInfraredScanner);
-    }
+    DeviceEventEmitter.addListener('Scan', onScanInfraredScanner);
   }, [onScanInfraredScanner]);
 
   const fetchCurrentScanner = React.useCallback(async () => {
