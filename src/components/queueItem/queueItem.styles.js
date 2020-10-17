@@ -21,6 +21,10 @@ const QueueItemStyles = StyleSheet.create({
     color: 'white',
     fontWeight: '500',
   },
+  queueTitleContainer: {
+    width: 65,
+    alignItems: 'center',
+  },
   queueTitle: {
     fontSize: 10,
     fontWeight: '900',

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import {showMessage} from 'react-native-flash-message';
 import {getToken} from 'helpers/AsyncStorage';
+import Config from 'react-native-config';
 
-const BASE_URL = 'https://dev.mover.az/api/worker/';
+const {BASE_URL} = Config;
 
 export const ApiClient = axios.create({
   baseURL: BASE_URL,

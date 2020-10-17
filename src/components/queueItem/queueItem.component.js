@@ -20,8 +20,6 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
     from_type,
   } = item;
 
-  const navigation = useNavigation();
-
   React.useLayoutEffect(() => {
     calculateStartDate();
     const interval = setInterval(() => {
@@ -52,8 +50,10 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
     const isUser = type === 1 && from_type === 0; // Mushteri
     const isPreprareOrder = type === 0 && from_type === 0; // Paketle
     const isPreprareOrder2 = type === 1 && from_type === 1; // Paketle
+    const isCourier = from_type === 3; // Kuryer
 
     const typeTitle =
+      (isCourier && 'Kuriyer') ||
       (isPacker && 'Rəflə') ||
       (isUser && 'Müştəri') ||
       (isPreprareOrder && 'Paketlə') ||
@@ -69,9 +69,11 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
     const status = is_active ? typeStatus : 'danger';
 
     return (
-      <Text status={status} style={QueueItemStyles.queueTitle}>
-        {title}
-      </Text>
+      <View style={QueueItemStyles.queueTitleContainer}>
+        <Text status={status} style={QueueItemStyles.queueTitle}>
+          {title}
+        </Text>
+      </View>
     );
   };
 

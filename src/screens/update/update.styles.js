@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const UpdateScreenStyles = StyleSheet.create({
   container: {
@@ -6,8 +6,8 @@ const UpdateScreenStyles = StyleSheet.create({
     backgroundColor: 'white',
   },
   content: {
-    alignItems: 'center',
     flex: 1,
+    padding: 10,
   },
   countContainer: {
     width: 80,
@@ -16,8 +16,8 @@ const UpdateScreenStyles = StyleSheet.create({
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 20
-  }
+    marginVertical: 20,
+  },
 });
 
-export default UpdateScreenStyles
+export default UpdateScreenStyles;

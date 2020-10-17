@@ -8,22 +8,26 @@ import {
   Text,
   Spinner,
   Button,
+  Card,
 } from '@ui-kitten/components';
 import CodePush from 'react-native-code-push';
-import AnimatedNumbers from 'react-native-animated-numbers';
+// import AnimatedNumbers from 'react-native-animated-numbers';
+// import ProgressBar from 'react-native-animated-progress-bar';
 import UpdateScreenStyles from './update.styles';
+import Config from 'react-native-config';
 
 CodePush.allowRestart();
+
+const deploymentKey =
+  Platform.OS === 'ios'
+    ? Config.CODE_PUSH_KEY_IOS
+    : Config.CODE_PUSH_KEY_ANDROID;
 
 const UpdateScreen = ({navigation}) => {
   const [updateData, setUpdateData] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [isDownloading, setIsDownloading] = React.useState(false);
-  const [isInstalling, setIsInstalling] = React.useState(false);
-  const [animateToNumber, setAnimateToNumber] = React.useState(0);
-  const [text, setText] = React.useState('');
-
-  const downloadedPackage = React.useRef(null);
+  const [statusProgress, setStatusProgress] = React.useState('');
+  const [downloadProgress, setDownloadProgress] = React.useState(null);
 
   React.useEffect(() => {
     checkUpdate();
@@ -32,11 +36,7 @@ const UpdateScreen = ({navigation}) => {
   const checkUpdate = async () => {
     setIsLoading(true);
     try {
-      const newUpdateData = await CodePush.checkForUpdate(
-        Platform.OS === 'ios'
-          ? 'BDICIqYEsquLexDJspnZpZ0j0e_O_Cbr0vUHD'
-          : 'lxaj-AelDzx77gjsOly04YXqDjxSTmCqIUkAz',
-      );
+      const newUpdateData = await CodePush.checkForUpdate(deploymentKey);
       setUpdateData(newUpdateData);
     } catch (error) {
       console.log(error);
@@ -62,11 +62,7 @@ const UpdateScreen = ({navigation}) => {
   };
 
   const ReloadAction = () => (
-    <TopNavigationAction
-      hitSlop={{left: 10, right: 10, top: 10, bottom: 10}}
-      icon={ReloadIcon}
-      onPress={onPressCheckUpdate}
-    />
+    <TopNavigationAction icon={ReloadIcon} onPress={onPressCheckUpdate} />
   );
 
   const onPressDownload = async () => {
@@ -74,84 +70,122 @@ const UpdateScreen = ({navigation}) => {
     //   setAnimateToNumber(parseInt((receivedBytes / totalBytes) * 100)),
     // );
     // downloaded.install(CodePush.InstallMode.IMMEDIATE);
-    CodePush.sync({updateDialog: true}, (status) => {
-      switch (status) {
-        case CodePush.SyncStatus.CHECKING_FOR_UPDATE:
-          setText('Yoxlanılır');
-          break;
-        case CodePush.SyncStatus.DOWNLOADING_PACKAGE:
-          setText('Paket endirilir...');
-          break;
-        case CodePush.SyncStatus.INSTALLING_UPDATE:
-          setText('Paket yüklənir...');
-          break;
-        case CodePush.SyncStatus.UPDATE_INSTALLED:
-          setText('Paket yükləndi');
-          CodePush.restartApp();
-          break;
-        case CodePush.SyncStatus.UPDATE_IGNORED:
-          setText('Yeniləmə dayandırıldı');
-
-        default:
-          break;
-      }
-    })
+    CodePush.sync(
+      {
+        updateDialog: true,
+        deploymentKey,
+      },
+      (status) => {
+        switch (status) {
+          case CodePush.SyncStatus.UP_TO_DATE:
+            setStatusProgress('Ən son veriyadan istifadə edirsiniz');
+            break;
+          case CodePush.SyncStatus.CHECKING_FOR_UPDATE:
+            setStatusProgress('Yoxlanılır...');
+            break;
+          case CodePush.SyncStatus.DOWNLOADING_PACKAGE:
+            setStatusProgress('Paket endirilir...');
+            break;
+          case CodePush.SyncStatus.INSTALLING_UPDATE:
+            setStatusProgress('Paket yüklənir...');
+            break;
+          case CodePush.SyncStatus.UPDATE_INSTALLED:
+            setStatusProgress('Paket yükləndi');
+            CodePush.restartApp();
+            break;
+          case CodePush.SyncStatus.UPDATE_IGNORED:
+            setStatusProgress('Yeniləmə dayandırıldı');
+            break;
+          case CodePush.SyncStatus.SYNC_IN_PROGRESS:
+            setStatusProgress('Zəhmət olmasa gözləyin paket endirilir...');
+            break;
+          case CodePush.SyncStatus.UNKNOWN_ERROR:
+            setStatusProgress('Bilinməyən xəta!');
+            break;
+          default:
+            setStatusProgress('Bilinməyən xəta!');
+            console.log(status);
+            console.log(JSON.stringify(CodePush.SyncStatus));
+            break;
+        }
+      },
+      (progress) => {
+        const progressPercentage =
+          (progress.receivedBytes / progress.totalBytes) * 100;
+        setDownloadProgress(progressPercentage);
+      },
+    )
       .then((resp) => {
         // setText(resp)
       })
       .catch((error) => console.log(error));
   };
 
-  // const onPressInstall = async () => {
-  //   const installedPackage = await downloadedPackage.current.install(CodePush.InstallMode.IMMEDIATE);
-  //   console.log(installedPackage);
-  // }
+  const Header = (props) => (
+    <View {...props}>
+      <Text category="h6">Paket məlumatları</Text>
+    </View>
+  );
+
+  const Footer = (props) => (
+    <View {...props} style={[props.style, UpdateScreenStyles.footerContainer]}>
+      {downloadProgress !== null ? (
+        <Text
+          category="s1"
+          style={{alignSelf: 'center'}}>{`${downloadProgress}%`}</Text>
+      ) : (
+        <Button
+          style={UpdateScreenStyles.footerControl}
+          status="success"
+          onPress={onPressDownload}>
+          ENDİR
+        </Button>
+      )}
+    </View>
+  );
+
+  const renderUpdateData = () => {
+    const {label, appVersion, packageSize} = updateData;
+    const packageSizeMB = (packageSize / 1048576).toFixed(2);
+    return (
+      <View style={{marginBottom: 20}}>
+        <Text category="s2">
+          Paket versiyası: <Text category="s1">{label}</Text>
+        </Text>
+        <Text category="s2">
+          Tətbiq versiyası: <Text category="s1">{appVersion}</Text>
+        </Text>
+        <Text category="s2">
+          Paket ölçüsü: <Text category="s1">{packageSizeMB} MB</Text>
+        </Text>
+      </View>
+    );
+  };
+
+  const renderNoUpdate = () => <Text>Yeni versiya mövcud deyil</Text>;
 
   const renderContent = () => {
-    const isDownloaded = animateToNumber === 100;
-    if (isLoading) {
-      return <Spinner animating />;
-    } else if (updateData === null) {
-      return (
-        <View>
-          <Text>Yeni versiya mövcud deyil</Text>
-        </View>
-      );
-    } else {
-      const {
-        label,
-        appVersion,
-        isMandatory,
-        packageSize,
-        downloadUrl,
-        isPending,
-        failedInstall,
-      } = updateData;
-      return (
-        <>
-          <Text>{label}</Text>
-          <Text category="h4" style={{marginVertical: 20}}>
-            {text}
-          </Text>
-          {/* <View style={UpdateScreenStyles.countContainer}>
-            {!isDownloaded ? (
-              <AnimatedNumbers
-                // includeComma
-                animateToNumber={animateToNumber}
-                fontStyle={{fontSize: 30, fontWeight: 'bold', color: 'gray'}}
-              />
-            ) : (
-              <Icon
-                name="checkmark-outline"
-                fill="#8F9BB3"
-                style={{width: 32, height: 32}}
-              />
+    return (
+      <Card
+        style={UpdateScreenStyles.card}
+        header={Header}
+        footer={(props) => updateData !== null && !isLoading && Footer(props)}>
+        {isLoading ? (
+          <Spinner animating />
+        ) : (
+          <>
+            {updateData !== null ? renderUpdateData() : renderNoUpdate()}
+            {statusProgress !== '' && (
+              <View>
+                <Text>Status:</Text>
+                <Text category="h4">{statusProgress}</Text>
+              </View>
             )}
-          </View> */}
-          <Button onPress={onPressDownload}>Download and Install</Button>
-        </>
-      );
-    }
+          </>
+        )}
+        {/* <Text>{JSON.stringify(updateData)}</Text> */}
+      </Card>
+    );
   };
 
   return (

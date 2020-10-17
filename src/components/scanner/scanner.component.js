@@ -10,7 +10,7 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import ScannerStyles from './scanner.styles';
 import LottieView from 'lottie-react-native';
 import SelectScanner from 'components/selectScanner/selectScanner.component';
-import KeepAwake from 'react-native-keep-awake';
+// import KeepAwake from 'react-native-keep-awake';
 import CameraNotAuthorized from 'components/cameraNotAuthorized/cameraNotAuthorized.component';
 
 const Scanner = ({topContent, onScan}) => {
@@ -49,13 +49,13 @@ const Scanner = ({topContent, onScan}) => {
     onScan,
   ]);
 
-  const changeKeepAwake = (shouldBeAwake) => {
-    if (shouldBeAwake) {
-      KeepAwake.activate();
-    } else {
-      KeepAwake.deactivate();
-    }
-  };
+  // const changeKeepAwake = (shouldBeAwake) => {
+  //   if (shouldBeAwake) {
+  //     KeepAwake.activate();
+  //   } else {
+  //     KeepAwake.deactivate();
+  //   }
+  // };
 
   const removeInfraredScannerListener = useCallback(() => {
     if (currentScanner !== null && currentScanner?.id === SCANNERS[1].id) {

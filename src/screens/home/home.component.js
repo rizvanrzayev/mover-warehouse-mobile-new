@@ -53,6 +53,9 @@ const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
   }, [queues]);
 
   const onPressItem = (item) => {
+    if (item.from_type) {
+      navigation.navigate('QueueDetail', {item});
+    }
     if (item.from_type === 1 && item.type === 0) {
       if (item.accepted_by_worker === 0) {
         navigation.navigate('AcceptOrder', {item});

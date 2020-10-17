@@ -20,7 +20,7 @@ platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
     increment_build_number(xcodeproj: "MoverWarehouse.xcodeproj")
-    sh("cd .. && cd .. && react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios")
+    # sh("cd .. && cd .. && react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios")
     build_app(workspace: "MoverWarehouse.xcworkspace", scheme: "MoverWarehouse")
     upload_to_testflight
   end
