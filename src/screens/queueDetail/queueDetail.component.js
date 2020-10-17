@@ -70,10 +70,8 @@ const QueueDetailScreen = ({
     } else {
       hasError = true;
     }
-    if (!hasError) {
-      setCanGive(true);
-    }
-  }, [queue]);
+    setCanGive(!hasError);
+  }, [prepared, preparedParcel, queue]);
 
   const [canGive, setCanGive] = React.useState(false);
   const [showGiveAlert, setShowGiveAlert] = React.useState(false);
@@ -211,15 +209,20 @@ const QueueDetailScreen = ({
 
   const alertLoading = isLoadingOrder || postingCustomerGone;
 
-  const isPacker = type === 1; // Paketchi
-  const isUser = type === 0;
-  //  && from_type === 0; // Mushteri
-  // const isPreprareOrder = type === 0
-  //  && from_type === 1; // Baglama topla
+  // const isPacker = type === 1; // Paketchi
+  // const isUser = type === 0;
 
-  const tookOrderTitle = isUser && 'Müştəriyə təhvil ver';
+  const isPacker = type === 0 && from_type === 1; // Refle
+  const isUser = type === 1 && from_type === 0; // Mushteri
+  const isPreprareOrder =
+    (type === 0 && from_type === 0) || (type === 3 && from_type === 3); // Paketle
+  const isPreprareOrder2 = type === 1 && from_type === 1; // Paketle
+  const isCourier = type === 0 && from_type === 3; // Kuriyer
 
-  const tookOrderTitle2 = isUser && 'Paketçiyə təhvil ver';
+  const tookOrderTitle =
+    ((isPreprareOrder2 || isPreprareOrder) && 'Paketçiyə təhvil ver') ||
+    ((isPacker || isUser) && 'Müştəriyə təhvil ver') ||
+    (isCourier && 'Kuriyerə təhvil ver');
 
   const renderCustomAlertContent = useCallback(
     <View style={QueueDetailScreenStyles.alertContainer}>
@@ -243,13 +246,13 @@ const QueueDetailScreen = ({
         onPress={onPressTookOrder}>
         {tookOrderTitle}
       </Button>
-      <Button
+      {/* <Button
         style={{marginTop: 10}}
         status="success"
         disabled={alertLoading}
         onPress={onPressTookOrder}>
         {tookOrderTitle2}
-      </Button>
+      </Button> */}
     </View>,
     [alertLoading],
   );

@@ -48,23 +48,26 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
   const renderItemLeft = () => {
     const isPacker = type === 0 && from_type === 1; // Refle
     const isUser = type === 1 && from_type === 0; // Mushteri
-    const isPreprareOrder = type === 0 && from_type === 0; // Paketle
+    const isPreprareOrder =
+      (type === 0 && from_type === 0) || (type === 3 && from_type === 3); // Paketle
     const isPreprareOrder2 = type === 1 && from_type === 1; // Paketle
-    const isCourier = from_type === 3; // Kuryer
+    const isCourier = type === 0 && from_type === 3; // Kuriyer
 
     const typeTitle =
       (isCourier && 'Kuriyer') ||
       (isPacker && 'Rəflə') ||
       (isUser && 'Müştəri') ||
       (isPreprareOrder && 'Paketlə') ||
-      (isPreprareOrder2 && 'Paketlə');
+      (isPreprareOrder2 && 'Paketlə') ||
+      (isCourier && 'Kuriyer');
     const title = is_active ? typeTitle : 'Gözləmədə';
 
     const typeStatus =
       (isPacker && 'warning') ||
       (isUser && 'success') ||
       (isPreprareOrder && 'info') ||
-      (isPreprareOrder2 && 'info');
+      (isPreprareOrder2 && 'info') ||
+      (isCourier && 'info');
 
     const status = is_active ? typeStatus : 'danger';
 

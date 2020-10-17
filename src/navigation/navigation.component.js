@@ -2,7 +2,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import HomeScreen from '../screens/home/home.component';
+import HomeScreen from 'screens/home/home.component';
 import SignInScreen from 'screens/singIn/signIn.component';
 import QRScanScreen from 'screens/qrScan/qrScan.component';
 import QueueDetailScreen from 'screens/queueDetail/queueDetail.component';
@@ -16,6 +16,8 @@ import ShelfPreparedOrdersScreen from 'screens/shelfPreparedOrders/shelfPrepared
 import ShelfOrdersScreen from 'screens/shelfOrders/shelfOrders.component';
 import AcceptOrderScreen from 'screens/acceptOrder/acceptOrder.component';
 import UserDetailScreen from 'screens/userDetail/userDetail.component';
+import Drawer from 'react-native-drawer';
+import DrawerContent from 'components/drawerContent/drawerContent.component';
 
 const {
   Navigator: DrawerNavigator,
@@ -54,33 +56,55 @@ const UserDetailStack = () => (
   </Navigator>
 );
 
-const HomeNavigator = () => (
-  <DrawerNavigator
-    backBehavior="none"
-    headerMode="none"
-    screenOptions={{animationEnabled: false}}>
-    <DrawerScreen
-      name="Home"
-      component={HomeStack}
-      options={{title: 'Növbələr'}}
-    />
-    <DrawerScreen
-      name="Settings"
-      component={SettingsStack}
-      options={{title: 'Ayarlar'}}
-    />
-    <DrawerScreen
-      name="Warehouse"
-      component={WarehouseStack}
-      options={{unmountOnBlur: true, title: 'Bağlamaları rəflə'}}
-    />
-    <DrawerScreen
-      name="UserDetail"
-      component={UserDetailStack}
-      options={{title: 'İstifadəçi məlumatları'}}
-    />
-  </DrawerNavigator>
-);
+export const drawerRef = React.createRef();
+
+const HomeNavigator = () => {
+  const onClose = () => {
+    drawerRef.current.close();
+  };
+
+  return (
+    <Drawer
+      ref={drawerRef}
+      type="static"
+      content={<DrawerContent onClose={onClose} />}
+      openDrawerOffset={100}
+      // styles={drawerStyles}
+      // tweenHandler={Drawer.tweenPresets.parallax}
+    >
+      {React.useMemo(
+        () => (
+          <Navigator
+            backBehavior="none"
+            headerMode="none"
+            screenOptions={{animationEnabled: false}}>
+            <Screen
+              name="Home"
+              component={HomeStack}
+              options={{title: 'Növbələr'}}
+            />
+            <Screen
+              name="Settings"
+              component={SettingsStack}
+              options={{title: 'Ayarlar'}}
+            />
+            <Screen
+              name="Warehouse"
+              component={WarehouseStack}
+              options={{unmountOnBlur: true, title: 'Bağlamaları rəflə'}}
+            />
+            <Screen
+              name="UserDetail"
+              component={UserDetailStack}
+              options={{title: 'İstifadəçi məlumatları'}}
+            />
+          </Navigator>
+        ),
+        [],
+      )}
+    </Drawer>
+  );
+};
 
 const SingInNavigator = () => (
   <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
