@@ -8,7 +8,7 @@ const ScannerStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
   },
   infraredScannerTitle: {
     textAlign: 'center',
@@ -48,6 +48,7 @@ const ScannerStyles = StyleSheet.create({
     flex: 0.3,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
   },
   infraredScannerBottomContent: {
     flex: 0.7,

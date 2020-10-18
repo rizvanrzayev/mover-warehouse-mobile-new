@@ -1,10 +1,9 @@
 // /* eslint-disable react-hooks/exhaustive-deps */
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import React from 'react';
 import {Button, Card, Icon, Modal, Text} from '@ui-kitten/components';
 import {getCurrentScanner} from 'helpers/AsyncStorage';
 import {SCANNERS} from 'helpers/scanner';
-import React, {useCallback} from 'react';
-import {Alert, DeviceEventEmitter, Linking, Platform, View} from 'react-native';
+import {Alert, Linking, Platform, View} from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import ScannerStyles from './scanner.styles';
@@ -13,6 +12,14 @@ import SelectScanner from 'components/selectScanner/selectScanner.component';
 import KeepAwake from 'react-native-keep-awake';
 import CameraNotAuthorized from 'components/cameraNotAuthorized/cameraNotAuthorized.component';
 import {useDeviceEventEmitter} from '../../hooks/useDeviceEventEmitter';
+import Sound from 'react-native-sound';
+
+const successSound = new Sound('section.mp3', Sound.MAIN_BUNDLE, (error) => {
+  if (error) {
+    console.log('failed to load the sound', error);
+    return;
+  }
+});
 
 const Scanner = ({topContent, onScan}) => {
   const qrRef = React.useRef(null);
@@ -38,8 +45,8 @@ const Scanner = ({topContent, onScan}) => {
 
   const onScanInfraredScanner = React.useCallback(
     ({code}) => {
+      successSound.play();
       onScan?.(code);
-      console.log(`code ${new Date().toISOString()}: `, code);
     },
     [onScan],
   );

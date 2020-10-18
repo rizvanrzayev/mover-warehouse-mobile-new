@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.os.Bundle;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
@@ -22,7 +23,16 @@ public class ScanBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String code = "";
-        if (intent.getAction() == "com.sunmi.scanner.ACTION_DATA_CODE_RECEIVED") {
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            for (String key : bundle.keySet()) {
+                Log.e("test: ", key + " : " + (bundle.get(key) != null ? bundle.get(key) : "NULL"));
+            }
+        }
+
+        if (intent.getAction() == "android.intent.ACTION_DECODE_DATA") {
+            code = intent.getStringExtra("barcode_string");
+        } else if (intent.getAction() == "com.sunmi.scanner.ACTION_DATA_CODE_RECEIVED") {
             code = intent.getStringExtra("data");
         } else {
             code = intent.getExtras().getString("code");

@@ -8,6 +8,7 @@ import {showMessage} from 'react-native-flash-message';
 import SignOutButton from 'components/signOutButton/signOutButton.component';
 import Scanner from 'components/scanner/scanner.component';
 import BackButton from 'components/backButton/backButton.component';
+import ShelfTopContent from 'components/shelfTopContent/shelfTopContent.component';
 
 const errorSound = new Sound('unknown.mp3', Sound.MAIN_BUNDLE, (error) => {
   if (error) {
@@ -88,7 +89,7 @@ const ShelfOrders = ({route, navigation}) => {
           }
           showMessage({
             duration: 3000,
-            message: `Uğurla əlavə olundu\n${item.customer_name}`,
+            message: `Uğurla əlavə olundu\n---------------\n${item.customer_name}`,
             type: 'success',
           });
         }
@@ -112,29 +113,6 @@ const ShelfOrders = ({route, navigation}) => {
     ? 'Rəf yoxlanılır...'
     : 'Bağlama rəfə əlavə olunur...';
 
-  const TopContent = (
-    <View style={WarehouseScreenStyles.topContentContent}>
-      {hasCurrentSection && (
-        <View style={WarehouseScreenStyles.topContentSectionContainer}>
-          <Text category="h6">Seçilmiş rəf: {currentSection?.name}</Text>
-          <Text category="p2">
-            Əlavə olunacağ bağlamalar bu rəfə yerləşdiriləcək.
-          </Text>
-        </View>
-      )}
-      {isLoading ? (
-        <View style={WarehouseScreenStyles.topContentContainer}>
-          <Spinner animating />
-          <Text style={{marginTop: 10}} category="s1">
-            {topContentLoadingText}
-          </Text>
-        </View>
-      ) : (
-        <Text category="h6">{topContentTitle}</Text>
-      )}
-    </View>
-  );
-
   const BottomContent = null;
 
   const onScan = (data) => {
@@ -150,7 +128,18 @@ const ShelfOrders = ({route, navigation}) => {
         // accessoryRight={SignOutButton}
       />
       <Divider />
-      <Scanner onScan={onScan} topContent={TopContent} />
+      <Scanner
+        onScan={onScan}
+        topContent={
+          <ShelfTopContent
+            isLoading={isLoading}
+            hasCurrentSection={hasCurrentSection}
+            currentSection={currentSection}
+            topContentLoadingText={topContentLoadingText}
+            topContentTitle={topContentTitle}
+          />
+        }
+      />
     </SafeAreaView>
   );
 };

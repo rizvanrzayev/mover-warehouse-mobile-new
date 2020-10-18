@@ -184,6 +184,10 @@ const QueueDetailScreen = ({
         data,
         id,
         (message) => {
+          showMessage({
+            message: 'Uğurlu əməliyyat',
+            type: 'success',
+          });
           setTimeout(() => {
             fetchQueueList();
           }, 300);

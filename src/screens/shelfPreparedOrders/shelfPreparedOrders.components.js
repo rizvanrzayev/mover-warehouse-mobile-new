@@ -16,6 +16,7 @@ import {connect} from 'react-redux';
 import moment from 'moment';
 import ShelfPreparedOrdersStyles from './shelfPreparedOrders.styles';
 import {ApiClient} from 'config/Api';
+import {showMessage} from 'react-native-flash-message';
 
 const ShelfPreparedOrdersScreen = ({
   navigation,
@@ -122,7 +123,15 @@ const ShelfPreparedOrdersScreen = ({
       if (success === true) {
         fetchQueueList();
         navigation.pop();
+        showMessage({
+          message: 'Uğurlu əməliyyat',
+          type: 'success',
+        });
       } else {
+        showMessage({
+          message: 'Səhv baş verdi!',
+          type: 'danger',
+        });
         // error
       }
     } catch (e) {

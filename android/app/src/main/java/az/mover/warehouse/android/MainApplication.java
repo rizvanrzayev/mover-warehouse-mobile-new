@@ -70,6 +70,7 @@ public class MainApplication extends Application implements ReactApplication {
                     IntentFilter intentFilter = new IntentFilter();
                     intentFilter.addAction("com.zkc.scancode");
                     intentFilter.addAction("com.sunmi.scanner.ACTION_DATA_CODE_RECEIVED");
+                    intentFilter.addAction("android.intent.ACTION_DECODE_DATA");
                     registerReceiver(scanBroadcastReceiver, intentFilter);
                 }
             });

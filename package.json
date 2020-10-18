@@ -11,7 +11,7 @@
     "lint": "eslint . --ext .js,.jsx",
     "pod-install": "npx pod-install ios",
     "android-release": "cd android && ENVFILE=.env.production ./gradlew assembleRelease",
-    "code-push-ios": "ENVFILE=.env.production appcenter codepush release-react -a moverarge-gmail.com/MOVER_WAREHOUSE-iOS -d Production",
+    "code-push-ios": "appcenter codepush release-react -a moverarge-gmail.com/MOVER_WAREHOUSE-iOS -d Production",
     "code-push-android": "appcenter codepush release-react -a moverarge-gmail.com/MOVER_WAREHOUSE-Android -d Production"
   },
   "dependencies": {

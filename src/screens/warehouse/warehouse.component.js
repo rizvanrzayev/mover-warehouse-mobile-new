@@ -8,6 +8,7 @@ import {showMessage} from 'react-native-flash-message';
 import MenuButton from 'components/menuButton/menuButton.component';
 import SignOutButton from 'components/signOutButton/signOutButton.component';
 import Scanner from 'components/scanner/scanner.component';
+import ShelfTopContent from 'components/shelfTopContent/shelfTopContent.component';
 
 const errorSound = new Sound('unknown.mp3', Sound.MAIN_BUNDLE, (error) => {
   if (error) {
@@ -83,24 +84,25 @@ const WarehouseScreen = ({onSuccessTaked}) => {
           });
           errorSound.play();
         } else {
+          // alert(JSON.stringify(response?.data));
           if (!response?.data?.user || !response?.data?.order) {
             showMessage({
-              titleStyle: {fontSize: 18},
+              titleStyle: {fontSize: 18, fontWeight: 'bold'},
               message: 'Uğurla əlavə olundu',
               type: 'success',
               duration: 3000,
-              textStyle: {fontSize: 18},
+              // textStyle: {fontSize: 18},
             });
             return;
           }
           const {name, surname} = response?.data?.user;
           const {weight, shop, width, height, length} = response?.data?.order;
           showMessage({
-            titleStyle: {fontSize: 18},
-            message: `Uğurla əlavə olundu\n\n${name} ${surname}\n\nMağaza: ${shop}\n\nÇəki: ${weight} kq\n\nÖlçü: ${width}x${height}x${length} sm`,
+            titleStyle: {fontSize: 18, fontWeight: 'bold'},
+            message: `Uğurla əlavə olundu\n---------------\n${name} ${surname}\n\nMağaza: ${shop}\n\nÇəki: ${weight} kq\n\nÖlçü: ${width}x${height}x${length} sm`,
             type: 'success',
-            duration: 3000,
-            textStyle: {fontSize: 18},
+            duration: 6000,
+            textStyle: {fontSize: 18, fontWeight: 'bold'},
           });
         }
       }
@@ -124,29 +126,6 @@ const WarehouseScreen = ({onSuccessTaked}) => {
     ? 'Rəf yoxlanılır...'
     : 'Bağlama rəfə əlavə olunur...';
 
-  const TopContent = (
-    <View style={WarehouseScreenStyles.topContentContent}>
-      {hasCurrentSection && (
-        <View style={WarehouseScreenStyles.topContentSectionContainer}>
-          <Text category="h6">Seçilmiş rəf: {currentSection?.name}</Text>
-          <Text category="p2">
-            Əlavə olunacağ bağlamalar bu rəfə yerləşdiriləcək.
-          </Text>
-        </View>
-      )}
-      {isLoading ? (
-        <View style={WarehouseScreenStyles.topContentContainer}>
-          <Spinner animating />
-          <Text style={{marginTop: 10}} category="s1">
-            {topContentLoadingText}
-          </Text>
-        </View>
-      ) : (
-        <Text category="h6">{topContentTitle}</Text>
-      )}
-    </View>
-  );
-
   const onScan = (data) => {
     onSuccess(data);
   };
@@ -160,7 +139,18 @@ const WarehouseScreen = ({onSuccessTaked}) => {
         accessoryRight={SignOutButton}
       />
       <Divider />
-      <Scanner onScan={onScan} topContent={TopContent} />
+      <Scanner
+        onScan={onScan}
+        topContent={
+          <ShelfTopContent
+            isLoading={isLoading}
+            hasCurrentSection={hasCurrentSection}
+            currentSection={currentSection}
+            topContentLoadingText={topContentLoadingText}
+            topContentTitle={topContentTitle}
+          />
+        }
+      />
     </SafeAreaView>
   );
 };
