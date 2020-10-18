@@ -28,6 +28,7 @@ export const API_ROUTES = {
 const notAuthRequiredUrls = ['login'];
 
 ApiClient.interceptors.request.use(async (config) => {
+  console.log('request: ', config);
   if (!notAuthRequiredUrls.includes(config.url)) {
     const token = await getToken();
     config.headers.Authorization = `Bearer ${token}`;

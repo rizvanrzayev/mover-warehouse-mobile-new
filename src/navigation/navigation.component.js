@@ -18,6 +18,7 @@ import AcceptOrderScreen from 'screens/acceptOrder/acceptOrder.component';
 import UserDetailScreen from 'screens/userDetail/userDetail.component';
 import Drawer from 'react-native-drawer';
 import DrawerContent from 'components/drawerContent/drawerContent.component';
+import {StatusBar} from 'react-native';
 
 const {
   Navigator: DrawerNavigator,
@@ -59,50 +60,54 @@ const UserDetailStack = () => (
 export const drawerRef = React.createRef();
 
 const HomeNavigator = () => {
-  const onClose = () => {
-    drawerRef.current.close();
-  };
+  // const onClose = () => {
+  //   drawerRef.current.close();
+  // };
 
   return (
-    <Drawer
-      ref={drawerRef}
-      type="static"
-      content={<DrawerContent onClose={onClose} />}
-      openDrawerOffset={100}
-      // styles={drawerStyles}
-      // tweenHandler={Drawer.tweenPresets.parallax}
-    >
-      {React.useMemo(
-        () => (
-          <Navigator
-            backBehavior="none"
-            headerMode="none"
-            screenOptions={{animationEnabled: false}}>
-            <Screen
-              name="Home"
-              component={HomeStack}
-              options={{title: 'Növbələr'}}
-            />
-            <Screen
-              name="Settings"
-              component={SettingsStack}
-              options={{title: 'Ayarlar'}}
-            />
-            <Screen
-              name="Warehouse"
-              component={WarehouseStack}
-              options={{unmountOnBlur: true, title: 'Bağlamaları rəflə'}}
-            />
-            <Screen
-              name="UserDetail"
-              component={UserDetailStack}
-              options={{title: 'İstifadəçi məlumatları'}}
-            />
-          </Navigator>
-        ),
-        [],
-      )}
-    </Drawer>
+    // <Drawer
+    //   ref={drawerRef}
+    //   type="overlay"
+    //   content={<DrawerContent onClose={onClose} />}
+    //   tapToClose={true}
+    //   openDrawerOffset={0.2} // 20% gap on the right side of drawer
+    //   panCloseMask={0.2}
+    //   closedDrawerOffset={-3}
+    //   // styles={drawerStyles}
+    //   // tweenHandler={Drawer.tweenPresets.parallax}
+    // >
+    //   {React.useMemo(
+    //     () => (
+    <DrawerNavigator
+      backBehavior="none"
+      headerMode="none"
+      screenOptions={{animationEnabled: false}}
+      drawerContent={(props) => <DrawerContent {...props} />}>
+      <DrawerScreen
+        name="Home"
+        component={HomeStack}
+        options={{title: 'Növbələr'}}
+      />
+      <DrawerScreen
+        name="Settings"
+        component={SettingsStack}
+        options={{title: 'Ayarlar'}}
+      />
+      <DrawerScreen
+        name="Warehouse"
+        component={WarehouseStack}
+        options={{unmountOnBlur: true, title: 'Bağlamaları rəflə'}}
+      />
+      <DrawerScreen
+        name="UserDetail"
+        component={UserDetailStack}
+        options={{title: 'İstifadəçi məlumatları'}}
+      />
+    </DrawerNavigator>
+    //     ),
+    //     [],
+    //   )}
+    // </Drawer>
   );
 };
 

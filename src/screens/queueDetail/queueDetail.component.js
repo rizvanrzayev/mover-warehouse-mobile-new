@@ -108,7 +108,9 @@ const QueueDetailScreen = ({
     return (
       <View style={QueueDetailScreenStyles.itemRightContainer}>
         <Text category="p2" style={QueueDetailScreenStyles.itemRightWeight}>
-          {Number(weight).toFixed(2)} kq
+          {prepared
+            ? `${item?.orders?.length} bağ.`
+            : `${Number(weight).toFixed(2)} kq`}
         </Text>
         <View style={QueueDetailScreenStyles.itemRightQueueContainer}>
           <Text category="h6">{sectionName}</Text>
@@ -180,6 +182,7 @@ const QueueDetailScreen = ({
       setShowGiveAlert(true);
       giveOrderAction(
         data,
+        id,
         (message) => {
           setTimeout(() => {
             fetchQueueList();
@@ -198,6 +201,13 @@ const QueueDetailScreen = ({
     }, 500);
   };
 
+  const isPacker = type === 0 && from_type === 1; // Refle
+  const isUser = type === 1 && from_type === 0; // Mushteri
+  const isPreprareOrder =
+    (type === 0 && from_type === 0) || (type === 3 && from_type === 3); // Paketle
+  const isPreprareOrder2 = type === 1 && from_type === 1; // Paketle
+  const isCourier = type === 0 && from_type === 3; // Kuriyer
+
   const onPressTookOrder = () => {
     requestAnimationFrame(() => {
       setShowGiveAlert(false);
@@ -208,16 +218,6 @@ const QueueDetailScreen = ({
   };
 
   const alertLoading = isLoadingOrder || postingCustomerGone;
-
-  // const isPacker = type === 1; // Paketchi
-  // const isUser = type === 0;
-
-  const isPacker = type === 0 && from_type === 1; // Refle
-  const isUser = type === 1 && from_type === 0; // Mushteri
-  const isPreprareOrder =
-    (type === 0 && from_type === 0) || (type === 3 && from_type === 3); // Paketle
-  const isPreprareOrder2 = type === 1 && from_type === 1; // Paketle
-  const isCourier = type === 0 && from_type === 3; // Kuriyer
 
   const tookOrderTitle =
     ((isPreprareOrder2 || isPreprareOrder) && 'Paketçiyə təhvil ver') ||
@@ -232,7 +232,7 @@ const QueueDetailScreen = ({
           <Spinner animating size="medium" />
         </View>
       )}
-      {queue.type !== 2 && (
+      {type === 0 && from_type === 0 && (
         <Button
           disabled={alertLoading}
           onPress={onPressCustomerGone}
@@ -246,13 +246,6 @@ const QueueDetailScreen = ({
         onPress={onPressTookOrder}>
         {tookOrderTitle}
       </Button>
-      {/* <Button
-        style={{marginTop: 10}}
-        status="success"
-        disabled={alertLoading}
-        onPress={onPressTookOrder}>
-        {tookOrderTitle2}
-      </Button> */}
     </View>,
     [alertLoading],
   );
@@ -260,14 +253,11 @@ const QueueDetailScreen = ({
   return (
     <SafeAreaView style={QueueDetailScreenStyles.container}>
       <TopNavigation
-        title={`Növbə - ${novbe_id}`}
+        title={`${tookOrderTitle} - ${novbe_id}`}
         alignment="center"
         accessoryLeft={BackButton}
       />
       <Divider />
-      {/* <Text category="h5" style={{alignSelf: 'center'}}>
-        {novbe_id}
-      </Text> */}
       <Text category="h5" style={{alignSelf: 'center', marginVertical: 10}}>
         {`${customer_name} - ${customer_id || 'ID'}`}
       </Text>

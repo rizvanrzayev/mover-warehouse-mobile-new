@@ -17,13 +17,22 @@ const AcceptOrderScreen = ({
   navigation,
 }) => {
   const item = route?.params?.item;
+
+  const {type, from_type} = item;
+
+  const isUser = type === 1 && from_type === 0; // Mushteri
+
   const onScan = async (data) => {
     acceptOrderAction(
       data,
       (message) => {
-        navigation.dispatch(
-          StackActions.replace('ShelfPreparedOrders', {item}),
-        );
+        if (isUser) {
+          navigation.dispatch(StackActions.replace('QueueDetail', {item}));
+        } else {
+          navigation.dispatch(
+            StackActions.replace('ShelfPreparedOrders', {item}),
+          );
+        }
         showMessage({
           message: JSON.stringify(message),
           type: 'success',

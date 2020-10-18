@@ -1,7 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import {Icon, TopNavigationAction} from '@ui-kitten/components';
 import React from 'react';
-import {drawerRef} from 'navigation/navigation.component';
 
 const MenuButton = () => {
   const navigation = useNavigation();
@@ -10,9 +9,10 @@ const MenuButton = () => {
     return <Icon name="menu-2-outline" {...props} />;
   };
 
-  const openDrawer = () => {
-    // navigation.openDrawer();
-    drawerRef.current.open();
+  const openDrawer = ({nativeEvent}) => {
+    if (Object.keys(nativeEvent).length > 0) {
+      navigation.openDrawer();
+    }
   };
 
   return (

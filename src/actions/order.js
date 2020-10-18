@@ -8,22 +8,26 @@ export const TOOK_ORDER = 'TOOK_ORDER';
 export const TOOK_ORDER_FAIL = 'TOOK_ORDER_FAIL';
 export const TOOK_ORDER_SUCCESS = 'TOOK_ORDER_SUCCESS';
 
-export const giveOrder = (orderId) => ({
+export const giveOrder = (orderId, queueId) => ({
   type: GIVE_ORDER,
   payload: {
     request: {
       method: 'POST',
       url: `${API_ROUTES.give}/${orderId}`,
+      data: {
+        queue_id: queueId,
+      },
     },
   },
 });
 
 export const giveOrderAction = (
   orderId,
+  queueId,
   onSuccess = () => {},
   onError = () => {},
 ) => (dispatch) =>
-  dispatch(giveOrder(orderId))
+  dispatch(giveOrder(orderId, queueId))
     .then(
       (action) => {
         const {success, message} = action?.payload?.data;

@@ -30,7 +30,7 @@ import {Provider as StoreProvider} from 'react-redux';
 import AuthContext from 'contexts/AuthContext';
 import {getToken, setToken, removeToken} from 'helpers/AsyncStorage';
 import FlashMessage from 'react-native-flash-message';
-import {View} from 'react-native';
+import {StatusBar, View} from 'react-native';
 
 if (__DEV__) {
   import('config/ReactotronConfig').then(() =>
@@ -112,6 +112,7 @@ const App = () => {
   return (
     <StoreProvider store={store}>
       <View style={{flex: 1}}>
+        <StatusBar barStyle="dark-content" backgroundColor="white" />
         <IconRegistry icons={EvaIconsPack} />
         <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
           <AuthContext.Provider value={authContext}>

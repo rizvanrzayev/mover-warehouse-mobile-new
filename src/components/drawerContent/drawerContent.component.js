@@ -5,57 +5,25 @@ import {ScrollView, TouchableOpacity} from 'react-native';
 import {drawerRef} from 'navigation/navigation.component';
 import DrawerContentStyles from './drawerContent.styles';
 
-const DrawerContent = ({onClose}) => {
-  const navigation = useNavigation();
+const DrawerContent = (props) => {
+  const {navigation, state} = props;
 
-  React.useEffect(() => {
-    console.log('rerenderedd');
-  }, []);
-
-  const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
+  const onPressItem = (descriptor, {nativeEvent}) => {
+    if (Object.keys(nativeEvent).length > 0) {
+      navigation.navigate(state.routeNames[descriptor.index.row]);
+    }
+  };
 
   return (
-    <Drawer selectedIndex={selectedIndex}>
-      <DrawerItem
-        title="Növbələr"
-        onPress={(_, {nativeEvent}) => {
-          if (Object.keys(nativeEvent).length > 0) {
-            drawerRef.current.close();
-            setSelectedIndex(new IndexPath(0));
-            navigation.dispatch(StackActions.replace('Home'));
-          }
-        }}
-      />
-      <DrawerItem
-        title="Ayarlar"
-        onPress={(_, {nativeEvent}) => {
-          if (Object.keys(nativeEvent).length > 0) {
-            drawerRef.current.close();
-            setSelectedIndex(new IndexPath(1));
-            navigation.dispatch(StackActions.replace('Settings'));
-          }
-        }}
-      />
-      <DrawerItem
-        title="Bağlamaları rəflə"
-        onPress={(_, {nativeEvent}) => {
-          if (Object.keys(nativeEvent).length > 0) {
-            drawerRef.current.close();
-            setSelectedIndex(new IndexPath(2));
-            navigation.dispatch(StackActions.replace('Warehouse'));
-          }
-        }}
-      />
-      <DrawerItem
-        title="İstifadəçi məlumatları"
-        onPress={(_, {nativeEvent}) => {
-          if (Object.keys(nativeEvent).length > 0) {
-            drawerRef.current.close();
-            setSelectedIndex(new IndexPath(3));
-            navigation.dispatch(StackActions.replace('UserDetail'));
-          }
-        }}
-      />
+    <Drawer
+      selectedIndex={new IndexPath(state.index)}
+      onSelect={(index) => {
+        navigation.navigate(state.routeNames[index.row]);
+      }}>
+      <DrawerItem title="Növbələr" onPress={onPressItem} />
+      <DrawerItem title="Ayarlar" onPress={onPressItem} />
+      <DrawerItem title="Bağlamaları rəflə" onPress={onPressItem} />
+      <DrawerItem title="İstifadəçi məlumatları" onPress={onPressItem} />
     </Drawer>
   );
 };

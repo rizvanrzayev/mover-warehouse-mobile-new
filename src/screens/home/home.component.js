@@ -53,9 +53,6 @@ const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
   }, [queues]);
 
   const onPressItem = (item) => {
-    if (item.from_type) {
-      navigation.navigate('QueueDetail', {item});
-    }
     if (item.accepted_by_worker === 0) {
       navigation.navigate('AcceptOrder', {item});
       return;
@@ -83,7 +80,6 @@ const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
 
   return (
     <SafeAreaView style={HomeStyles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="white" />
       <TopNavigation
         title="Növbələr"
         alignment="center"

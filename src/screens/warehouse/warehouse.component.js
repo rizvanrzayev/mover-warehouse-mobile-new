@@ -83,6 +83,16 @@ const WarehouseScreen = ({onSuccessTaked}) => {
           });
           errorSound.play();
         } else {
+          if (!response?.data?.user || !response?.data?.order) {
+            showMessage({
+              titleStyle: {fontSize: 18},
+              message: 'Uğurla əlavə olundu',
+              type: 'success',
+              duration: 3000,
+              textStyle: {fontSize: 18},
+            });
+            return;
+          }
           const {name, surname} = response?.data?.user;
           const {weight, shop, width, height, length} = response?.data?.order;
           showMessage({
