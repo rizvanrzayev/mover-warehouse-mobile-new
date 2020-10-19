@@ -39,14 +39,8 @@ const WarehouseScreen = ({onSuccessTaked}) => {
   const isSection = (data) => {
     const length = data.length;
     const firstChar = data.charAt(0);
-    if (
-      (length === 4 || length === 5 || length === 6) &&
-      (firstChar === 'A' || firstChar === 'F' || firstChar === 'E')
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    return (length === 4 || length === 5 || length === 6) &&
+        (firstChar === 'A' || firstChar === 'F' || firstChar === 'E' || firstChar === 'G');
   };
 
   const onSelectSection = (sectionData) => {

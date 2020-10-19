@@ -61,4 +61,9 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# Android Additional
 android/*.hprof
+
+# Bit dist folder
+dist/

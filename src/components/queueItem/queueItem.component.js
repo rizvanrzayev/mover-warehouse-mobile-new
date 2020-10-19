@@ -6,7 +6,7 @@ import QueueItemStyles from './queueItem.styles';
 import {connect} from 'react-redux';
 import {fetchQueueList} from 'actions/queue';
 import {ApiClient, API_ROUTES} from 'config/Api';
-import {useNavigation} from '@react-navigation/native';
+import {getQueueActionType} from 'helpers/queue';
 
 const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
   const {
@@ -46,28 +46,13 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
   const [isStarting, setIsStarting] = React.useState(false);
 
   const renderItemLeft = () => {
-    const isPacker = type === 0 && from_type === 1; // Refle
-    const isUser = type === 1 && from_type === 0; // Mushteri
-    const isPreprareOrder =
-      (type === 0 && from_type === 0) || (type === 3 && from_type === 3); // Paketle
-    const isPreprareOrder2 = type === 1 && from_type === 1; // Paketle
-    const isCourier = type === 0 && from_type === 3; // Kuriyer
+    const queueActionType = getQueueActionType(type, from_type);
 
-    const typeTitle =
-      (isCourier && 'Kuriyer') ||
-      (isPacker && 'Rəflə') ||
-      (isUser && 'Müştəri') ||
-      (isPreprareOrder && 'Paketlə') ||
-      (isPreprareOrder2 && 'Paketlə') ||
-      (isCourier && 'Kuriyer');
+    const typeTitle = queueActionType.description;
+
+    const typeStatus = queueActionType.status;
+
     const title = is_active ? typeTitle : 'Gözləmədə';
-
-    const typeStatus =
-      (isPacker && 'warning') ||
-      (isUser && 'success') ||
-      (isPreprareOrder && 'info') ||
-      (isPreprareOrder2 && 'info') ||
-      (isCourier && 'info');
 
     const status = is_active ? typeStatus : 'danger';
 

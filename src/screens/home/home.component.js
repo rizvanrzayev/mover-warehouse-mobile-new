@@ -12,6 +12,7 @@ import firebase from 'react-native-firebase';
 import Sound from 'react-native-sound';
 import SignOutButton from 'components/signOutButton/signOutButton.component';
 import MenuButton from 'components/menuButton/menuButton.component';
+import {getQueueActionType} from "helpers/queue";
 
 const notificationSound = new Sound(
   'notification.mp3',

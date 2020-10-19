@@ -1,11 +1,8 @@
 import React from 'react';
 import {Layout, Icon, Text, withStyles} from '@ui-kitten/components';
 import EmptyItemStyles from './emptyItem.styles';
-import {View} from 'react-native';
 
-const EmptyItem = (props) => {
-  const {eva, style, ...restProps} = props;
-
+const EmptyItem = () => {
   return (
     <Layout style={EmptyItemStyles.container}>
       <Icon name="alert-circle" fill="#EB7B78" style={EmptyItemStyles.icon} />

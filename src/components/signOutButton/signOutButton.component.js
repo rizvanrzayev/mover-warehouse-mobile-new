@@ -1,4 +1,3 @@
-import {useNavigation} from '@react-navigation/native';
 import {Icon, TopNavigationAction} from '@ui-kitten/components';
 import {useAuth} from 'contexts/AuthContext';
 import React from 'react';

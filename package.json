@@ -12,7 +12,9 @@
     "pod-install": "npx pod-install ios",
     "android-release": "cd android && ENVFILE=.env.production ./gradlew assembleRelease",
     "code-push-ios": "appcenter codepush release-react -a moverarge-gmail.com/MOVER_WAREHOUSE-iOS -d Production",
-    "code-push-android": "appcenter codepush release-react -a moverarge-gmail.com/MOVER_WAREHOUSE-Android -d Production"
+    "code-push-android": "appcenter codepush release-react -a moverarge-gmail.com/MOVER_WAREHOUSE-Android -d Production",
+    "fastlane-ios": "cd ios && bundle exec fastlane",
+    "fastlane-android": "cd android && bundle exec fastlane"
   },
   "dependencies": {
     "@eva-design/eva": "2.0.0",
@@ -38,7 +40,6 @@
     "react-native-camera": "3.40.0",
     "react-native-code-push": "6.3.0",
     "react-native-config": "^1.3.3",
-    "react-native-drawer": "^2.5.1",
     "react-native-firebase": "~5.6.0",
     "react-native-flash-message": "^0.1.16",
     "react-native-gesture-handler": "^1.7.0",

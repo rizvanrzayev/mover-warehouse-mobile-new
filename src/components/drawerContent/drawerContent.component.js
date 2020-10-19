@@ -1,9 +1,5 @@
-import {StackActions, useNavigation} from '@react-navigation/native';
-import {Drawer, DrawerItem, IndexPath, Text} from '@ui-kitten/components';
+import {Drawer, DrawerItem, IndexPath} from '@ui-kitten/components';
 import React from 'react';
-import {ScrollView, TouchableOpacity} from 'react-native';
-import {drawerRef} from 'navigation/navigation.component';
-import DrawerContentStyles from './drawerContent.styles';
 
 const DrawerContent = (props) => {
   const {navigation, state} = props;

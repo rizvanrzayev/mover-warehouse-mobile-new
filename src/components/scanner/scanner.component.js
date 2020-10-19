@@ -1,6 +1,6 @@
 // /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import {Button, Card, Icon, Modal, Text} from '@ui-kitten/components';
+import {Button, Icon, Text} from '@ui-kitten/components';
 import {getCurrentScanner} from 'helpers/AsyncStorage';
 import {SCANNERS} from 'helpers/scanner';
 import {Alert, Linking, Platform, View} from 'react-native';
@@ -11,7 +11,7 @@ import LottieView from 'lottie-react-native';
 import SelectScanner from 'components/selectScanner/selectScanner.component';
 import KeepAwake from 'react-native-keep-awake';
 import CameraNotAuthorized from 'components/cameraNotAuthorized/cameraNotAuthorized.component';
-import {useDeviceEventEmitter} from '../../hooks/useDeviceEventEmitter';
+import {useDeviceEventEmitter} from 'hooks/useDeviceEventEmitter';
 import Sound from 'react-native-sound';
 
 const successSound = new Sound('section.mp3', Sound.MAIN_BUNDLE, (error) => {
@@ -25,7 +25,6 @@ const Scanner = ({topContent, onScan}) => {
   const qrRef = React.useRef(null);
 
   const [currentScanner, setCurrentScanner] = React.useState(null);
-  const [showHelper, setShowHelper] = React.useState(false);
   const [flashOn, setFlashOn] = React.useState(false);
 
   React.useEffect(() => {
@@ -46,7 +45,7 @@ const Scanner = ({topContent, onScan}) => {
   const onScanInfraredScanner = React.useCallback(
     ({code}) => {
       successSound.play();
-      onScan?.(code);
+      onScan?.(code.split('{')[0]);
     },
     [onScan],
   );
@@ -56,12 +55,6 @@ const Scanner = ({topContent, onScan}) => {
   const fetchCurrentScanner = React.useCallback(async () => {
     const newCurrentScanner = await getCurrentScanner();
     if (newCurrentScanner !== null) {
-      if (newCurrentScanner.id === SCANNERS[0].id) {
-        setShowHelper(true);
-      }
-      // if (newCurrentScanner.id === SCANNERS[1].id) {
-      //   setupInfraredScanner();
-      // }
       setCurrentScanner(newCurrentScanner);
     }
   }, []);
@@ -146,28 +139,7 @@ const Scanner = ({topContent, onScan}) => {
     }
   };
 
-  const renderHelperView = () => (
-    <Modal visible={showHelper}>
-      <Card disabled={true}>
-        <Text category="s1">Bağlamanı kameraya yaxınlaşdırın</Text>
-        <View style={ScannerStyles.cameraHelperLottieContainer}>
-          <LottieView
-            source={require('assets/lotties/barcode-camera.json')}
-            autoPlay
-            loop
-          />
-        </View>
-        <Button onPress={() => setShowHelper(false)}>OLDU</Button>
-      </Card>
-    </Modal>
-  );
-
-  return (
-    <View style={ScannerStyles.container}>
-      {renderScanner()}
-      {/* {showHelper && renderHelperView()} */}
-    </View>
-  );
+  return <View style={ScannerStyles.container}>{renderScanner()}</View>;
 };
 
 export default Scanner;

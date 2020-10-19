@@ -1,11 +1,8 @@
 import React, {useCallback, useMemo, useState} from 'react';
 import {
-  Layout,
   TopNavigation,
-  TopNavigationAction,
   Icon,
   List,
-  Card,
   Text,
   Button,
   ListItem,
@@ -24,12 +21,12 @@ import {ApiClient, API_ROUTES} from 'config/Api';
 import {showMessage} from 'react-native-flash-message';
 import {useIsFocused} from '@react-navigation/native';
 import BackButton from 'components/backButton/backButton.component';
+import {getQueueActionType} from "helpers/queue";
 
 const QueueDetailScreen = ({
   navigation,
   route,
   fetchSingleQueue,
-  orders,
   queue,
   isLoading,
   isLoadingOrder,
@@ -144,7 +141,6 @@ const QueueDetailScreen = ({
         accessoryRight={(props) =>
           renderRight({...item, prepared, sectionName})
         }
-        // onPress={onPressItem}
       />
     );
   };
@@ -205,12 +201,7 @@ const QueueDetailScreen = ({
     }, 500);
   };
 
-  const isPacker = type === 0 && from_type === 1; // Refle
-  const isUser = type === 1 && from_type === 0; // Mushteri
-  const isPreprareOrder =
-    (type === 0 && from_type === 0) || (type === 3 && from_type === 3); // Paketle
-  const isPreprareOrder2 = type === 1 && from_type === 1; // Paketle
-  const isCourier = type === 0 && from_type === 3; // Kuriyer
+  const queueActionType = getQueueActionType(type, from_type);
 
   const onPressTookOrder = () => {
     requestAnimationFrame(() => {
@@ -223,10 +214,7 @@ const QueueDetailScreen = ({
 
   const alertLoading = isLoadingOrder || postingCustomerGone;
 
-  const tookOrderTitle =
-    ((isPreprareOrder2 || isPreprareOrder) && 'Paketçiyə təhvil ver') ||
-    ((isPacker || isUser) && 'Müştəriyə təhvil ver') ||
-    (isCourier && 'Kuriyerə təhvil ver');
+  const tookOrderTitle = queueActionType.tookTitle;
 
   const renderCustomAlertContent = useCallback(
     <View style={QueueDetailScreenStyles.alertContainer}>
