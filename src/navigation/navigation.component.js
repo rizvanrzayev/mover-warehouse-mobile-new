@@ -17,6 +17,8 @@ import ShelfOrdersScreen from 'screens/shelfOrders/shelfOrders.component';
 import AcceptOrderScreen from 'screens/acceptOrder/acceptOrder.component';
 import UserDetailScreen from 'screens/userDetail/userDetail.component';
 import DrawerContent from 'components/drawerContent/drawerContent.component';
+import Config from 'react-native-config';
+import {Platform} from 'react-native';
 
 const {
   Navigator: DrawerNavigator,
@@ -36,10 +38,21 @@ const HomeStack = () => (
   </Navigator>
 );
 
+// CODE_PUSH UPDATE COMPONENT DEPLOYMENT KEY
+const deploymentKey =
+  Platform.OS === 'ios'
+    ? Config.CODE_PUSH_KEY_IOS
+    : Config.CODE_PUSH_KEY_ANDROID;
+
 const SettingsStack = () => (
   <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
     <Screen name="Settings" component={SettingsScreen} />
-    <Screen name="Update" component={UpdateScreen} />
+    <Screen
+      name="Update"
+      component={(screenProps) => (
+        <UpdateScreen {...screenProps} deploymentKey={deploymentKey} />
+      )}
+    />
   </Navigator>
 );
 

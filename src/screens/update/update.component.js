@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, View, Platform} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import {
   TopNavigation,
   TopNavigationAction,
@@ -11,19 +11,11 @@ import {
   Card,
 } from '@ui-kitten/components';
 import CodePush from 'react-native-code-push';
-// import AnimatedNumbers from 'react-native-animated-numbers';
-// import ProgressBar from 'react-native-animated-progress-bar';
 import UpdateScreenStyles from './update.styles';
-import Config from 'react-native-config';
 
 CodePush.allowRestart();
 
-const deploymentKey =
-  Platform.OS === 'ios'
-    ? Config.CODE_PUSH_KEY_IOS
-    : Config.CODE_PUSH_KEY_ANDROID;
-
-const UpdateScreen = ({navigation}) => {
+const UpdateScreen = ({navigation, deploymentKey}) => {
   const [updateData, setUpdateData] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [statusProgress, setStatusProgress] = React.useState('');
@@ -31,9 +23,9 @@ const UpdateScreen = ({navigation}) => {
 
   React.useEffect(() => {
     checkUpdate();
-  }, []);
+  }, [checkUpdate]);
 
-  const checkUpdate = async () => {
+  const checkUpdate = React.useCallback(async () => {
     setIsLoading(true);
     try {
       const newUpdateData = await CodePush.checkForUpdate(deploymentKey);
@@ -43,7 +35,7 @@ const UpdateScreen = ({navigation}) => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [deploymentKey]);
 
   const onPressBack = () => navigation.pop();
 
@@ -66,10 +58,6 @@ const UpdateScreen = ({navigation}) => {
   );
 
   const onPressDownload = async () => {
-    // const downloaded = await updateData.download(({receivedBytes, totalBytes}) =>
-    //   setAnimateToNumber(parseInt((receivedBytes / totalBytes) * 100)),
-    // );
-    // downloaded.install(CodePush.InstallMode.IMMEDIATE);
     CodePush.sync(
       {
         updateDialog: true,
