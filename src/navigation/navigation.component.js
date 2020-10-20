@@ -19,6 +19,10 @@ import UserDetailScreen from 'screens/userDetail/userDetail.component';
 import DrawerContent from 'components/drawerContent/drawerContent.component';
 import Config from 'react-native-config';
 import {Platform} from 'react-native';
+import {connect} from 'react-redux';
+import {fetchUserAction} from 'actions/user';
+import Connection from 'components/connection/connection.component';
+import EditUserDetailsScreen from 'screens/editUserDetails/editUserDetails.component';
 
 const {
   Navigator: DrawerNavigator,
@@ -47,12 +51,11 @@ const deploymentKey =
 const SettingsStack = () => (
   <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
     <Screen name="Settings" component={SettingsScreen} />
-    <Screen
-      name="Update"
-      component={(screenProps) => (
+    <Screen name="Update">
+      {(screenProps) => (
         <UpdateScreen {...screenProps} deploymentKey={deploymentKey} />
       )}
-    />
+    </Screen>
   </Navigator>
 );
 
@@ -65,6 +68,7 @@ const WarehouseStack = () => (
 const UserDetailStack = () => (
   <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
     <Screen name="UserDetail" component={UserDetailScreen} />
+    <Screen name="EditUserDetails" component={EditUserDetailsScreen} />
   </Navigator>
 );
 
@@ -72,32 +76,34 @@ export const drawerRef = React.createRef();
 
 const HomeNavigator = () => {
   return (
-    <DrawerNavigator
-      backBehavior="none"
-      headerMode="none"
-      screenOptions={{animationEnabled: false}}
-      drawerContent={(props) => <DrawerContent {...props} />}>
-      <DrawerScreen
-        name="Home"
-        component={HomeStack}
-        options={{title: 'Növbələr'}}
-      />
-      <DrawerScreen
-        name="Settings"
-        component={SettingsStack}
-        options={{title: 'Ayarlar'}}
-      />
-      <DrawerScreen
-        name="Warehouse"
-        component={WarehouseStack}
-        options={{unmountOnBlur: true, title: 'Bağlamaları rəflə'}}
-      />
-      <DrawerScreen
-        name="UserDetail"
-        component={UserDetailStack}
-        options={{title: 'İstifadəçi məlumatları'}}
-      />
-    </DrawerNavigator>
+    <Connection>
+      <DrawerNavigator
+        backBehavior="none"
+        headerMode="none"
+        screenOptions={{animationEnabled: false}}
+        drawerContent={(props) => <DrawerContent {...props} />}>
+        <DrawerScreen
+          name="Home"
+          component={HomeStack}
+          options={{title: 'Növbələr'}}
+        />
+        <DrawerScreen
+          name="Settings"
+          component={SettingsStack}
+          options={{title: 'Ayarlar'}}
+        />
+        <DrawerScreen
+          name="Warehouse"
+          component={WarehouseStack}
+          options={{unmountOnBlur: true, title: 'Bağlamaları rəflə'}}
+        />
+        <DrawerScreen
+          name="UserDetail"
+          component={UserDetailStack}
+          options={{title: 'İstifadəçi məlumatları'}}
+        />
+      </DrawerNavigator>
+    </Connection>
   );
 };
 
@@ -107,8 +113,12 @@ const SingInNavigator = () => (
   </Navigator>
 );
 
-export const AppNavigator = () => {
+const AppNavigator = ({fetchUserAction}) => {
   const {isLoading, userToken, isSignout} = useAuth();
+
+  React.useLayoutEffect(() => {
+    fetchUserAction();
+  }, [fetchUserAction]);
 
   if (isLoading) {
     return <SplashScreen />;
@@ -136,3 +146,11 @@ export const AppNavigator = () => {
     </NavigationContainer>
   );
 };
+
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = {
+  fetchUserAction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppNavigator);

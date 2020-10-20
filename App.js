@@ -19,7 +19,7 @@ import * as eva from '@eva-design/eva';
 import {default as theme} from 'theme/custom-theme.json';
 
 import 'react-native-gesture-handler';
-import {AppNavigator} from 'navigation/navigation.component';
+import AppNavigator from 'navigation/navigation.component';
 import {createStore, applyMiddleware} from 'redux';
 
 import rootReducer from 'reducers';

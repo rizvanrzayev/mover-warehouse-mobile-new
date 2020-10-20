@@ -1,13 +1,11 @@
 import {
   Avatar,
-  Button,
-  Card,
-  Divider,
-  Spinner,
+  Icon,
   Text,
   TopNavigation,
+  TopNavigationAction,
 } from '@ui-kitten/components';
-import {fetchUser} from 'actions/user';
+import {fetchUserAction} from 'actions/user';
 import MenuButton from 'components/menuButton/menuButton.component';
 import React from 'react';
 import {SafeAreaView, View} from 'react-native';
@@ -16,21 +14,32 @@ import UserDetailScreenStyles from './userDetail.styles';
 import LottieView from 'lottie-react-native';
 import {useIsFocused} from '@react-navigation/native';
 
-const UserDetailScreen = ({fetchUser, isLoading, user}) => {
+const UserDetailScreen = ({fetchUserAction, isLoading, user, navigation}) => {
   const {name, surname, email, image} = user;
 
   const isFocused = useIsFocused();
 
   React.useLayoutEffect(() => {
     if (isFocused) {
-      fetchUser();
+      fetchUserAction();
     }
-  }, [fetchUser, isFocused]);
+  }, [fetchUserAction, isFocused]);
+
+  const onPressEditUser = () => {
+    navigation.navigate('EditUserDetails');
+  };
+
+  const SettingsIcon = (props) => <Icon {...props} name="settings-2-outline" />;
+
+  const SettingsAction = () => (
+    <TopNavigationAction icon={SettingsIcon} onPress={onPressEditUser} />
+  );
 
   return (
     <SafeAreaView style={UserDetailScreenStyles.container}>
       <TopNavigation
         accessoryLeft={MenuButton}
+        accessoryRight={SettingsAction}
         title={isLoading ? 'Yenilənir...' : 'İstifadəçi məlumatları'}
         alignment="center"
       />
@@ -75,7 +84,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  fetchUser,
+  fetchUserAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetailScreen);
