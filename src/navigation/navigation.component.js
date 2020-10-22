@@ -20,7 +20,6 @@ import DrawerContent from 'components/drawerContent/drawerContent.component';
 import Config from 'react-native-config';
 import {Platform} from 'react-native';
 import {connect} from 'react-redux';
-import {fetchUserAction} from 'actions/user';
 import Connection from 'components/connection/connection.component';
 import EditUserDetailsScreen from 'screens/editUserDetails/editUserDetails.component';
 
@@ -113,12 +112,8 @@ const SingInNavigator = () => (
   </Navigator>
 );
 
-const AppNavigator = ({fetchUserAction}) => {
+const AppNavigator = ({}) => {
   const {isLoading, userToken, isSignout} = useAuth();
-
-  React.useLayoutEffect(() => {
-    fetchUserAction();
-  }, [fetchUserAction]);
 
   if (isLoading) {
     return <SplashScreen />;
@@ -147,10 +142,4 @@ const AppNavigator = ({fetchUserAction}) => {
   );
 };
 
-const mapStateToProps = () => ({});
-
-const mapDispatchToProps = {
-  fetchUserAction,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AppNavigator);
+export default AppNavigator;

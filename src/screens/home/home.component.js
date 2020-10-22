@@ -1,18 +1,19 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Divider, Layout, List, TopNavigation} from '@ui-kitten/components';
 import EmptyItem from 'components/emptyItem/emptyItem.component';
-import {SafeAreaView, RefreshControl, StatusBar} from 'react-native';
+import {SafeAreaView, RefreshControl} from 'react-native';
 
 import HomeStyles from './home.styles';
 import {connect, useDispatch} from 'react-redux';
 import {fetchQueueList} from 'actions/queue';
 import QueueItem from 'components/queueItem/queueItem.component';
 import firebase from 'react-native-firebase';
+import {fetchUserAction} from 'actions/user';
 
 import Sound from 'react-native-sound';
 import SignOutButton from 'components/signOutButton/signOutButton.component';
 import MenuButton from 'components/menuButton/menuButton.component';
-import {getQueueActionType} from "helpers/queue";
+import {useSocket} from 'hooks/useSocket';
 
 const notificationSound = new Sound(
   'notification.mp3',
@@ -24,17 +25,47 @@ const notificationSound = new Sound(
   },
 );
 
-const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
+const HomeScreen = ({
+  navigation,
+  fetchQueueList,
+  isLoading,
+  queues,
+  fetchUserAction,
+}) => {
   const [hasActiveQueue, setHasActiveQueue] = React.useState(false);
 
-  React.useLayoutEffect(() => {
-    const listener = firebase.notifications().onNotification((notification) => {
+  React.useEffect(() => {
+    fetchUserAction();
+  }, [fetchUserAction]);
+
+  const {isConnected} = useSocket();
+
+  const setNewQueue = React.useCallback(
+    () => (notification) => {
       notificationSound.play();
-      const newQueue = JSON.parse(notification._data.newQueue);
+      let newQueue = notification?._data?.newQueue;
+      if (newQueue) {
+        newQueue = JSON.parse(newQueue);
+      }
       dispatch({type: 'NEW_QUEUE', newQueue});
+    },
+    [dispatch],
+  );
+
+  React.useLayoutEffect(() => {
+    const notificationOpenListener = firebase
+      .notifications()
+      .onNotificationOpened((notificationOpen) => {
+        setNewQueue(notificationOpen.notification);
+      });
+    const listener = firebase.notifications().onNotification((notification) => {
+      setNewQueue(notification);
     });
-    return () => listener();
-  }, [dispatch]);
+    return () => {
+      listener();
+      notificationOpenListener();
+    };
+  }, [dispatch, setNewQueue]);
 
   const dispatch = useDispatch();
 
@@ -82,7 +113,7 @@ const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
   return (
     <SafeAreaView style={HomeStyles.container}>
       <TopNavigation
-        title="Növbələr"
+        title={'Növbələr'}
         alignment="center"
         accessoryLeft={MenuButton}
         accessoryRight={SignOutButton}
@@ -119,6 +150,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   fetchQueueList,
+  fetchUserAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
