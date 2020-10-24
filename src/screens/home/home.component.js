@@ -14,6 +14,7 @@ import Sound from 'react-native-sound';
 import SignOutButton from 'components/signOutButton/signOutButton.component';
 import MenuButton from 'components/menuButton/menuButton.component';
 import {useSocket} from 'hooks/useSocket';
+import {useNotification, useNotificationOpen} from 'hooks/useNotification';
 
 const notificationSound = new Sound(
   'notification.mp3',
@@ -40,34 +41,22 @@ const HomeScreen = ({
 
   const {isConnected} = useSocket();
 
-  const setNewQueue = React.useCallback(
-    () => (notification) => {
+  const dispatch = useDispatch();
+
+  function setNewQueue(notification) {
+    if (notification) {
       notificationSound.play();
       let newQueue = notification?._data?.newQueue;
       if (newQueue) {
         newQueue = JSON.parse(newQueue);
+        dispatch({type: 'NEW_QUEUE', newQueue});
       }
-      dispatch({type: 'NEW_QUEUE', newQueue});
-    },
-    [dispatch],
-  );
+    }
+  }
 
-  React.useLayoutEffect(() => {
-    const notificationOpenListener = firebase
-      .notifications()
-      .onNotificationOpened((notificationOpen) => {
-        setNewQueue(notificationOpen.notification);
-      });
-    const listener = firebase.notifications().onNotification((notification) => {
-      setNewQueue(notification);
-    });
-    return () => {
-      listener();
-      notificationOpenListener();
-    };
-  }, [dispatch, setNewQueue]);
+  useNotification((notification) => setNewQueue(notification));
 
-  const dispatch = useDispatch();
+  useNotificationOpen((notificationOpen) => fetchQueueList());
 
   React.useLayoutEffect(() => {
     fetchQueueList();

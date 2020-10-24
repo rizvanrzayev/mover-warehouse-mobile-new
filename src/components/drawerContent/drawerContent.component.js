@@ -8,7 +8,6 @@ const DrawerContent = (props) => {
   const {navigation, state} = props;
 
   const onPressItem = (routeName, {nativeEvent}) => {
-    // alert(JSON.stringify(descriptor));
     if (Object.keys(nativeEvent).length > 0) {
       navigation.navigate(routeName);
     }

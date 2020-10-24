@@ -44,6 +44,7 @@ const SignInScreen = ({postSignInAction, isLoading}) => {
     }
     const fcmToken = await firebase.messaging().getToken();
     const data = {email, password, fcm_token: fcmToken};
+
     postSignInAction(data, (token) => {
       signIn(token);
     });
