@@ -8,13 +8,6 @@ import {connect} from 'react-redux';
 import {tookOrderAction} from 'actions/order';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import {fetchSingleQueue} from 'actions/queue';
-import Sound from 'react-native-sound';
-
-const successSound = new Sound('section.mp3', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    return;
-  }
-});
 
 const QRScanScreen = ({isLoading, navigation, route}) => {
   const NotAuthView = (
@@ -71,7 +64,6 @@ const QRScanScreen = ({isLoading, navigation, route}) => {
   );
 
   const onSuccess = (data) => {
-    successSound.play();
     onSuccessScan?.(data);
     navigation.pop();
   };

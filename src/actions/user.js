@@ -61,6 +61,11 @@ export const fetchUserAction = () => (dispatch) =>
         return;
       }
       const {user} = action?.payload?.data;
+      if (user.position_id === 6) {
+        dispatch(add('sendings'));
+      } else {
+        dispatch(remove('sendings'));
+      }
       if (user.position_id === 3) {
         dispatch(add('shelf'));
       } else {

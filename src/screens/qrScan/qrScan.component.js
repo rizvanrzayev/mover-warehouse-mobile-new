@@ -6,18 +6,10 @@ import {connect} from 'react-redux';
 import {tookOrderAction} from 'actions/order';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import {fetchSingleQueue} from 'actions/queue';
-import Sound from 'react-native-sound';
 import BackButton from 'components/backButton/backButton.component';
 import Scanner from 'components/scanner/scanner.component';
 
-const successSound = new Sound('section.mp3', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    return;
-  }
-});
-
 const QRScanScreen = ({isLoading, navigation, route}) => {
-  const qrRef = React.useRef(null);
   const [error, setError] = React.useState('');
 
   const onSuccessScan = route.params?.onSuccessScan;
@@ -38,7 +30,6 @@ const QRScanScreen = ({isLoading, navigation, route}) => {
   );
 
   const onScan = (data) => {
-    successSound.play();
     onSuccessScan?.(data);
     navigation.pop();
   };

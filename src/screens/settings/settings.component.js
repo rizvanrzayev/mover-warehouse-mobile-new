@@ -19,6 +19,7 @@ import {ApiClient} from 'config/Api';
 import {SCANNERS} from 'helpers/scanner';
 import {getCurrentScanner, setCurrentScanner} from 'helpers/AsyncStorage';
 import MenuButton from 'components/menuButton/menuButton.component';
+import {useIsFocused} from '@react-navigation/native';
 
 const SettingsScreen = ({navigation}) => {
   const SETTINGS = [
@@ -37,10 +38,14 @@ const SettingsScreen = ({navigation}) => {
 
   const [loadingIndex, setLoadingIndex] = React.useState(null);
 
+  const isFocused = useIsFocused();
+
   React.useEffect(() => {
-    fetchSettings();
-    fetchCurrentScanner();
-  }, [fetchSettings]);
+    if (isFocused) {
+      fetchSettings();
+      fetchCurrentScanner();
+    }
+  }, [fetchSettings, isFocused]);
 
   const fetchCurrentScanner = async () => {
     const currentScanner = await getCurrentScanner();
@@ -52,7 +57,7 @@ const SettingsScreen = ({navigation}) => {
   const fetchSettings = useCallback(async () => {
     setLoadingIndex(0);
     try {
-      const response = await ApiClient.get('status');
+      const response = await ApiClient.get('worker/status');
       const newSettings = [...settings];
       newSettings[0].status = response.data.status === 1 ? true : false;
       setSettings(newSettings);
@@ -65,7 +70,7 @@ const SettingsScreen = ({navigation}) => {
   const changeOnline = async (status, index) => {
     setLoadingIndex(index);
     try {
-      const response = await ApiClient.post('status', {status});
+      const response = await ApiClient.post('worker/status', {status});
       if (response.data.status === true) {
         const newSettings = [...SETTINGS];
         newSettings[index].status = status;

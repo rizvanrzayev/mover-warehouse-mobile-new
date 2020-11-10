@@ -12,23 +12,27 @@ export const ApiClient = axios.create({
 });
 
 export const API_ROUTES = {
-  login: 'login',
-  queueList: 'queue-list',
-  startQueue: 'start-queue',
-  queue: 'queue',
-  activeQueue: 'active-queue',
-  give: 'give',
-  took: 'took',
-  customerGone: 'customer-gone',
-  settings: 'settings',
-  approveReceivePacket: 'approve-receive-packet',
-  me: 'me',
+  login: 'worker/login',
+  queueList: 'worker/queue-list',
+  startQueue: 'worker/start-queue',
+  queue: 'worker/queue',
+  activeQueue: 'worker/active-queue',
+  give: 'worker/give',
+  took: 'worker/took',
+  customerGone: 'worker/customer-gone',
+  settings: 'worker/settings',
+  approveReceivePacket: 'worker/approve-receive-packet',
+  me: 'worker/me',
+  sendings: 'sorting/sendings',
+  warehouseSendings: 'sorting/warehouse/sendings',
+  warehouseSackOrders: 'sorting/warehouse/sack/orders',
+  sackJoin: 'sorting/sack/join',
+  addOrderToSack: 'sorting/sack/order/add',
 };
 
-const notAuthRequiredUrls = ['login'];
+const notAuthRequiredUrls = ['worker/login'];
 
 ApiClient.interceptors.request.use(async (config) => {
-  console.log('request: ', config);
   if (!notAuthRequiredUrls.includes(config.url)) {
     const token = await getToken();
     config.headers.Authorization = `Bearer ${token}`;
@@ -47,20 +51,22 @@ export const configureResponseInterceptors = (onUnauth) => {
         onUnauth();
       }
       let message = '';
-      if (error.response) {
-        // Request made and server responded
-        message = error.response.data.message;
-        // console.log(error.response.data);
-        // console.log(error.response.status);
-        // console.log(error.response.headers);
-      } else if (error.request) {
-        // The request was made but no response was received
-        message = error.request._response;
+      if (error?.response) {
+        if (error?.response?.data?.message) {
+          message = error?.response?.data?.message;
+        } else {
+          message = 'Bilinməyən xəta!';
+        }
+      } else if (error?.request) {
+        message = 'Zəhmət olmasa internet əlaqəsini yoxlayın';
       } else {
-        // Something happened in setting up the request that triggered an Error
-        message = error.message;
-        // console.log('Error', error.message);
+        message = 'Network error';
       }
+      showMessage({
+        message,
+        position: 'top',
+        type: 'danger',
+      });
       showMessage({
         message,
         type: 'danger',

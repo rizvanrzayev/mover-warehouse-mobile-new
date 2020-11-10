@@ -13,7 +13,6 @@ import BackButton from 'components/backButton/backButton.component';
 import React from 'react';
 import {RefreshControl, SafeAreaView, View} from 'react-native';
 import {connect} from 'react-redux';
-import moment from 'moment';
 import ShelfPreparedOrdersStyles from './shelfPreparedOrders.styles';
 import {ApiClient} from 'config/Api';
 import {showMessage} from 'react-native-flash-message';
@@ -51,7 +50,7 @@ const ShelfPreparedOrdersScreen = ({
 
   React.useLayoutEffect(() => {
     fetchSingleQueue(id);
-  }, []);
+  }, [fetchSingleQueue, id]);
 
   const Left = (props, status) => {
     return <CheckBox {...props} checked={status === 1} status="info" />;
@@ -112,7 +111,7 @@ const ShelfPreparedOrdersScreen = ({
   };
 
   const postCompeleteShelf = async () => {
-    const response = await ApiClient.get(`end/${item.id}`);
+    const response = await ApiClient.get(`worker/end/${item.id}`);
     return response;
   };
 

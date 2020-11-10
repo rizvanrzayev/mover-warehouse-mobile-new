@@ -2,29 +2,16 @@ import React from 'react';
 import {Divider, Layout, List, TopNavigation} from '@ui-kitten/components';
 import EmptyItem from 'components/emptyItem/emptyItem.component';
 import {SafeAreaView, RefreshControl} from 'react-native';
-
-import HomeStyles from './home.styles';
 import {connect, useDispatch} from 'react-redux';
 import {fetchQueueList} from 'actions/queue';
 import QueueItem from 'components/queueItem/queueItem.component';
-import firebase from 'react-native-firebase';
 import {fetchUserAction} from 'actions/user';
-
-import Sound from 'react-native-sound';
 import SignOutButton from 'components/signOutButton/signOutButton.component';
 import MenuButton from 'components/menuButton/menuButton.component';
-import {useSocket} from 'hooks/useSocket';
 import {useNotification, useNotificationOpen} from 'hooks/useNotification';
 
-const notificationSound = new Sound(
-  'notification.mp3',
-  Sound.MAIN_BUNDLE,
-  (error) => {
-    if (error) {
-      return;
-    }
-  },
-);
+import HomeStyles from './home.styles';
+import {notificationSound} from 'helpers/Sounds';
 
 const HomeScreen = ({
   navigation,
@@ -39,7 +26,7 @@ const HomeScreen = ({
     fetchUserAction();
   }, [fetchUserAction]);
 
-  const {isConnected} = useSocket();
+  // const {isConnected} = useSocket();
 
   const dispatch = useDispatch();
 

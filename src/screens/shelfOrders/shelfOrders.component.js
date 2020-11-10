@@ -1,21 +1,12 @@
 import React from 'react';
-import Sound from 'react-native-sound';
-import WarehouseScreenStyles from './shelfOrders.styles';
-import {Divider, Spinner, Text, TopNavigation} from '@ui-kitten/components';
-import {SafeAreaView, View} from 'react-native';
+import {Divider, TopNavigation} from '@ui-kitten/components';
+import {SafeAreaView} from 'react-native';
 import {ApiClient} from 'config/Api';
 import {showMessage} from 'react-native-flash-message';
-import SignOutButton from 'components/signOutButton/signOutButton.component';
 import Scanner from 'components/scanner/scanner.component';
 import BackButton from 'components/backButton/backButton.component';
 import ShelfTopContent from 'components/shelfTopContent/shelfTopContent.component';
-
-const errorSound = new Sound('unknown.mp3', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error);
-    return;
-  }
-});
+import {errorSound} from 'helpers/Sounds';
 
 const ShelfOrders = ({route, navigation}) => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -25,7 +16,7 @@ const ShelfOrders = ({route, navigation}) => {
   const item = route?.params?.item || {};
 
   const postSectionData = async (sectionName) => {
-    const response = await ApiClient.post('select-shelf-total', {
+    const response = await ApiClient.post('worker/select-shelf-total', {
       name: sectionName,
       office_id: '0',
     });
@@ -33,7 +24,7 @@ const ShelfOrders = ({route, navigation}) => {
   };
 
   const postBundleData = async (orderId) => {
-    const response = await ApiClient.post('add-to-shelf-total', {
+    const response = await ApiClient.post('worker/add-to-shelf-total', {
       unique_id: orderId,
       section_id: String(currentSection.section_id),
       queue_id: item.id,
@@ -41,13 +32,7 @@ const ShelfOrders = ({route, navigation}) => {
     return response;
   };
 
-  const isSection = (data) => {
-    if (data.includes('HZR')) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const isSection = (data) => data.includes('HZR');
 
   const onSelectSection = (sectionData) => {
     setCurrentSection(sectionData);
@@ -74,7 +59,7 @@ const ShelfOrders = ({route, navigation}) => {
           });
         }
       } else {
-        const orderId = data.split('-')[0];
+        const orderId = data;
         response = await postBundleData(orderId);
         if (response?.data?.status === false) {
           errorSound.play();
@@ -98,9 +83,6 @@ const ShelfOrders = ({route, navigation}) => {
       // console.log(e.response.data);
     } finally {
       setIsLoading(false);
-      setTimeout(() => {
-        // qrRef.current.reactivate();
-      }, 500);
     }
   };
 
@@ -113,8 +95,6 @@ const ShelfOrders = ({route, navigation}) => {
     ? 'Rəf yoxlanılır...'
     : 'Bağlama rəfə əlavə olunur...';
 
-  const BottomContent = null;
-
   const onScan = (data) => {
     onSuccess(data);
   };
@@ -125,7 +105,6 @@ const ShelfOrders = ({route, navigation}) => {
         title="Bağlamaları rəflə"
         alignment="center"
         accessoryLeft={BackButton}
-        // accessoryRight={SignOutButton}
       />
       <Divider />
       <Scanner

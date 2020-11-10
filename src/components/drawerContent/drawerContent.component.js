@@ -39,6 +39,18 @@ const DrawerContent = (props) => {
           title="İstifadəçi məlumatları"
           onPress={(_, event) => onPressItem('UserDetail', event)}
         />
+        <Permissions fallbackElement={null} allowed={['sendings']}>
+          <DrawerItem
+            title="Göndərişlər"
+            onPress={(_, event) => onPressItem('Sendings', event)}
+          />
+        </Permissions>
+        <Permissions fallbackElement={null} allowed={['shelf']}>
+          <DrawerItem
+            title="Göndərişi rəflə"
+            onPress={(_, event) => onPressItem('WarehouseSendings', event)}
+          />
+        </Permissions>
       </Drawer>
     </SafeAreaView>
   );

@@ -22,6 +22,11 @@ import {Platform} from 'react-native';
 import {connect} from 'react-redux';
 import Connection from 'components/connection/connection.component';
 import EditUserDetailsScreen from 'screens/editUserDetails/editUserDetails.component';
+import SendingsScreen from 'screens/sendings/sendings.component';
+import SendingsSackSortingScreen from 'screens/sendingsSackSorting/sendingsSackSorting.component';
+import WarehouseSendingsScreen from 'screens/warehouseSendings/warehouseSendings.component';
+import WarehouseSendingsDetailsScreen from 'screens/warehouseSendingsDetails/warehouseSendingsDetails.component';
+import OpenWarehouseSackScreen from 'screens/openWarehouseSack/openWarehouseSack.component';
 
 const {
   Navigator: DrawerNavigator,
@@ -71,6 +76,25 @@ const UserDetailStack = () => (
   </Navigator>
 );
 
+const SendingsStack = () => (
+  <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
+    <Screen name="Sendings" component={SendingsScreen} />
+    <Screen name="SendingsSackSorting" component={SendingsSackSortingScreen} />
+  </Navigator>
+);
+
+const WarehouseSendingsStack = () => (
+  <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
+    <Screen name="WarehouseSendings" component={WarehouseSendingsScreen} />
+    <Screen
+      name="WarehouseSendingsDetails"
+      component={WarehouseSendingsDetailsScreen}
+    />
+    <Screen name="OpenWarehouseSack" component={OpenWarehouseSackScreen} />
+    <Screen name="Warehouse" component={WarehouseScreen} />
+  </Navigator>
+);
+
 export const drawerRef = React.createRef();
 
 const HomeNavigator = () => {
@@ -100,6 +124,16 @@ const HomeNavigator = () => {
           name="UserDetail"
           component={UserDetailStack}
           options={{title: 'İstifadəçi məlumatları'}}
+        />
+        <DrawerScreen
+          name="Sendings"
+          component={SendingsStack}
+          options={{title: 'Göndərişlər'}}
+        />
+        <DrawerScreen
+          name="WarehouseSendings"
+          component={WarehouseSendingsStack}
+          options={{title: 'Göndərişi rəflə', unmountOnBlur: true}}
         />
       </DrawerNavigator>
     </Connection>

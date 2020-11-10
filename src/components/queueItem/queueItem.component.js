@@ -68,7 +68,9 @@ const QueueItem = ({item, onPressItem, fetchQueueList, hasActiveQueue}) => {
   const onPressStartQueue = async () => {
     setIsStarting(true);
     try {
-      const response = await ApiClient.post(`${API_ROUTES.startQueue}/${id}`);
+      const response = await ApiClient.post(
+        `worker/${API_ROUTES.startQueue}/${id}`,
+      );
     } catch (e) {
     } finally {
       onPressItem(item);

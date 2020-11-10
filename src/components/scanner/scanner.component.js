@@ -12,14 +12,8 @@ import SelectScanner from 'components/selectScanner/selectScanner.component';
 import KeepAwake from 'react-native-keep-awake';
 import CameraNotAuthorized from 'components/cameraNotAuthorized/cameraNotAuthorized.component';
 import {useDeviceEventEmitter} from 'hooks/useDeviceEventEmitter';
-import Sound from 'react-native-sound';
-
-const successSound = new Sound('section.mp3', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error);
-    return;
-  }
-});
+import {useIsFocused} from '@react-navigation/native';
+import {successSound} from 'helpers/Sounds';
 
 const Scanner = ({topContent, onScan}) => {
   const qrRef = React.useRef(null);
@@ -29,7 +23,6 @@ const Scanner = ({topContent, onScan}) => {
 
   React.useEffect(() => {
     KeepAwake.activate();
-
     return () => {
       KeepAwake.deactivate();
     };
@@ -59,9 +52,13 @@ const Scanner = ({topContent, onScan}) => {
     }
   }, []);
 
+  const isFocused = useIsFocused();
+
   React.useEffect(() => {
-    fetchCurrentScanner();
-  }, [fetchCurrentScanner]);
+    if (isFocused) {
+      fetchCurrentScanner();
+    }
+  }, [fetchCurrentScanner, isFocused]);
 
   const FlashIcon = (props) => (
     <Icon {...props} name={flashOn ? 'flash-outline' : 'flash-off-outline'} />
@@ -99,6 +96,7 @@ const Scanner = ({topContent, onScan}) => {
       bottomViewStyle={ScannerStyles.cameraBottomView}
       topViewStyle={ScannerStyles.cameraTopView}
       bottomContent={BottomContent}
+      cameraStyle={ScannerStyles.camera}
       notAuthorizedView={<CameraNotAuthorized onRefreshAuth={onRefreshAuth} />}
       cameraProps={{
         captureAudio: false,
@@ -108,7 +106,11 @@ const Scanner = ({topContent, onScan}) => {
 
   const renderInfraredScanner = (
     <View style={ScannerStyles.infraredScannerContent}>
-      <View style={ScannerStyles.infraredScannerTopContent}>{topContent}</View>
+      {topContent && (
+        <View style={ScannerStyles.infraredScannerTopContent}>
+          {topContent}
+        </View>
+      )}
       <View style={ScannerStyles.infraredScannerBottomContent}>
         <Text category="h4" style={ScannerStyles.infraredScannerTitle}>
           Infrared vasitəsi ilə bağlamanı oxudun

@@ -1,10 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-const ShelfPreparedOrdersStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
+const OrderListItemStyles = StyleSheet.create({
   itemRightQueueContainer: {
     padding: 5,
     backgroundColor: '#C9FBD8',
@@ -20,12 +16,6 @@ const ShelfPreparedOrdersStyles = StyleSheet.create({
     alignSelf: 'center',
     marginRight: 10,
   },
-  bottomContainer: {
-    padding: 10,
-  },
-  complete: {
-    marginTop: 10,
-  },
 });
 
-export default ShelfPreparedOrdersStyles;
+export default OrderListItemStyles;

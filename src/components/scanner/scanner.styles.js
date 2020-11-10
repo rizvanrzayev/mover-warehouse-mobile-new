@@ -8,7 +8,6 @@ const ScannerStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-    // paddingHorizontal: 20,
   },
   infraredScannerTitle: {
     textAlign: 'center',
@@ -37,12 +36,17 @@ const ScannerStyles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
   },
+  camera: {
+    flex: 1,
+  },
   cameraBottomView: {
     backgroundColor: 'white',
+    flex: 1.5,
   },
   cameraTopView: {
     backgroundColor: 'white',
     zIndex: 99,
+    flex: 3.5,
   },
   infraredScannerTopContent: {
     flex: 0.3,
@@ -53,6 +57,8 @@ const ScannerStyles = StyleSheet.create({
   infraredScannerBottomContent: {
     flex: 0.7,
     alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
   },
 });
 

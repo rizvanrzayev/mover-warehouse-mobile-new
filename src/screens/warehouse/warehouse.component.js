@@ -1,35 +1,31 @@
 import React from 'react';
-import Sound from 'react-native-sound';
 import WarehouseScreenStyles from './warehouse.styles';
-import {Divider, Spinner, Text, TopNavigation} from '@ui-kitten/components';
-import {SafeAreaView, View} from 'react-native';
+import {Divider, TopNavigation} from '@ui-kitten/components';
+import {SafeAreaView} from 'react-native';
 import {ApiClient} from 'config/Api';
 import {showMessage} from 'react-native-flash-message';
 import MenuButton from 'components/menuButton/menuButton.component';
 import SignOutButton from 'components/signOutButton/signOutButton.component';
 import Scanner from 'components/scanner/scanner.component';
 import ShelfTopContent from 'components/shelfTopContent/shelfTopContent.component';
+import BackButton from 'components/backButton/backButton.component';
+import {errorSound} from 'helpers/Sounds';
 
-const errorSound = new Sound('unknown.mp3', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error);
-    return;
-  }
-});
-
-const WarehouseScreen = ({onSuccessTaked}) => {
+const WarehouseScreen = ({onSuccessTaked, route}) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [currentSection, setCurrentSection] = React.useState(null);
 
+  const back = route?.params?.back;
+
   const postSectionData = async (sectionName) => {
-    const response = await ApiClient.post('select-shelf', {
+    const response = await ApiClient.post('worker/select-shelf', {
       shelfBarcode: sectionName,
     });
     return response;
   };
 
   const postBundleData = async (orderId) => {
-    const response = await ApiClient.post('add-to-shelf', {
+    const response = await ApiClient.post('worker/add-to-shelf', {
       packageBarcode: orderId,
       sectionId: String(currentSection.section_id),
     });
@@ -39,8 +35,14 @@ const WarehouseScreen = ({onSuccessTaked}) => {
   const isSection = (data) => {
     const length = data.length;
     const firstChar = data.charAt(0);
-    return (length === 4 || length === 5 || length === 6) &&
-        (firstChar === 'A' || firstChar === 'F' || firstChar === 'E' || firstChar === 'G');
+    return (
+      (length === 4 || length === 5 || length === 6) &&
+      (firstChar === 'A' ||
+        firstChar === 'F' ||
+        firstChar === 'E' ||
+        firstChar === 'G' ||
+        firstChar === 'S')
+    );
   };
 
   const onSelectSection = (sectionData) => {
@@ -52,19 +54,18 @@ const WarehouseScreen = ({onSuccessTaked}) => {
   };
 
   const onSuccess = async (data) => {
-    // successSound.play();
     setIsLoading(true);
     try {
       let response = null;
       if (currentSection === null || isSection(data)) {
         response = await postSectionData(data);
-        const {status, data: sectionData} = response.data;
+        const {status, data: sectionData, message} = response.data;
         if (status === true) {
           onSelectSection(sectionData);
         } else {
           errorSound.play();
           showMessage({
-            message: 'Zəhmət olmasa düzgün rəf oxudun',
+            message: message,
             type: 'warning',
           });
         }
@@ -72,20 +73,18 @@ const WarehouseScreen = ({onSuccessTaked}) => {
         const orderId = `${data.split('-')[0]}-346`;
         response = await postBundleData(orderId);
         if (response?.data?.status === false) {
+          errorSound.play();
           showMessage({
             message: response?.data?.message,
             type: 'danger',
           });
-          errorSound.play();
         } else {
-          // alert(JSON.stringify(response?.data));
           if (!response?.data?.user || !response?.data?.order) {
             showMessage({
               titleStyle: {fontSize: 18, fontWeight: 'bold'},
               message: 'Uğurla əlavə olundu',
               type: 'success',
               duration: 3000,
-              // textStyle: {fontSize: 18},
             });
             return;
           }
@@ -105,9 +104,6 @@ const WarehouseScreen = ({onSuccessTaked}) => {
       alert(JSON.stringify(e));
     } finally {
       setIsLoading(false);
-      setTimeout(() => {
-        // qrRef.current.reactivate();
-      }, 500);
     }
   };
 
@@ -129,7 +125,7 @@ const WarehouseScreen = ({onSuccessTaked}) => {
       <TopNavigation
         title="Bağlamaları rəflə"
         alignment="center"
-        accessoryLeft={MenuButton}
+        accessoryLeft={back ? BackButton : MenuButton}
         accessoryRight={SignOutButton}
       />
       <Divider />

@@ -14,7 +14,7 @@ const SignOutButton = () => {
 
   const onPressSignOut = async () => {
     try {
-      const response = await ApiClient.post('status', {status: false});
+      const response = await ApiClient.post('worker/status', {status: false});
       if (response.data.status === true) {
         showMessage({
           message: 'Çıxış edildi',

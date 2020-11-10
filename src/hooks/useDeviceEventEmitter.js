@@ -8,21 +8,18 @@ export function useDeviceEventEmitter(eventName, handler) {
     savedHandler.current = handler;
   }, [handler]);
 
-  useEffect(
-    () => {
-      const isSupported = DeviceEventEmitter && DeviceEventEmitter.addListener;
-      if (!isSupported) {
-        return;
-      }
+  useEffect(() => {
+    const isSupported = DeviceEventEmitter && DeviceEventEmitter.addListener;
+    if (!isSupported) {
+      return;
+    }
 
-      const eventListener = (event) => savedHandler.current(event);
+    const eventListener = (event) => savedHandler.current(event);
 
-      DeviceEventEmitter.addListener(eventName, eventListener);
+    DeviceEventEmitter.addListener(eventName, eventListener);
 
-      return () => {
-        DeviceEventEmitter.removeListener(eventName, eventListener);
-      };
-    },
-    [eventName], // Re-run if eventName or element changes
-  );
+    return () => {
+      DeviceEventEmitter.removeListener(eventName, eventListener);
+    };
+  }, [eventName]);
 }

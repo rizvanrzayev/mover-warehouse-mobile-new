@@ -21,7 +21,7 @@ import {ApiClient, API_ROUTES} from 'config/Api';
 import {showMessage} from 'react-native-flash-message';
 import {useIsFocused} from '@react-navigation/native';
 import BackButton from 'components/backButton/backButton.component';
-import {getQueueActionType} from "helpers/queue";
+import {getQueueActionType} from 'helpers/queue';
 
 const QueueDetailScreen = ({
   navigation,
@@ -42,10 +42,6 @@ const QueueDetailScreen = ({
   // alert(JSON.stringify(item));
 
   const isFocused = useIsFocused();
-
-  React.useLayoutEffect(() => {
-    fetchSingleQueue(id);
-  }, []);
 
   React.useEffect(() => {
     if (isFocused) {
@@ -85,18 +81,26 @@ const QueueDetailScreen = ({
   };
 
   const onPressNotFound = (orderId) => {
-    tookOrderAction(
-      orderId,
-      1,
-      id,
-      (canGive) => {
-        setCanGive(canGive);
-        fetchSingleQueue(id);
+    Alert.alert('Diqqət!', 'Tapılmadı etmək istədiyinizdən əminsiniz?', [
+      {text: 'Xeyr'},
+      {
+        text: 'Bəli',
+        onPress: () => {
+          tookOrderAction(
+            orderId,
+            1,
+            id,
+            (canGive) => {
+              setCanGive(canGive);
+              fetchSingleQueue(id);
+            },
+            (message) => {
+              Alert.alert('Diqqət!', message);
+            },
+          );
+        },
       },
-      (message) => {
-        Alert.alert('Diqqət!', message);
-      },
-    );
+    ]);
   };
 
   const renderRight = (item) => {
@@ -163,7 +167,9 @@ const QueueDetailScreen = ({
   const onPressCustomerGone = async () => {
     setPostingCustomerGone(true);
     try {
-      const response = await ApiClient.post(`${API_ROUTES.customerGone}/${id}`);
+      const response = await ApiClient.post(
+        `worker/${API_ROUTES.customerGone}/${id}`,
+      );
       fetchQueueList();
       navigation.pop();
     } catch (e) {

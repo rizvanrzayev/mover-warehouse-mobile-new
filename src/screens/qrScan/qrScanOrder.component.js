@@ -1,20 +1,14 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {SafeAreaView, View} from 'react-native';
 import QRScanScreenStyles from './qrScan.styles';
 import {Text, Spinner, TopNavigation} from '@ui-kitten/components';
 import {connect} from 'react-redux';
 import {tookOrderAction} from 'actions/order';
 import {fetchSingleQueue} from 'actions/queue';
-import Sound from 'react-native-sound';
 import Scanner from 'components/scanner/scanner.component';
 import BackButton from 'components/backButton/backButton.component';
 import {showMessage} from 'react-native-flash-message';
-
-const errorSound = new Sound('unknown.mp3', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    return;
-  }
-});
+import {errorSound} from 'helpers/Sounds';
 
 const QRScanOrderScreen = ({
   tookOrderAction,
@@ -56,7 +50,6 @@ const QRScanOrderScreen = ({
       0,
       queueId,
       (can_give) => {
-        // alert(JSON.stringify(can_give));
         showMessage({
           message: 'Uğurlu əməliyyat',
           type: 'success',

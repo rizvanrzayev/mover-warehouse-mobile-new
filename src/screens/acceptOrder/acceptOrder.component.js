@@ -20,7 +20,8 @@ const AcceptOrderScreen = ({
 
   const {type, from_type} = item;
 
-  const isUser = type === 1 && from_type === 0; // Mushteri
+  const isUser =
+    (type === 1 && from_type === 0) || (type === 0 && from_type === 3); // Mushteri
 
   const onScan = async (data) => {
     acceptOrderAction(
