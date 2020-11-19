@@ -77,7 +77,7 @@ const WarehouseSendingsDetailsScreen = ({
           <RefreshControl
             tintColor="#009BD8"
             refreshing={isLoading}
-            onRefresh={() => {}}
+            onRefresh={() => fetchSackOrdersList(sendingId, sack.id)}
           />
         }
       />

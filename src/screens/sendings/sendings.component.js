@@ -10,6 +10,7 @@ import {fetchSendingsList} from 'actions/sendings';
 import emptyItemComponent from 'components/emptyItem/emptyItem.component';
 import MenuButton from 'components/menuButton/menuButton.component';
 import SendingsList from 'components/sendingsList/sendingsList.component';
+import SignOutButton from 'components/signOutButton/signOutButton.component';
 import {getCountry} from 'helpers/Countries';
 import React from 'react';
 import {RefreshControl, SafeAreaView, View} from 'react-native';
@@ -36,6 +37,7 @@ const SendingsScreen = ({
         title="Göndərişlər"
         alignment="center"
         accessoryLeft={MenuButton}
+        accessoryRight={SignOutButton}
       />
       <Divider />
       <SendingsList

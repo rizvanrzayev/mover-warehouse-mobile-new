@@ -20,10 +20,13 @@ const DrawerContent = (props) => {
         onSelect={(index) => {
           navigation.navigate(state.routeNames[index.row]);
         }}>
-        <DrawerItem
-          title="Növbələr"
-          onPress={(_, event) => onPressItem('Home', event)}
-        />
+        <Permissions fallbackElement={null} allowed={['queue']}>
+          <DrawerItem
+            selected={state.index === 0}
+            title="Növbələr"
+            onPress={(_, event) => onPressItem('Home', event)}
+          />
+        </Permissions>
         <DrawerItem
           title="Ayarlar"
           onPress={(_, event) => onPressItem('Settings', event)}
@@ -41,12 +44,14 @@ const DrawerContent = (props) => {
         />
         <Permissions fallbackElement={null} allowed={['sendings']}>
           <DrawerItem
+            selected={state.index === 4}
             title="Göndərişlər"
             onPress={(_, event) => onPressItem('Sendings', event)}
           />
         </Permissions>
         <Permissions fallbackElement={null} allowed={['shelf']}>
           <DrawerItem
+            selected={state.index === 5}
             title="Göndərişi rəflə"
             onPress={(_, event) => onPressItem('WarehouseSendings', event)}
           />

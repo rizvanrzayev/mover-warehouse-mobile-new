@@ -1,11 +1,16 @@
 import {Button, Divider, TopNavigation} from '@ui-kitten/components';
-import {addOrderToSackAction, postSackJoinAction} from 'actions/sendings';
+import {
+  addOrderToSackAction,
+  postSackJoinAction,
+  RESET_STACKS,
+} from 'actions/sendings';
 import BackButton from 'components/backButton/backButton.component';
 import SackInfoView from 'components/sackInfoView/sackInfoView.component';
 import Scanner from 'components/scanner/scanner.component';
+import SignOutButton from 'components/signOutButton/signOutButton.component';
 import React from 'react';
 import {Alert, SafeAreaView} from 'react-native';
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import SendingsSackSortingScreenStyles from './sendingsSackSorting.styles';
 
 const SendingsSackSortingScreen = ({
@@ -18,6 +23,14 @@ const SendingsSackSortingScreen = ({
   isAdding,
 }) => {
   const sendingId = route?.params?.id;
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    return () => {
+      dispatch({type: RESET_STACKS});
+    };
+  }, [dispatch]);
 
   const onScan = (data) => {
     if (data.includes('-346')) {

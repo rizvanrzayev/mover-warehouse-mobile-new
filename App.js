@@ -119,8 +119,8 @@ const App = () => {
             <AppNavigator />
           </AuthContext.Provider>
         </ApplicationProvider>
-        <FlashMessage position="top" />
       </View>
+      <FlashMessage position="top" />
     </StoreProvider>
   );
 };

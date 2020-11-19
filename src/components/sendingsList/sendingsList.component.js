@@ -34,14 +34,14 @@ const SendingsList = ({data = [], isLoading, onRefresh, onPressItem}) => {
   };
 
   const renderItem = ({item}) => {
-    const {count, id, sending_id} = item;
+    const {count, id} = item;
     return (
       <Card
         header={(props) => ItemHeader(props, item)}
         footer={(props) => ItemFooter(props, item)}
         status="info"
         style={SendingsListStyles.itemContainer}
-        onPress={() => onPressItem?.(sending_id)}>
+        onPress={() => onPressItem?.(id)}>
         <Text>
           Çuval sayı: <Text category="s1">{count}</Text>
         </Text>

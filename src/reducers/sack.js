@@ -34,7 +34,7 @@ const sack = (state = initialState, action) => {
       const {sack: sackData} = action?.payload?.data;
       return {
         ...state,
-        [sackData.is_old ? 'oldSack' : 'newSack']: sackData,
+        [sackData?.is_old ? 'oldSack' : 'newSack']: sackData,
         isLoading: false,
         hasError: false,
       };

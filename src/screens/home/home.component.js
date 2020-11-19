@@ -5,28 +5,18 @@ import {SafeAreaView, RefreshControl} from 'react-native';
 import {connect, useDispatch} from 'react-redux';
 import {fetchQueueList} from 'actions/queue';
 import QueueItem from 'components/queueItem/queueItem.component';
-import {fetchUserAction} from 'actions/user';
 import SignOutButton from 'components/signOutButton/signOutButton.component';
 import MenuButton from 'components/menuButton/menuButton.component';
 import {useNotification, useNotificationOpen} from 'hooks/useNotification';
 
 import HomeStyles from './home.styles';
 import {notificationSound} from 'helpers/Sounds';
+import {useSocket} from 'hooks/useSocket';
 
-const HomeScreen = ({
-  navigation,
-  fetchQueueList,
-  isLoading,
-  queues,
-  fetchUserAction,
-}) => {
+const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
   const [hasActiveQueue, setHasActiveQueue] = React.useState(false);
 
-  React.useEffect(() => {
-    fetchUserAction();
-  }, [fetchUserAction]);
-
-  // const {isConnected} = useSocket();
+  const {isConnected} = useSocket();
 
   const dispatch = useDispatch();
 
@@ -126,7 +116,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   fetchQueueList,
-  fetchUserAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

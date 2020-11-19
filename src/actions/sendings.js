@@ -117,6 +117,7 @@ export const postSackJoinAction = (
         } else {
           onError(message);
         }
+        showMessage({message, type: success ? 'success' : 'danger'});
       },
       (error) => {
         onError();

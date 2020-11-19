@@ -27,6 +27,7 @@ import SendingsSackSortingScreen from 'screens/sendingsSackSorting/sendingsSackS
 import WarehouseSendingsScreen from 'screens/warehouseSendings/warehouseSendings.component';
 import WarehouseSendingsDetailsScreen from 'screens/warehouseSendingsDetails/warehouseSendingsDetails.component';
 import OpenWarehouseSackScreen from 'screens/openWarehouseSack/openWarehouseSack.component';
+import {fetchUserAction} from 'actions/user';
 
 const {
   Navigator: DrawerNavigator,
@@ -97,12 +98,14 @@ const WarehouseSendingsStack = () => (
 
 export const drawerRef = React.createRef();
 
-const HomeNavigator = () => {
+const HomeNavigator = ({permissions}) => {
+  const hasPermissions = (permission) => permissions.includes(permission);
   return (
     <Connection>
       <DrawerNavigator
         backBehavior="none"
         headerMode="none"
+        initialRouteName={hasPermissions('queue') ? 'Home' : 'Sendings'}
         screenOptions={{animationEnabled: false}}
         drawerContent={(props) => <DrawerContent {...props} />}>
         <DrawerScreen
@@ -146,10 +149,16 @@ const SingInNavigator = () => (
   </Navigator>
 );
 
-const AppNavigator = ({}) => {
+const AppNavigator = ({permissions, fetchUserAction, isLoadingUser}) => {
   const {isLoading, userToken, isSignout} = useAuth();
 
-  if (isLoading) {
+  React.useEffect(() => {
+    if (userToken !== null) {
+      fetchUserAction();
+    }
+  }, [fetchUserAction, userToken]);
+
+  if (isLoading || isLoadingUser) {
     return <SplashScreen />;
   }
 
@@ -165,15 +174,22 @@ const AppNavigator = ({}) => {
             }}
           />
         ) : (
-          <Screen
-            name="Home"
-            component={HomeNavigator}
-            options={{animationEnabled: false}}
-          />
+          <Screen name="Home" options={{animationEnabled: false}}>
+            {() => <HomeNavigator permissions={permissions} />}
+          </Screen>
         )}
       </Navigator>
     </NavigationContainer>
   );
 };
 
-export default AppNavigator;
+const mapStateToProps = (state) => ({
+  permissions: state.permissions,
+  isLoadingUser: state.user.isLoading,
+});
+
+const mapDispatchToProps = {
+  fetchUserAction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppNavigator);

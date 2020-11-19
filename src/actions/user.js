@@ -1,6 +1,6 @@
 import {API_ROUTES} from 'config/Api';
 import {showMessage} from 'react-native-flash-message';
-import {add, remove} from 'react-redux-permissions/dist/actions';
+import {add, clear, remove} from 'react-redux-permissions/dist/actions';
 
 export const SIGN_IN = 'SIGN_IN';
 export const SIGN_IN_FAIL = 'SIGN_IN_FAIL';
@@ -54,6 +54,21 @@ export const putUserAction = (data, onSuccess, onError) => (dispatch) =>
     },
   );
 
+const getPermissions = (positionId) => {
+  const queue = [1, 3, 4];
+  let permissions = [];
+  if (queue.includes(positionId)) {
+    permissions.push('queue');
+  }
+  if (positionId === 6) {
+    permissions.push('sendings');
+  }
+  if (positionId === 3) {
+    permissions.push('shelf');
+  }
+  return permissions;
+};
+
 export const fetchUserAction = () => (dispatch) =>
   dispatch(fetchUser()).then(
     (action) => {
@@ -61,16 +76,9 @@ export const fetchUserAction = () => (dispatch) =>
         return;
       }
       const {user} = action?.payload?.data;
-      if (user.position_id === 6) {
-        dispatch(add('sendings'));
-      } else {
-        dispatch(remove('sendings'));
-      }
-      if (user.position_id === 3) {
-        dispatch(add('shelf'));
-      } else {
-        dispatch(remove('shelf'));
-      }
+      const permissions = getPermissions(user.position_id);
+      dispatch(clear());
+      dispatch(add(permissions));
       return action;
     },
     (error) => {
