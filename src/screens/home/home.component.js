@@ -79,7 +79,7 @@ const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
   return (
     <SafeAreaView style={HomeStyles.container}>
       <TopNavigation
-        title={'Növbələr'}
+        title={`Növbələr ${isConnected ? 'online' : 'offline'}`}
         alignment="center"
         accessoryLeft={MenuButton}
         accessoryRight={SignOutButton}

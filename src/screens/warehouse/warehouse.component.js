@@ -1,5 +1,4 @@
 import React from 'react';
-import WarehouseScreenStyles from './warehouse.styles';
 import {Divider, TopNavigation} from '@ui-kitten/components';
 import {SafeAreaView} from 'react-native';
 import {ApiClient} from 'config/Api';
@@ -10,6 +9,8 @@ import Scanner from 'components/scanner/scanner.component';
 import ShelfTopContent from 'components/shelfTopContent/shelfTopContent.component';
 import BackButton from 'components/backButton/backButton.component';
 import {errorSound} from 'helpers/Sounds';
+import Sound from 'react-native-sound';
+import Axios from 'axios';
 
 const WarehouseScreen = ({onSuccessTaked, route}) => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -18,17 +19,38 @@ const WarehouseScreen = ({onSuccessTaked, route}) => {
   const back = route?.params?.back;
 
   const postSectionData = async (sectionName) => {
-    const response = await ApiClient.post('worker/select-shelf', {
-      shelfBarcode: sectionName,
-    });
+    let source = Axios.CancelToken.source();
+    setTimeout(() => {
+      // source.cancel();
+    }, 3000);
+    const response = await ApiClient.post(
+      'worker/select-shelf',
+      {
+        shelfBarcode: sectionName,
+      },
+      {
+        cancelToken: source.token,
+      },
+    );
     return response;
   };
 
   const postBundleData = async (orderId) => {
-    const response = await ApiClient.post('worker/add-to-shelf', {
-      packageBarcode: orderId,
-      sectionId: String(currentSection.section_id),
-    });
+    let source = Axios.CancelToken.source();
+    setTimeout(() => {
+      // source.cancel();
+    }, 3000);
+    const response = await ApiClient.post(
+      'worker/add-to-shelf',
+      {
+        packageBarcode: orderId,
+        sectionId: String(currentSection.section_id),
+      },
+      {
+        cancelToken: source.token,
+      },
+    );
+    response.config.cancelToken;
     return response;
   };
 
@@ -79,6 +101,15 @@ const WarehouseScreen = ({onSuccessTaked, route}) => {
             type: 'danger',
           });
         } else {
+          const clearlySound = new Sound(
+            'clearly.mp3',
+            Sound.MAIN_BUNDLE,
+            () => {
+              clearlySound.play(() => {
+                clearlySound.release();
+              });
+            },
+          );
           if (!response?.data?.user || !response?.data?.order) {
             showMessage({
               titleStyle: {fontSize: 18, fontWeight: 'bold'},
@@ -100,8 +131,12 @@ const WarehouseScreen = ({onSuccessTaked, route}) => {
         }
       }
     } catch (e) {
-      // console.log(e.response.data);
-      alert(JSON.stringify(e));
+      console.log(e);
+      errorSound.play();
+      showMessage({
+        message: 'İnternet əlaqəsini yoxlayın',
+        type: 'danger',
+      });
     } finally {
       setIsLoading(false);
     }

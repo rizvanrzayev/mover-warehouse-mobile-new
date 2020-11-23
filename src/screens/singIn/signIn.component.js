@@ -1,5 +1,5 @@
 import React from 'react';
-import {Layout, Text, Input, Button, Spinner} from '@ui-kitten/components';
+import {Layout, Text, Input} from '@ui-kitten/components';
 import SignInStyles from './singIn.styles';
 import {KeyboardAvoidingView, Platform, StatusBar} from 'react-native';
 import ButtonWithLoader from 'components/button/button.component';
@@ -76,6 +76,7 @@ const SignInScreen = ({postSignInAction, isLoading}) => {
             value={password}
             onChangeText={setPassword}
             secureTextEntry
+            autoCapitalize="none"
             disabled={isLoading}
             onSubmitEditing={onPressSignIn}
           />

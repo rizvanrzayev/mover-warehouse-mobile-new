@@ -3,6 +3,7 @@ import {Divider, TopNavigation, Text} from '@ui-kitten/components';
 import {fetchWarehouseSendingsList} from 'actions/sendings';
 import MenuButton from 'components/menuButton/menuButton.component';
 import SendingsList from 'components/sendingsList/sendingsList.component';
+import {useKeepAwake} from 'hooks/useKeepAwake';
 import React from 'react';
 import {SafeAreaView} from 'react-native';
 import {connect} from 'react-redux';
@@ -15,6 +16,8 @@ const WarehouseSendingsScreen = ({
   navigation,
 }) => {
   const isFocused = useIsFocused();
+
+  useKeepAwake();
 
   React.useLayoutEffect(() => {
     if (isFocused) {

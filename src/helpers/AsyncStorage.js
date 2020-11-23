@@ -31,7 +31,9 @@ const writeItemToStorage = async (key, value) => {
 export const readItemFromStorage = async (key) => {
   let result = await AsyncStorage.getItem(key);
   try {
-    result = JSON.parse(result);
+    if (result) {
+      result = JSON.parse(result);
+    }
   } catch (e) {}
   return result;
 };

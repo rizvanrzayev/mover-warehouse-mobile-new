@@ -10,7 +10,7 @@
  * @format
  */
 
-import React, {useLayoutEffect} from 'react';
+import React, {useCallback, useLayoutEffect, useMemo} from 'react';
 import codePush from 'react-native-code-push';
 
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
@@ -30,7 +30,7 @@ import {Provider as StoreProvider} from 'react-redux';
 import AuthContext from 'contexts/AuthContext';
 import {getToken, setToken, removeToken} from 'helpers/AsyncStorage';
 import FlashMessage from 'react-native-flash-message';
-import {StatusBar, View} from 'react-native';
+import {StatusBar, Text, View} from 'react-native';
 
 if (__DEV__) {
   import('config/ReactotronConfig').then(() =>
@@ -100,14 +100,15 @@ const App = () => {
     dispatch({type: 'RESTORE_TOKEN', token: userToken});
   };
 
-  const onUnauth = () => {
-    authContext.signOut();
-  };
-
   useLayoutEffect(() => {
     startApp();
-    configureResponseInterceptors(onUnauth);
   }, []);
+
+  useLayoutEffect(() => {
+    configureResponseInterceptors(() => {
+      authContext.signOut();
+    });
+  }, [authContext]);
 
   return (
     <StoreProvider store={store}>

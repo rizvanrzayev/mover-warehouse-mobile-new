@@ -111,12 +111,12 @@ const HomeNavigator = ({permissions}) => {
         <DrawerScreen
           name="Home"
           component={HomeStack}
-          options={{title: 'Növbələr'}}
+          options={{title: 'Növbələr', unmountOnBlur: true}}
         />
         <DrawerScreen
           name="Settings"
           component={SettingsStack}
-          options={{title: 'Ayarlar'}}
+          options={{title: 'Ayarlar', unmountOnBlur: true}}
         />
         <DrawerScreen
           name="Warehouse"
@@ -126,12 +126,12 @@ const HomeNavigator = ({permissions}) => {
         <DrawerScreen
           name="UserDetail"
           component={UserDetailStack}
-          options={{title: 'İstifadəçi məlumatları'}}
+          options={{title: 'İstifadəçi məlumatları', unmountOnBlur: true}}
         />
         <DrawerScreen
           name="Sendings"
           component={SendingsStack}
-          options={{title: 'Göndərişlər'}}
+          options={{title: 'Göndərişlər', unmountOnBlur: true}}
         />
         <DrawerScreen
           name="WarehouseSendings"
@@ -158,7 +158,7 @@ const AppNavigator = ({permissions, fetchUserAction, isLoadingUser}) => {
     }
   }, [fetchUserAction, userToken]);
 
-  if (isLoading || isLoadingUser) {
+  if (isLoading) {
     return <SplashScreen />;
   }
 

@@ -6,7 +6,7 @@ import {showMessage} from 'react-native-flash-message';
 import Scanner from 'components/scanner/scanner.component';
 import BackButton from 'components/backButton/backButton.component';
 import ShelfTopContent from 'components/shelfTopContent/shelfTopContent.component';
-import {errorSound} from 'helpers/Sounds';
+import {clearlySound, errorSound} from 'helpers/Sounds';
 
 const ShelfOrders = ({route, navigation}) => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -69,6 +69,7 @@ const ShelfOrders = ({route, navigation}) => {
           });
         } else {
           if (response?.data?.completed) {
+            clearlySound.play();
             onSuccessShelf(currentSection);
             navigation.pop();
           }

@@ -13,7 +13,6 @@ import KeepAwake from 'react-native-keep-awake';
 import CameraNotAuthorized from 'components/cameraNotAuthorized/cameraNotAuthorized.component';
 import {useDeviceEventEmitter} from 'hooks/useDeviceEventEmitter';
 import {useIsFocused} from '@react-navigation/native';
-import {successSound} from 'helpers/Sounds';
 
 const Scanner = ({topContent, onScan}) => {
   const qrRef = React.useRef(null);
@@ -37,7 +36,6 @@ const Scanner = ({topContent, onScan}) => {
 
   const onScanInfraredScanner = React.useCallback(
     ({code}) => {
-      successSound.play();
       onScan?.(code.split('{')[0]);
     },
     [onScan],
@@ -119,7 +117,7 @@ const Scanner = ({topContent, onScan}) => {
           <LottieView
             source={require('assets/lotties/barcode.json')}
             autoPlay
-            loop
+            loop={false}
           />
         </View>
       </View>

@@ -6,7 +6,7 @@ import SplashScreenStyles from './splash.styles';
 const SplashScreen = () => {
   return (
     <View style={SplashScreenStyles.container}>
-      <Spinner animating />
+      {/* <Spinner animating /> */}
     </View>
   );
 };

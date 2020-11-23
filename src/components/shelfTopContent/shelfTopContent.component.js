@@ -9,36 +9,38 @@ const ShelfTopContent = ({
   currentSection,
   topContentLoadingText,
   topContentTitle,
-}) => (
-  <View style={ShelfTopContentStyles.topContentContent}>
-    {hasCurrentSection && (
-      <View style={ShelfTopContentStyles.topContentSectionContainer}>
-        <Text category="h6" style={ShelfTopContentStyles.section}>
-          Seçilmiş rəf:{' '}
-          <Text category="h6" style={ShelfTopContentStyles.sectionData}>
-            {currentSection?.name}
+}) => {
+  return (
+    <View style={ShelfTopContentStyles.topContentContent}>
+      {hasCurrentSection && (
+        <View style={ShelfTopContentStyles.topContentSectionContainer}>
+          <Text category="h6" style={ShelfTopContentStyles.section}>
+            Seçilmiş rəf:{' '}
+            <Text category="h6" style={ShelfTopContentStyles.sectionData}>
+              {currentSection?.name}
+            </Text>
           </Text>
+          <Text category="p2" style={ShelfTopContentStyles.info}>
+            Əlavə olunacağ bağlamalar bu rəfə yerləşdiriləcək.
+          </Text>
+        </View>
+      )}
+      {isLoading ? (
+        <View style={ShelfTopContentStyles.topContentContainer}>
+          <Spinner animating status="basic" />
+          <Text
+            style={[{marginTop: 10}, ShelfTopContentStyles.loading]}
+            category="s1">
+            {topContentLoadingText}
+          </Text>
+        </View>
+      ) : (
+        <Text category="h6" style={ShelfTopContentStyles.topContentTitle}>
+          {topContentTitle}
         </Text>
-        <Text category="p2" style={ShelfTopContentStyles.info}>
-          Əlavə olunacağ bağlamalar bu rəfə yerləşdiriləcək.
-        </Text>
-      </View>
-    )}
-    {isLoading ? (
-      <View style={ShelfTopContentStyles.topContentContainer}>
-        <Spinner animating status="basic" />
-        <Text
-          style={[{marginTop: 10}, ShelfTopContentStyles.loading]}
-          category="s1">
-          {topContentLoadingText}
-        </Text>
-      </View>
-    ) : (
-      <Text category="h6" style={ShelfTopContentStyles.topContentTitle}>
-        {topContentTitle}
-      </Text>
-    )}
-  </View>
-);
+      )}
+    </View>
+  );
+};
 
 export default ShelfTopContent;

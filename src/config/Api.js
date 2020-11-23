@@ -36,6 +36,8 @@ ApiClient.interceptors.request.use(async (config) => {
   if (!notAuthRequiredUrls.includes(config.url)) {
     const token = await getToken();
     config.headers.Authorization = `Bearer ${token}`;
+    config.headers['Cache-Control'] = 'no-cache';
+    config.headers['Content-Type'] = 'application/json';
   }
   return config;
 });
@@ -47,7 +49,7 @@ export const configureResponseInterceptors = (onUnauth) => {
       return response;
     },
     function (error) {
-      if (error.response.status === 401) {
+      if (error?.response?.status === 401) {
         onUnauth();
       }
       let message = '';

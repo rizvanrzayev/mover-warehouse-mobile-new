@@ -46,7 +46,7 @@ const UserDetailScreen = ({fetchUserAction, isLoading, user, navigation}) => {
       <View style={UserDetailScreenStyles.topContainer}>
         <LottieView
           autoPlay
-          loop
+          loop={false}
           source={require('assets/lotties/warehouse.json')}
         />
       </View>
@@ -55,7 +55,7 @@ const UserDetailScreen = ({fetchUserAction, isLoading, user, navigation}) => {
           <View style={{width: 80, height: 80}}>
             <LottieView
               autoPlay
-              loop
+              loop={false}
               source={require('assets/lotties/profile.json')}
             />
           </View>

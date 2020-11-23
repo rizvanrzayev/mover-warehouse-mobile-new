@@ -4,6 +4,12 @@ const ConnectionStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  innerContainer: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },
