@@ -28,6 +28,8 @@ export const API_ROUTES = {
   warehouseSackOrders: 'sorting/warehouse/sack/orders',
   sackJoin: 'sorting/sack/join',
   addOrderToSack: 'sorting/sack/order/add',
+  selectShelf: 'worker/select-shelf',
+  addToShelf: 'worker/add-to-shelf',
 };
 
 const notAuthRequiredUrls = ['worker/login'];

@@ -7,6 +7,7 @@ import acceptOrder from './acceptOrder';
 import sendings from './sendings';
 import sack from './sack';
 import sackOrder from './sackOrder';
+import shelf from './shelf';
 import {reducer as permissions} from 'react-redux-permissions';
 
 export default combineReducers({
@@ -19,4 +20,5 @@ export default combineReducers({
   sendings,
   sack,
   sackOrder,
+  shelf,
 });

@@ -25,20 +25,17 @@ const ShelfTopContent = ({
           </Text>
         </View>
       )}
-      {isLoading ? (
-        <View style={ShelfTopContentStyles.topContentContainer}>
-          <Spinner animating status="basic" />
-          <Text
+      <View style={ShelfTopContentStyles.topContentContainer}>
+        {/* <Spinner animating={isLoading} status="basic" /> */}
+        {/* <Text
             style={[{marginTop: 10}, ShelfTopContentStyles.loading]}
             category="s1">
             {topContentLoadingText}
-          </Text>
-        </View>
-      ) : (
+          </Text> */}
         <Text category="h6" style={ShelfTopContentStyles.topContentTitle}>
           {topContentTitle}
         </Text>
-      )}
+      </View>
     </View>
   );
 };

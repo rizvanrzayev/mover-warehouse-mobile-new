@@ -1,5 +1,5 @@
 import React from 'react';
-import {Divider, TopNavigation} from '@ui-kitten/components';
+import {Divider, Text, TopNavigation} from '@ui-kitten/components';
 import {SafeAreaView} from 'react-native';
 import {ApiClient} from 'config/Api';
 import {showMessage} from 'react-native-flash-message';
@@ -10,49 +10,20 @@ import ShelfTopContent from 'components/shelfTopContent/shelfTopContent.componen
 import BackButton from 'components/backButton/backButton.component';
 import {errorSound} from 'helpers/Sounds';
 import Sound from 'react-native-sound';
-import Axios from 'axios';
+import {connect} from 'react-redux';
+import {postOrderDataAction, postSectionDataAction} from 'actions/shelf';
 
-const WarehouseScreen = ({onSuccessTaked, route}) => {
-  const [isLoading, setIsLoading] = React.useState(false);
+const WarehouseScreen = ({
+  onSuccessTaked,
+  route,
+  postSectionDataAction,
+  postOrderDataAction,
+  isLoading,
+}) => {
+  // const [isLoading, setIsLoading] = React.useState(false);
   const [currentSection, setCurrentSection] = React.useState(null);
 
   const back = route?.params?.back;
-
-  const postSectionData = async (sectionName) => {
-    let source = Axios.CancelToken.source();
-    setTimeout(() => {
-      // source.cancel();
-    }, 3000);
-    const response = await ApiClient.post(
-      'worker/select-shelf',
-      {
-        shelfBarcode: sectionName,
-      },
-      {
-        cancelToken: source.token,
-      },
-    );
-    return response;
-  };
-
-  const postBundleData = async (orderId) => {
-    let source = Axios.CancelToken.source();
-    setTimeout(() => {
-      // source.cancel();
-    }, 3000);
-    const response = await ApiClient.post(
-      'worker/add-to-shelf',
-      {
-        packageBarcode: orderId,
-        sectionId: String(currentSection.section_id),
-      },
-      {
-        cancelToken: source.token,
-      },
-    );
-    response.config.cancelToken;
-    return response;
-  };
 
   const isSection = (data) => {
     const length = data.length;
@@ -76,69 +47,45 @@ const WarehouseScreen = ({onSuccessTaked, route}) => {
   };
 
   const onSuccess = async (data) => {
-    setIsLoading(true);
-    try {
-      let response = null;
-      if (currentSection === null || isSection(data)) {
-        response = await postSectionData(data);
-        const {status, data: sectionData, message} = response.data;
-        if (status === true) {
-          onSelectSection(sectionData);
-        } else {
-          errorSound.play();
-          showMessage({
-            message: message,
-            type: 'warning',
+    if (currentSection === null || isSection(data)) {
+      const payload = {
+        shelfBarcode: data,
+      };
+      postSectionDataAction(payload, (sectionData) => {
+        onSelectSection(sectionData);
+      });
+    } else {
+      const orderId = `${data.split('-')[0]}-346`;
+      const payload = {
+        packageBarcode: orderId,
+        sectionId: String(currentSection.section_id),
+      };
+      postOrderDataAction(payload, (responseData) => {
+        const {user, order} = responseData;
+        const clearlySound = new Sound('clearly.mp3', Sound.MAIN_BUNDLE, () => {
+          clearlySound.play(() => {
+            clearlySound.release();
           });
-        }
-      } else {
-        const orderId = `${data.split('-')[0]}-346`;
-        response = await postBundleData(orderId);
-        if (response?.data?.status === false) {
-          errorSound.play();
-          showMessage({
-            message: response?.data?.message,
-            type: 'danger',
-          });
-        } else {
-          const clearlySound = new Sound(
-            'clearly.mp3',
-            Sound.MAIN_BUNDLE,
-            () => {
-              clearlySound.play(() => {
-                clearlySound.release();
-              });
-            },
-          );
-          if (!response?.data?.user || !response?.data?.order) {
-            showMessage({
-              titleStyle: {fontSize: 18, fontWeight: 'bold'},
-              message: 'Uğurla əlavə olundu',
-              type: 'success',
-              duration: 3000,
-            });
-            return;
-          }
-          const {name, surname} = response?.data?.user;
-          const {weight, shop, width, height, length} = response?.data?.order;
+        });
+        if (!user || !order) {
           showMessage({
             titleStyle: {fontSize: 18, fontWeight: 'bold'},
-            message: `Uğurla əlavə olundu\n---------------\n${name} ${surname}\n\nMağaza: ${shop}\n\nÇəki: ${weight} kq\n\nÖlçü: ${width}x${height}x${length} sm`,
+            message: 'Uğurla əlavə olundu',
             type: 'success',
-            duration: 6000,
-            textStyle: {fontSize: 18, fontWeight: 'bold'},
+            duration: 3000,
           });
+          return;
         }
-      }
-    } catch (e) {
-      console.log(e);
-      errorSound.play();
-      showMessage({
-        message: 'İnternet əlaqəsini yoxlayın',
-        type: 'danger',
+        const {name, surname} = user;
+        const {weight, shop, width, height, length} = order;
+        showMessage({
+          titleStyle: {fontSize: 18, fontWeight: 'bold'},
+          message: `Uğurla əlavə olundu\n---------------\n${name} ${surname}\n\nMağaza: ${shop}\n\nÇəki: ${weight} kq\n\nÖlçü: ${width}x${height}x${length} sm`,
+          type: 'success',
+          duration: 6000,
+          textStyle: {fontSize: 18, fontWeight: 'bold'},
+        });
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -151,10 +98,6 @@ const WarehouseScreen = ({onSuccessTaked, route}) => {
     ? 'Rəf yoxlanılır...'
     : 'Bağlama rəfə əlavə olunur...';
 
-  const onScan = (data) => {
-    onSuccess(data);
-  };
-
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <TopNavigation
@@ -165,10 +108,10 @@ const WarehouseScreen = ({onSuccessTaked, route}) => {
       />
       <Divider />
       <Scanner
-        onScan={onScan}
+        onScan={onSuccess}
         topContent={
           <ShelfTopContent
-            isLoading={isLoading}
+            // isLoading={isLoading}
             hasCurrentSection={hasCurrentSection}
             currentSection={currentSection}
             topContentLoadingText={topContentLoadingText}
@@ -180,4 +123,13 @@ const WarehouseScreen = ({onSuccessTaked, route}) => {
   );
 };
 
-export default WarehouseScreen;
+const mapStateToProps = (state) => ({
+  isLoading: state.shelf.isLoading,
+});
+
+const mapDispatchToProps = {
+  postSectionDataAction,
+  postOrderDataAction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WarehouseScreen);

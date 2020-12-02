@@ -28,6 +28,7 @@ import WarehouseSendingsScreen from 'screens/warehouseSendings/warehouseSendings
 import WarehouseSendingsDetailsScreen from 'screens/warehouseSendingsDetails/warehouseSendingsDetails.component';
 import OpenWarehouseSackScreen from 'screens/openWarehouseSack/openWarehouseSack.component';
 import {fetchUserAction} from 'actions/user';
+import {useSocket} from 'hooks/useSocket';
 
 const {
   Navigator: DrawerNavigator,
@@ -111,7 +112,7 @@ const HomeNavigator = ({permissions}) => {
         <DrawerScreen
           name="Home"
           component={HomeStack}
-          options={{title: 'Növbələr', unmountOnBlur: true}}
+          options={{title: 'Növbələr'}}
         />
         <DrawerScreen
           name="Settings"
@@ -123,7 +124,7 @@ const HomeNavigator = ({permissions}) => {
           component={WarehouseStack}
           options={{unmountOnBlur: true, title: 'Bağlamaları rəflə'}}
         />
-        <DrawerScreen
+        {/* <DrawerScreen
           name="UserDetail"
           component={UserDetailStack}
           options={{title: 'İstifadəçi məlumatları', unmountOnBlur: true}}
@@ -137,7 +138,7 @@ const HomeNavigator = ({permissions}) => {
           name="WarehouseSendings"
           component={WarehouseSendingsStack}
           options={{title: 'Göndərişi rəflə', unmountOnBlur: true}}
-        />
+        /> */}
       </DrawerNavigator>
     </Connection>
   );

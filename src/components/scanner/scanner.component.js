@@ -9,10 +9,10 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import ScannerStyles from './scanner.styles';
 import LottieView from 'lottie-react-native';
 import SelectScanner from 'components/selectScanner/selectScanner.component';
-import KeepAwake from 'react-native-keep-awake';
 import CameraNotAuthorized from 'components/cameraNotAuthorized/cameraNotAuthorized.component';
 import {useDeviceEventEmitter} from 'hooks/useDeviceEventEmitter';
 import {useIsFocused} from '@react-navigation/native';
+import {useKeepAwake} from 'hooks/useKeepAwake';
 
 const Scanner = ({topContent, onScan}) => {
   const qrRef = React.useRef(null);
@@ -20,18 +20,11 @@ const Scanner = ({topContent, onScan}) => {
   const [currentScanner, setCurrentScanner] = React.useState(null);
   const [flashOn, setFlashOn] = React.useState(false);
 
-  React.useEffect(() => {
-    KeepAwake.activate();
-    return () => {
-      KeepAwake.deactivate();
-    };
-  }, []);
-
   const onScanCamera = (data) => {
     onScan?.(data.data);
     setTimeout(() => {
       qrRef?.current?.reactivate?.();
-    }, 2000);
+    }, 1000);
   };
 
   const onScanInfraredScanner = React.useCallback(
@@ -42,6 +35,7 @@ const Scanner = ({topContent, onScan}) => {
   );
 
   useDeviceEventEmitter('Scan', onScanInfraredScanner);
+  useKeepAwake();
 
   const fetchCurrentScanner = React.useCallback(async () => {
     const newCurrentScanner = await getCurrentScanner();

@@ -5,6 +5,14 @@ const ConnectionStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  socketContainer: {
+    position: 'absolute',
+    width: '90%',
+    alignSelf: 'center',
+    bottom: 20,
+    borderRadius: 5,
+    padding: 10,
+  },
   innerContainer: {
     position: 'absolute',
     width: '100%',

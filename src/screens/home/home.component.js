@@ -11,12 +11,9 @@ import {useNotification, useNotificationOpen} from 'hooks/useNotification';
 
 import HomeStyles from './home.styles';
 import {notificationSound} from 'helpers/Sounds';
-import {useSocket} from 'hooks/useSocket';
 
 const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
   const [hasActiveQueue, setHasActiveQueue] = React.useState(false);
-
-  const {isConnected} = useSocket();
 
   const dispatch = useDispatch();
 
@@ -79,7 +76,7 @@ const HomeScreen = ({navigation, fetchQueueList, isLoading, queues}) => {
   return (
     <SafeAreaView style={HomeStyles.container}>
       <TopNavigation
-        title={`Növbələr ${isConnected ? 'online' : 'offline'}`}
+        title="Növbələr"
         alignment="center"
         accessoryLeft={MenuButton}
         accessoryRight={SignOutButton}
