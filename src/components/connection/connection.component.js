@@ -20,8 +20,6 @@ const Connection = ({children}) => {
     }
   }, []);
 
-  React.useEffect(() => {}, [isConnected]);
-
   if (firstUpdate.current) {
     return children;
   }

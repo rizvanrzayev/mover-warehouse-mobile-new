@@ -124,7 +124,7 @@ const HomeNavigator = ({permissions}) => {
           component={WarehouseStack}
           options={{unmountOnBlur: true, title: 'Bağlamaları rəflə'}}
         />
-        {/* <DrawerScreen
+        <DrawerScreen
           name="UserDetail"
           component={UserDetailStack}
           options={{title: 'İstifadəçi məlumatları', unmountOnBlur: true}}
@@ -138,7 +138,7 @@ const HomeNavigator = ({permissions}) => {
           name="WarehouseSendings"
           component={WarehouseSendingsStack}
           options={{title: 'Göndərişi rəflə', unmountOnBlur: true}}
-        /> */}
+        />
       </DrawerNavigator>
     </Connection>
   );

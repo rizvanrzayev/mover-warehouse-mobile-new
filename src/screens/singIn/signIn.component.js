@@ -34,10 +34,6 @@ const SignInScreen = ({postSignInAction, isLoading}) => {
     passwordInputRef.current.focus();
   };
 
-  React.useLayoutEffect(() => {
-    startApp();
-  }, []);
-
   const onPressSignIn = async () => {
     if (email.length === 0 || password.length === 0) {
       return;
@@ -45,8 +41,10 @@ const SignInScreen = ({postSignInAction, isLoading}) => {
     const fcmToken = await firebase.messaging().getToken();
     const data = {email, password, fcm_token: fcmToken};
 
-    postSignInAction(data, (token) => {
-      signIn(token);
+    requestAnimationFrame(() => {
+      postSignInAction(data, (token) => {
+        signIn(token);
+      });
     });
   };
 
