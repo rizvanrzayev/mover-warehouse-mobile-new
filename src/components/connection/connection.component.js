@@ -27,7 +27,7 @@ const Connection = ({children}) => {
   return (
     <View style={ConnectionStyles.container}>
       {children}
-      <Animated.View
+      {/* <Animated.View
         style={[
           ConnectionStyles.socketContainer,
           {backgroundColor: isConnected ? '#5DEAA4' : '#E03E26'},
@@ -35,7 +35,7 @@ const Connection = ({children}) => {
         <Text status="control">
           Siz hal-hazırda {isConnected ? 'online' : 'offline'}-sınız.
         </Text>
-      </Animated.View>
+      </Animated.View> */}
       {!netInfo.isConnected && (
         <View style={ConnectionStyles.innerContainer}>
           <View style={ConnectionStyles.noInternetContainer}>

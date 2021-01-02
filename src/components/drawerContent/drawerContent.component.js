@@ -23,39 +23,28 @@ const DrawerContent = (props) => {
         <Permissions fallbackElement={null} allowed={['queue']}>
           <DrawerItem
             selected={state.index === 0}
-            title="Növbələr"
-            onPress={(_, event) => onPressItem('Home', event)}
+            title="Bağlamaları rəflə"
+            onPress={(_, event) => onPressItem('NewShelfOrders', event)}
+          />
+        </Permissions>
+        <Permissions fallbackElement={null} allowed={['queue']}>
+          <DrawerItem
+            selected={state.index === 1}
+            title="Bağlamaları paketlə"
+            onPress={(_, event) => onPressItem('NewPackagingOrders', event)}
+          />
+        </Permissions>
+        <Permissions fallbackElement={null} allowed={['queue']}>
+          <DrawerItem
+            selected={state.index === 2}
+            title="Bağlamaları çuvalla"
+            onPress={(_, event) => onPressItem('NewSackingOrders', event)}
           />
         </Permissions>
         <DrawerItem
           title="Ayarlar"
           onPress={(_, event) => onPressItem('Settings', event)}
         />
-        <Permissions fallbackElement={null} allowed={['shelf']}>
-          <DrawerItem
-            selected={state.index === 2}
-            title="Bağlamaları rəflə"
-            onPress={(_, event) => onPressItem('Warehouse', event)}
-          />
-        </Permissions>
-        <DrawerItem
-          title="İstifadəçi məlumatları"
-          onPress={(_, event) => onPressItem('UserDetail', event)}
-        />
-        <Permissions fallbackElement={null} allowed={['sendings']}>
-          <DrawerItem
-            selected={state.index === 4}
-            title="Göndərişlər"
-            onPress={(_, event) => onPressItem('Sendings', event)}
-          />
-        </Permissions>
-        <Permissions fallbackElement={null} allowed={['shelf']}>
-          <DrawerItem
-            selected={state.index === 5}
-            title="Göndərişi rəflə"
-            onPress={(_, event) => onPressItem('WarehouseSendings', event)}
-          />
-        </Permissions>
       </Drawer>
     </SafeAreaView>
   );

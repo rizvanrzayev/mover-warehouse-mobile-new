@@ -30,6 +30,12 @@ export const API_ROUTES = {
   addOrderToSack: 'sorting/sack/order/add',
   selectShelf: 'worker/select-shelf',
   addToShelf: 'worker/add-to-shelf',
+  queuePrepare: 'sorter/queue-prepare',
+  selectPackage: 'sorter/create-package',
+  putPackage: 'sorter/put-the-package',
+  printPackage: 'sorter/print-the-packaging-complete',
+  removePackage: 'sorter/remove-package',
+  endPackaging: 'sorter/end-packing',
 };
 
 const notAuthRequiredUrls = ['worker/login'];

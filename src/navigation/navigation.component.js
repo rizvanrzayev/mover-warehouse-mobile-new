@@ -29,6 +29,10 @@ import WarehouseSendingsDetailsScreen from 'screens/warehouseSendingsDetails/war
 import OpenWarehouseSackScreen from 'screens/openWarehouseSack/openWarehouseSack.component';
 import {fetchUserAction} from 'actions/user';
 import {useSocket} from 'hooks/useSocket';
+import NewShelfOrdersScreen from 'screens/newShelfOrders/newShelfOrders.component';
+import NewPackagingOrdersScreen from 'screens/newPackagingOrders/newPackagingOrders.component';
+import NewPackagingOrdersCreateScreen from 'screens/newPackagingOrdersCreate/newPackagingOrdersCreate.component';
+import NewSackingOrdersScreen from 'screens/newSackingOrders/newSackingOrders.component';
 
 const {
   Navigator: DrawerNavigator,
@@ -45,6 +49,28 @@ const HomeStack = () => (
     <Screen name="ShelfPreparedOrders" component={ShelfPreparedOrdersScreen} />
     <Screen name="ShelfOrders" component={ShelfOrdersScreen} />
     <Screen name="AcceptOrder" component={AcceptOrderScreen} />
+  </Navigator>
+);
+
+const NewShelfOrdersStack = () => (
+  <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
+    <Screen name="NewShelfOrders" component={NewShelfOrdersScreen} />
+  </Navigator>
+);
+
+const NewPackagingOrdersStack = () => (
+  <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
+    <Screen name="NewPackagingOrders" component={NewPackagingOrdersScreen} />
+    <Screen
+      name="NewPackagingOrdersCreate"
+      component={NewPackagingOrdersCreateScreen}
+    />
+  </Navigator>
+);
+
+const NewSackingOrdersStack = () => (
+  <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
+    <Screen name="NewSackingOrders" component={NewSackingOrdersScreen} />
   </Navigator>
 );
 
@@ -110,14 +136,29 @@ const HomeNavigator = ({permissions}) => {
         screenOptions={{animationEnabled: false}}
         drawerContent={(props) => <DrawerContent {...props} />}>
         <DrawerScreen
-          name="Home"
-          component={HomeStack}
-          options={{title: 'Növbələr'}}
+          name="NewShelfOrders"
+          component={NewShelfOrdersStack}
+          options={{unmountOnBlur: true, title: 'Bağlamaları rəflə'}}
+        />
+        <DrawerScreen
+          name="NewPackagingOrders"
+          component={NewPackagingOrdersStack}
+          options={{unmountOnBlur: true, title: 'Bağlamaları paketlə'}}
+        />
+        <DrawerScreen
+          name="NewSackingOrders"
+          component={NewSackingOrdersStack}
+          options={{unmountOnBlur: true, title: 'Bağlamaları çuvalla'}}
         />
         <DrawerScreen
           name="Settings"
           component={SettingsStack}
           options={{title: 'Ayarlar', unmountOnBlur: true}}
+        />
+        {/* <DrawerScreen
+          name="Home"
+          component={HomeStack}
+          options={{title: 'Növbələr'}}
         />
         <DrawerScreen
           name="Warehouse"
@@ -138,7 +179,7 @@ const HomeNavigator = ({permissions}) => {
           name="WarehouseSendings"
           component={WarehouseSendingsStack}
           options={{title: 'Göndərişi rəflə', unmountOnBlur: true}}
-        />
+        /> */}
       </DrawerNavigator>
     </Connection>
   );

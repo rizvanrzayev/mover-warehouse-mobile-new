@@ -8,6 +8,7 @@ import sendings from './sendings';
 import sack from './sack';
 import sackOrder from './sackOrder';
 import shelf from './shelf';
+import packaging from './packaging';
 import {reducer as permissions} from 'react-redux-permissions';
 
 export default combineReducers({
@@ -21,4 +22,5 @@ export default combineReducers({
   sack,
   sackOrder,
   shelf,
+  packaging,
 });

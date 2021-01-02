@@ -14,7 +14,7 @@ import {useDeviceEventEmitter} from 'hooks/useDeviceEventEmitter';
 import {useIsFocused} from '@react-navigation/native';
 import {useKeepAwake} from 'hooks/useKeepAwake';
 
-const Scanner = ({topContent, onScan}) => {
+const Scanner = ({topContent, onScan, showContent = true}) => {
   const qrRef = React.useRef(null);
 
   const [currentScanner, setCurrentScanner] = React.useState(null);
@@ -133,6 +133,9 @@ const Scanner = ({topContent, onScan}) => {
     }
   };
 
+  if (!showContent) {
+    return null;
+  }
   return <View style={ScannerStyles.container}>{renderScanner()}</View>;
 };
 
