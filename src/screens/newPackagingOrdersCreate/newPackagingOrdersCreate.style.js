@@ -5,10 +5,13 @@ const NewPackagingOrdersCreateScreenStyles = StyleSheet.create({
     flex: 1,
   },
   queueInfoContainer: {
-    backgroundColor: 'gray',
-    borderRadius: 10,
     padding: 10,
-    margin: 15,
+    backgroundColor: '#42AAFF',
+  },
+  queueInfo: {
+    fontSize: 19,
+    fontWeight: 'bold',
+    alignSelf: 'center',
   },
   itemContainer: {
     marginBottom: 10,

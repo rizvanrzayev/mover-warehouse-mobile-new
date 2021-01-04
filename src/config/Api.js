@@ -36,6 +36,8 @@ export const API_ROUTES = {
   printPackage: 'sorter/print-the-packaging-complete',
   removePackage: 'sorter/remove-package',
   endPackaging: 'sorter/end-packing',
+  sackAdd: 'sorter/sacks/add',
+  shelvingCreate: 'shelving/create',
 };
 
 const notAuthRequiredUrls = ['worker/login'];

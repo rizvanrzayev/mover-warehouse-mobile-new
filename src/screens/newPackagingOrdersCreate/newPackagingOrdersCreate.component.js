@@ -37,26 +37,28 @@ const NewPackagingOrdersCreateScreen = ({
     fetchPrepareData(sendingId, sortPrepareId);
   }, [sendingId, sortPrepareId, fetchPrepareData]);
 
-  const removePackage = async (packageId) => {
-    const response = await ApiClient.get(
-      `${API_ROUTES.removePackage}/${packageId}`,
-    );
-    const {status, message} = response.data;
-    if (status) {
-      fetchPrepareData(sendingId, sortPrepareId);
-    }
-    showMessage({
-      message,
-      type: status ? 'success' : 'danger',
-    });
-  };
-
-  const onPressDeletePackage = (id) => {
-    Alert.alert('Diqqət!', 'Bu paketi silmək istədiyinizdən əminsiniz?', [
-      {text: 'Bəli', style: 'destructive', onPress: () => removePackage(id)},
-      {text: 'Xeyr'},
-    ]);
-  };
+  const onPressDeletePackage = useCallback(
+    (id) => {
+      const removePackage = async (packageId) => {
+        const response = await ApiClient.get(
+          `${API_ROUTES.removePackage}/${packageId}`,
+        );
+        const {status, message} = response.data;
+        if (status) {
+          fetchPrepareData(sendingId, sortPrepareId);
+        }
+        showMessage({
+          message,
+          type: status ? 'success' : 'danger',
+        });
+      };
+      Alert.alert('Diqqət!', 'Bu paketi silmək istədiyinizdən əminsiniz?', [
+        {text: 'Bəli', style: 'destructive', onPress: () => removePackage(id)},
+        {text: 'Xeyr'},
+      ]);
+    },
+    [fetchPrepareData, sendingId, sortPrepareId],
+  );
 
   const onPressCompletePackaging = async () => {
     const response = await ApiClient.get(
@@ -146,11 +148,12 @@ const NewPackagingOrdersCreateScreen = ({
     const newUserId = id + 100000;
     return (
       <View style={NewPackagingOrdersCreateScreenStyles.queueInfoContainer}>
-        <Text>{newUserId}</Text>
-        <Text>
-          {name} {surname}
+        <Text
+          status="control"
+          style={NewPackagingOrdersCreateScreenStyles.queueInfo}>
+          {newUserId} - {name} {surname} -{' '}
+          {`${sortOrder.length}/${totalSorted}`}
         </Text>
-        <Text>{`${sortOrder.length}/${totalSorted}`}</Text>
       </View>
     );
   };
@@ -179,34 +182,37 @@ const NewPackagingOrdersCreateScreen = ({
     [onPressItemSelectPackage, selectedPackageId],
   );
 
-  const Footer = useCallback((props) => {
-    const {id} = props.item;
-    return (
-      <View
-        {...props}
-        style={[
-          props.style,
-          NewPackagingOrdersCreateScreenStyles.footerContainer,
-        ]}>
-        <Button
-          style={NewPackagingOrdersCreateScreenStyles.footerControl}
-          size="small"
-          status="info"
-          onPress={() => printPackageLabel(id)}>
-          ÇAP ET
-        </Button>
-        <Button
+  const Footer = useCallback(
+    (props) => {
+      const {id} = props.item;
+      return (
+        <View
+          {...props}
           style={[
-            NewPackagingOrdersCreateScreenStyles.footerControl,
-            {marginTop: 10},
-          ]}
-          size="small"
-          onPress={() => onPressDeletePackage(id)}>
-          SİL
-        </Button>
-      </View>
-    );
-  }, []);
+            props.style,
+            NewPackagingOrdersCreateScreenStyles.footerContainer,
+          ]}>
+          <Button
+            style={NewPackagingOrdersCreateScreenStyles.footerControl}
+            size="small"
+            status="info"
+            onPress={() => printPackageLabel(id)}>
+            ÇAP ET
+          </Button>
+          <Button
+            style={[
+              NewPackagingOrdersCreateScreenStyles.footerControl,
+              {marginTop: 10},
+            ]}
+            size="small"
+            onPress={() => onPressDeletePackage(id)}>
+            SİL
+          </Button>
+        </View>
+      );
+    },
+    [onPressDeletePackage],
+  );
 
   const renderEmptyOrder = () => <Text>Bu paketdə heç bir bağlama yoxdur</Text>;
 

@@ -3,6 +3,7 @@ import emptyItemComponent from 'components/emptyItem/emptyItem.component';
 import {getCountry} from 'helpers/Countries';
 import React from 'react';
 import {RefreshControl, View} from 'react-native';
+import moment from 'moment';
 import SendingsListStyles from './sendingsList.styles';
 
 const SendingsList = ({data = [], isLoading, onRefresh, onPressItem}) => {
@@ -34,7 +35,7 @@ const SendingsList = ({data = [], isLoading, onRefresh, onPressItem}) => {
   };
 
   const renderItem = ({item}) => {
-    const {count, id} = item;
+    const {count, id, created_at} = item;
     return (
       <Card
         header={(props) => ItemHeader(props, item)}
@@ -43,7 +44,8 @@ const SendingsList = ({data = [], isLoading, onRefresh, onPressItem}) => {
         style={SendingsListStyles.itemContainer}
         onPress={() => onPressItem?.(id)}>
         <Text>
-          Çuval sayı: <Text category="s1">{count}</Text>
+          Bağlama sayı: <Text category="s1">{count}</Text> -{' '}
+          {moment(created_at).format('DD MM YYYY')}
         </Text>
       </Card>
     );
