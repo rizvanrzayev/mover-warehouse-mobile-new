@@ -11,6 +11,7 @@ import {fetchPrepareData} from 'actions/packaging';
 import BackButton from 'components/backButton/backButton.component';
 import Scanner from 'components/scanner/scanner.component';
 import {ApiClient, API_ROUTES} from 'config/Api';
+import {errorSound, successSound} from 'helpers/Sounds';
 import React from 'react';
 import {useCallback} from 'react';
 import {useMemo} from 'react';
@@ -32,6 +33,9 @@ const NewPackagingOrdersCreateScreen = ({
   const sortPrepareId = route.params?.sortPrepareId;
 
   const [selectedPackageId, setSelectedPackageId] = React.useState(null);
+  const [isCourier, setIsCourier] = React.useState(false);
+
+  const [printing, setPrinting] = React.useState(false);
 
   React.useLayoutEffect(() => {
     fetchPrepareData(sendingId, sortPrepareId);
@@ -76,8 +80,13 @@ const NewPackagingOrdersCreateScreen = ({
 
   const printPackageLabel = async (packageId) => {
     const data = {packageId};
-    const response = await ApiClient.post(`${API_ROUTES.printPackage}`, data);
-    console.log(response.data);
+    setPrinting(true);
+    try {
+      const response = await ApiClient.post(`${API_ROUTES.printPackage}`, data);
+    } catch (e) {
+    } finally {
+      setPrinting(false);
+    }
   };
 
   const selectOrCreatePackage = useCallback(
@@ -91,7 +100,11 @@ const NewPackagingOrdersCreateScreen = ({
       if (status) {
         setSelectedPackageId(sortedPreparePackage.id);
         fetchPrepareData(sendingId, sortPrepareId);
+        successSound.play();
+      } else {
+        errorSound.play();
       }
+
       showMessage({
         message,
         type: status ? 'success' : 'danger',
@@ -110,9 +123,14 @@ const NewPackagingOrdersCreateScreen = ({
       `${API_ROUTES.putPackage}/${sendingId}/${sortPrepareId}`,
       data,
     );
-    const {status, message = ''} = response.data;
+    const {status, message = '', is_courier} = response.data;
+
     if (status) {
       fetchPrepareData(sendingId, sortPrepareId);
+      setIsCourier(is_courier);
+      successSound.play();
+    } else {
+      errorSound.play();
     }
     showMessage({
       message,
@@ -133,6 +151,7 @@ const NewPackagingOrdersCreateScreen = ({
       selectOrCreatePackage(data);
     } else {
       if (selectedPackageId === null) {
+        errorSound.play();
         showMessage({
           message: 'İlk öncə paketi oxudun',
           type: 'info',
@@ -196,8 +215,9 @@ const NewPackagingOrdersCreateScreen = ({
             style={NewPackagingOrdersCreateScreenStyles.footerControl}
             size="small"
             status="info"
+            disabled={printing}
             onPress={() => printPackageLabel(id)}>
-            ÇAP ET
+            {printing ? 'ÇAP EDİLİR' : 'ÇAP ET'}
           </Button>
           <Button
             style={[
@@ -211,7 +231,7 @@ const NewPackagingOrdersCreateScreen = ({
         </View>
       );
     },
-    [onPressDeletePackage],
+    [onPressDeletePackage, printing],
   );
 
   const renderEmptyOrder = () => <Text>Bu paketdə heç bir bağlama yoxdur</Text>;
@@ -220,7 +240,7 @@ const NewPackagingOrdersCreateScreen = ({
     const {id} = order;
     return (
       <View style={NewPackagingOrdersCreateScreenStyles.orderItemContainer}>
-        <Text key={order.id}>{id}</Text>
+        <Text>{id}</Text>
         <Divider />
       </View>
     );
@@ -269,6 +289,13 @@ const NewPackagingOrdersCreateScreen = ({
       <Divider />
       <View style={NewPackagingOrdersCreateScreenStyles.content}>
         {renderQueueInfo()}
+        {isCourier && (
+          <View style={NewPackagingOrdersCreateScreenStyles.courier}>
+            <Text status="h3" category="control">
+              Kuryer Sifarişi
+            </Text>
+          </View>
+        )}
         {useMemo(() => renderPackages(), [renderPackages])}
         <View style={NewPackagingOrdersCreateScreenStyles.completeContainer}>
           <Button status="success" onPress={onPressCompletePackaging}>

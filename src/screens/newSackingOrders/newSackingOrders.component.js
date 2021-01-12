@@ -12,6 +12,7 @@ import {showMessage} from 'react-native-flash-message';
 import {connect} from 'react-redux';
 import {errorSound, successSound} from 'helpers/Sounds';
 import NewSackingOrdersScreenStyles from './newSackingOrders.styles';
+import {isOrder, isCourierSack, isParcel} from 'helpers/Common';
 
 const NewSackingOrdersScreen = ({
   fetchSendingsList,
@@ -43,11 +44,9 @@ const NewSackingOrdersScreen = ({
     setSelectedSendingId(id);
   };
 
-  const isOrder = (data) => data.includes('-346');
-
   const onScan = useCallback(
     async (barcode) => {
-      if (isOrder(barcode) && !selectedSackId) {
+      if ((isOrder(barcode) || isParcel(barcode)) && !selectedSackId) {
         showMessage({
           message: 'Zəhmət olmasa əvvəlcə çuvalı oxudun',
           type: 'danger',
@@ -56,25 +55,39 @@ const NewSackingOrdersScreen = ({
         return;
       }
 
-      const payload = {
-        sending_id: selectedSendingId,
-        barcode,
-      };
+      const payload = {};
+
+      payload.barcode = barcode;
 
       if (selectedSackId) {
         payload.sack_id = selectedSackId;
       }
 
-      const response = await ApiClient.post(API_ROUTES.sackAdd, payload);
-      const {status, sack_id, message} = response.data;
-      if (status && sack_id) {
-        setSelectedSackId(sack_id);
+      let response;
+      try {
+        // COURIER SACKS
+        if (isCourierSack(barcode)) {
+          response = await ApiClient.get(`${API_ROUTES.sorterSack}/${barcode}`);
+        } else if (isCourierSack(selectedSackId) && selectedSackId) {
+          response = await ApiClient.post(
+            `${API_ROUTES.sorterSacking}/${selectedSackId.replace('-446', '')}`,
+            payload,
+          );
+        } else {
+          payload.sending_id = selectedSendingId;
+          response = await ApiClient.post(API_ROUTES.sackAdd, payload);
+        }
+      } catch (e) {}
+
+      const {status, success, sack_id, sack, message} = response.data;
+      if ((status || success) && (sack_id || sack?.id)) {
+        setSelectedSackId(sack_id || `${sack?.id}-446`);
       }
       showMessage({
         message,
-        type: status ? 'success' : 'danger',
+        type: status || success ? 'success' : 'danger',
       });
-      status ? successSound.play() : errorSound.play();
+      status || success ? successSound.play() : errorSound.play();
     },
     [selectedSackId, selectedSendingId],
   );
@@ -82,7 +95,7 @@ const NewSackingOrdersScreen = ({
   const renderContent = useCallback(() => {
     if (selectedSendingId === null) {
       return (
-        <View>
+        <View style={NewSackingOrdersScreenStyles.sendingsContainer}>
           <Text
             category="h5"
             status="info"
@@ -111,7 +124,7 @@ const NewSackingOrdersScreen = ({
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <TopNavigation
-        title="Bağlamaları çuvalla"
+        title="Çuvalla"
         alignment="center"
         accessoryLeft={MenuButton}
       />

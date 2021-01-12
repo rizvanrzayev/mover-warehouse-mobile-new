@@ -8,6 +8,12 @@ const NewSackingOrdersScreenStyles = StyleSheet.create({
     backgroundColor: '#42AAFF',
     width: '100%',
   },
+  sendingsContainer: {
+    flex: 1,
+  },
+  titleSending: {
+    margin: 10,
+  },
 });
 
 export default NewSackingOrdersScreenStyles;

@@ -13,6 +13,7 @@ const ShelfTopContentStyles = StyleSheet.create({
   },
   topContentTitle: {
     color: 'rgba(255, 255, 255, 0.5)',
+    textAlign: 'center',
   },
   section: {
     color: 'white',
@@ -32,9 +33,12 @@ const ShelfTopContentStyles = StyleSheet.create({
     backgroundColor: '#42AAFF',
     width: '100%',
   },
+  topContentContainer: {
+    width: '90%',
+  },
   topContentSectionContainer: {
     alignItems: 'center',
-    // marginBottom: 20,
+    // paddingHorizontal: 20,
   },
 });
 

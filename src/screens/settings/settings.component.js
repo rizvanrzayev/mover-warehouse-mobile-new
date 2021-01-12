@@ -148,7 +148,7 @@ const SettingsScreen = ({navigation}) => {
         title="Ayarlar"
         alignment="center"
         accessoryLeft={MenuButton}
-        accessoryRight={UpdateAction}
+        // accessoryRight={UpdateAction}
       />
       <Divider />
       <ListItem

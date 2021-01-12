@@ -26,6 +26,12 @@ const NewPackagingOrdersCreateScreenStyles = StyleSheet.create({
   completeContainer: {
     padding: 10,
   },
+  courier: {
+    width: '100%',
+    padding: 10,
+    backgroundColor: '#BE233B',
+    alignItems: 'center',
+  },
 });
 
 export default NewPackagingOrdersCreateScreenStyles;

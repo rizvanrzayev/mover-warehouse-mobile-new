@@ -23,7 +23,7 @@ const DrawerContent = (props) => {
         <Permissions fallbackElement={null} allowed={['queue']}>
           <DrawerItem
             selected={state.index === 0}
-            title="Bağlamaları rəflə"
+            title="Rəflə"
             onPress={(_, event) => onPressItem('NewShelfOrders', event)}
           />
         </Permissions>
@@ -37,7 +37,7 @@ const DrawerContent = (props) => {
         <Permissions fallbackElement={null} allowed={['queue']}>
           <DrawerItem
             selected={state.index === 2}
-            title="Bağlamaları çuvalla"
+            title="Çuvalla"
             onPress={(_, event) => onPressItem('NewSackingOrders', event)}
           />
         </Permissions>

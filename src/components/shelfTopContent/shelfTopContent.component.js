@@ -21,7 +21,7 @@ const ShelfTopContent = ({
             </Text>
           </Text>
           <Text category="p2" style={ShelfTopContentStyles.info}>
-            Əlavə olunacağ bağlamalar bu rəfə yerləşdiriləcək.
+            Oxudulan məhlullar bu rəfə yerləşdiriləcək.
           </Text>
         </View>
       )}

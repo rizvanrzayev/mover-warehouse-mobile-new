@@ -38,6 +38,9 @@ export const API_ROUTES = {
   endPackaging: 'sorter/end-packing',
   sackAdd: 'sorter/sacks/add',
   shelvingCreate: 'shelving/create',
+  shelvingParcel: 'shelving/parcel',
+  sorterSack: 'sack',
+  sorterSacking: 'sorter/sacking',
 };
 
 const notAuthRequiredUrls = ['worker/login'];
@@ -59,6 +62,7 @@ export const configureResponseInterceptors = (onUnauth) => {
       return response;
     },
     function (error) {
+      console.log('error?.response: ', error?.response);
       if (error?.response?.status === 401) {
         onUnauth();
       }

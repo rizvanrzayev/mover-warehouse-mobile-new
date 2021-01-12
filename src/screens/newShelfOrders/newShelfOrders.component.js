@@ -12,9 +12,10 @@ import Scanner from 'components/scanner/scanner.component';
 import SendingsList from 'components/sendingsList/sendingsList.component';
 import ShelfTopContent from 'components/shelfTopContent/shelfTopContent.component';
 import {ApiClient, API_ROUTES} from 'config/Api';
+import {isCourierSack, isParcel} from 'helpers/Common';
 import React, {useCallback} from 'react';
 import {useMemo} from 'react';
-import {Image, SafeAreaView, View} from 'react-native';
+import {Alert, Image, SafeAreaView, View} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import Sound from 'react-native-sound';
 import {connect} from 'react-redux';
@@ -22,8 +23,12 @@ import NewShelfOrdersStyles from './newShelfOrders.styles';
 
 const SECTION_ERROR = 'Əvvəlcə rəfi oxudun';
 
-const NewShelfOrdersScreen = ({fetchSendingsList, sendings, navigation}) => {
-  const [isLoading, setIsLoading] = React.useState(false);
+const NewShelfOrdersScreen = ({
+  fetchSendingsList,
+  sendings,
+  navigation,
+  isLoading,
+}) => {
   const [selectedSection, setSelectedSection] = React.useState(null);
 
   const [queueData, setQueueData] = React.useState(null);
@@ -41,7 +46,7 @@ const NewShelfOrdersScreen = ({fetchSendingsList, sendings, navigation}) => {
   const onScan = useCallback(
     async (data) => {
       const checkIsSection = (section) => isCharacterALetter(section.charAt(0));
-      const isSection = checkIsSection(data);
+      const isSection = checkIsSection(data) && !isParcel(data);
       if (!isSection && !selectedSection) {
         showMessage({
           message: SECTION_ERROR,
@@ -54,9 +59,11 @@ const NewShelfOrdersScreen = ({fetchSendingsList, sendings, navigation}) => {
         });
         return;
       }
-      const payload = {
-        sending_id: selectedSendingId,
-      };
+      const payload = {};
+
+      if (!isParcel(data)) {
+        payload.sending_id = selectedSendingId;
+      }
 
       if (isSection) {
         payload.barcode = data;
@@ -65,48 +72,59 @@ const NewShelfOrdersScreen = ({fetchSendingsList, sendings, navigation}) => {
         payload.barcode = data;
       }
 
-      const response = await ApiClient.post(API_ROUTES.shelvingCreate, payload);
+      try {
+        const response = await ApiClient.post(
+          isParcel(data) || isCourierSack(data)
+            ? API_ROUTES.shelvingParcel
+            : API_ROUTES.shelvingCreate,
+          payload,
+        );
 
-      console.log(payload);
-      console.log(response.data);
+        console.log(payload);
+        console.log(response.data);
 
-      const {
-        success,
-        message,
-        is_pack,
-        qr,
-        queue,
-        data: orderSections,
-      } = response.data;
+        const {
+          success,
+          message,
+          is_pack,
+          qr,
+          queue,
+          data: orderSections,
+        } = response.data;
 
-      if (is_pack) {
-        const newQueueData = {qr, queue, orderSections};
-        setQueueData(newQueueData);
-        return;
-      }
+        if (is_pack) {
+          const newQueueData = {qr, queue, orderSections};
+          setQueueData(newQueueData);
+          return;
+        }
 
-      if (isSection) {
-        setSelectedSection(response.data.data.section);
-      }
+        if (isSection) {
+          setSelectedSection(response.data.data.section);
+        }
 
-      showMessage({
-        message,
-        type: success ? 'success' : 'danger',
-      });
-
-      if (success) {
-        const clearlySound = new Sound('clearly.mp3', Sound.MAIN_BUNDLE, () => {
-          clearlySound.play(() => {
-            clearlySound.release();
-          });
+        showMessage({
+          message,
+          type: success ? 'success' : 'danger',
         });
-      } else {
-        const errorSound = new Sound('unknown.mp3', Sound.MAIN_BUNDLE, () => {
-          errorSound.play(() => {
-            errorSound.release();
+
+        if (success) {
+          const clearlySound = new Sound(
+            'clearly.mp3',
+            Sound.MAIN_BUNDLE,
+            () => {
+              clearlySound.play(() => {
+                clearlySound.release();
+              });
+            },
+          );
+        } else {
+          const errorSound = new Sound('unknown.mp3', Sound.MAIN_BUNDLE, () => {
+            errorSound.play(() => {
+              errorSound.release();
+            });
           });
-        });
-      }
+        }
+      } catch (e) {}
     },
     [selectedSection, selectedSendingId],
   );
@@ -118,7 +136,7 @@ const NewShelfOrdersScreen = ({fetchSendingsList, sendings, navigation}) => {
   const renderContent = useCallback(() => {
     const hasCurrentSection = selectedSection !== null;
     const topContentTitle = hasCurrentSection
-      ? 'Oxuyucunu bağlamaya yaxınlaşdırın'
+      ? 'Oxuyucunu bağlamaya, paketə və ya çuvala yaxınlaşdırın'
       : 'Oxuyucunu rəfə yaxınlaşdırın';
 
     const topContentLoadingText = !hasCurrentSection
@@ -126,10 +144,11 @@ const NewShelfOrdersScreen = ({fetchSendingsList, sendings, navigation}) => {
       : 'Bağlama rəfə əlavə olunur...';
     if (selectedSendingId === null) {
       return (
-        <View>
+        <View style={NewShelfOrdersStyles.sendingsContainer}>
           <Text
             category="h5"
             status="info"
+            style={NewShelfOrdersStyles.sendingsTitle}
             // style={NewShelfOrdersScreenStyles.titleSending}
           >
             Göndəriş seçin
@@ -171,7 +190,8 @@ const NewShelfOrdersScreen = ({fetchSendingsList, sendings, navigation}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <TopNavigation
-        title="Bağlamaları rəflə"
+        title="Rəflə"
+        subtitle="Bağlama, paket, çuval"
         alignment="center"
         accessoryLeft={MenuButton}
       />
@@ -213,7 +233,9 @@ const NewShelfOrdersScreen = ({fetchSendingsList, sendings, navigation}) => {
                 source={{uri: base64QR}}
                 style={NewShelfOrdersStyles.queueQR}
               />
-              <Button onPress={() => setQueueData(null)}>DISMISS</Button>
+              <Button status="success" onPress={() => setQueueData(null)}>
+                PAKETÇİYƏ TƏHVİL VERDİM
+              </Button>
             </Card>
           </Modal>
         ),

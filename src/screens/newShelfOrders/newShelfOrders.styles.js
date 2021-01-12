@@ -41,6 +41,12 @@ const NewShelfOrdersStyles = StyleSheet.create({
     marginBottom: 10,
     justifyContent: 'center',
   },
+  sendingsContainer: {
+    flex: 1,
+  },
+  sendingsTitle: {
+    margin: 10,
+  },
 });
 
 export default NewShelfOrdersStyles;
