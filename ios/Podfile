@@ -3,8 +3,8 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'MoverWarehouse' do
-  # Pods for MoverWarehouse
+target 'MoverSorting' do
+  # Pods for MoverSorting
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
@@ -29,7 +29,7 @@ target 'MoverWarehouse' do
 
 
 
-  target 'MoverWarehouseTests' do
+  target 'MoverSortingTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -44,10 +44,10 @@ target 'MoverWarehouse' do
   end
 end
 
-target 'MoverWarehouse-tvOS' do
-  # Pods for MoverWarehouse-tvOS
+target 'MoverSorting-tvOS' do
+  # Pods for MoverSorting-tvOS
 
-  target 'MoverWarehouse-tvOSTests' do
+  target 'MoverSorting-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

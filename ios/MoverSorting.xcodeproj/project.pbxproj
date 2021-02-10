@@ -7,18 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* MoverWarehouseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MoverWarehouseTests.m */; };
-		0D773A24174AE65D03588F51 /* libPods-MoverWarehouse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1795F997747CCEEE239BDF92 /* libPods-MoverWarehouse.a */; };
+		00E356F31AD99517003FC87E /* MoverSortingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MoverSortingTests.m */; };
+		0D773A24174AE65D03588F51 /* libPods-MoverSorting.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1795F997747CCEEE239BDF92 /* libPods-MoverSorting.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2DCD954D1E0B4F2C00145EB5 /* MoverWarehouseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MoverWarehouseTests.m */; };
-		2ECA5737A3689A3DF3567AFA /* libPods-MoverWarehouse-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED1ED166AB822CCB71DF67CE /* libPods-MoverWarehouse-tvOSTests.a */; };
-		3EC3BCEA912471395840AA8B /* libPods-MoverWarehouse-MoverWarehouseTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEFFD7A61A3F8F106E55E13B /* libPods-MoverWarehouse-MoverWarehouseTests.a */; };
-		A8A26D088367BF6E8500ECB2 /* libPods-MoverWarehouse-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893A5779952034F7E4FFFC2B /* libPods-MoverWarehouse-tvOS.a */; };
+		2DCD954D1E0B4F2C00145EB5 /* MoverSortingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MoverSortingTests.m */; };
+		2ECA5737A3689A3DF3567AFA /* libPods-MoverSorting-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED1ED166AB822CCB71DF67CE /* libPods-MoverSorting-tvOSTests.a */; };
+		3EC3BCEA912471395840AA8B /* libPods-MoverSorting-MoverSortingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEFFD7A61A3F8F106E55E13B /* libPods-MoverSorting-MoverSortingTests.a */; };
+		A8A26D088367BF6E8500ECB2 /* libPods-MoverSorting-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893A5779952034F7E4FFFC2B /* libPods-MoverSorting-tvOS.a */; };
 		F14CAC2024F15D6200CA719E /* clearly.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F14CAC1D24F15D6200CA719E /* clearly.mp3 */; };
 		F163444324F1608D00FED234 /* notification.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F163444224F1608D00FED234 /* notification.mp3 */; };
 		F163444524F160AA00FED234 /* section.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F163444424F160AA00FED234 /* section.mp3 */; };
@@ -34,51 +34,51 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = MoverWarehouse;
+			remoteInfo = MoverSorting;
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "MoverWarehouse-tvOS";
+			remoteInfo = "MoverSorting-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* MoverWarehouseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoverWarehouseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* MoverSortingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoverSortingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* MoverWarehouseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoverWarehouseTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* MoverWarehouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoverWarehouse.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MoverWarehouse/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MoverWarehouse/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MoverWarehouse/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MoverWarehouse/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MoverWarehouse/main.m; sourceTree = "<group>"; };
-		1795F997747CCEEE239BDF92 /* libPods-MoverWarehouse.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MoverWarehouse.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E47B1E0B4A5D006451C7 /* MoverWarehouse-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MoverWarehouse-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* MoverWarehouse-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoverWarehouse-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3497BB60EAE321C89E53C50E /* Pods-MoverWarehouse-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverWarehouse-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-MoverWarehouse-tvOS/Pods-MoverWarehouse-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		6541560F926BE17D6AC8EEF0 /* Pods-MoverWarehouse-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverWarehouse-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-MoverWarehouse-tvOSTests/Pods-MoverWarehouse-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		893A5779952034F7E4FFFC2B /* libPods-MoverWarehouse-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MoverWarehouse-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8E4CA50E21AABAE1DE16AC4D /* Pods-MoverWarehouse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverWarehouse.release.xcconfig"; path = "Target Support Files/Pods-MoverWarehouse/Pods-MoverWarehouse.release.xcconfig"; sourceTree = "<group>"; };
-		A19F7B451974499B0C70E555 /* Pods-MoverWarehouse-MoverWarehouseTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverWarehouse-MoverWarehouseTests.release.xcconfig"; path = "Target Support Files/Pods-MoverWarehouse-MoverWarehouseTests/Pods-MoverWarehouse-MoverWarehouseTests.release.xcconfig"; sourceTree = "<group>"; };
-		BEFFD7A61A3F8F106E55E13B /* libPods-MoverWarehouse-MoverWarehouseTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MoverWarehouse-MoverWarehouseTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D1C574952E5466870D799EC2 /* Pods-MoverWarehouse-MoverWarehouseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverWarehouse-MoverWarehouseTests.debug.xcconfig"; path = "Target Support Files/Pods-MoverWarehouse-MoverWarehouseTests/Pods-MoverWarehouse-MoverWarehouseTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DA8C4206CF890B6E31589BA6 /* Pods-MoverWarehouse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverWarehouse.debug.xcconfig"; path = "Target Support Files/Pods-MoverWarehouse/Pods-MoverWarehouse.debug.xcconfig"; sourceTree = "<group>"; };
-		E70B5BD14A33EDD59475D54B /* Pods-MoverWarehouse-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverWarehouse-tvOS.release.xcconfig"; path = "Target Support Files/Pods-MoverWarehouse-tvOS/Pods-MoverWarehouse-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		ED1ED166AB822CCB71DF67CE /* libPods-MoverWarehouse-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MoverWarehouse-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356F21AD99517003FC87E /* MoverSortingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoverSortingTests.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* MoverSorting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoverSorting.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MoverSorting/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MoverSorting/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MoverSorting/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MoverSorting/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MoverSorting/main.m; sourceTree = "<group>"; };
+		1795F997747CCEEE239BDF92 /* libPods-MoverSorting.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MoverSorting.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E47B1E0B4A5D006451C7 /* MoverSorting-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MoverSorting-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* MoverSorting-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoverSorting-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3497BB60EAE321C89E53C50E /* Pods-MoverSorting-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverSorting-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-MoverSorting-tvOS/Pods-MoverSorting-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		6541560F926BE17D6AC8EEF0 /* Pods-MoverSorting-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverSorting-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-MoverSorting-tvOSTests/Pods-MoverSorting-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		893A5779952034F7E4FFFC2B /* libPods-MoverSorting-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MoverSorting-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E4CA50E21AABAE1DE16AC4D /* Pods-MoverSorting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverSorting.release.xcconfig"; path = "Target Support Files/Pods-MoverSorting/Pods-MoverSorting.release.xcconfig"; sourceTree = "<group>"; };
+		A19F7B451974499B0C70E555 /* Pods-MoverSorting-MoverSortingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverSorting-MoverSortingTests.release.xcconfig"; path = "Target Support Files/Pods-MoverSorting-MoverSortingTests/Pods-MoverSorting-MoverSortingTests.release.xcconfig"; sourceTree = "<group>"; };
+		BEFFD7A61A3F8F106E55E13B /* libPods-MoverSorting-MoverSortingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MoverSorting-MoverSortingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1C574952E5466870D799EC2 /* Pods-MoverSorting-MoverSortingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverSorting-MoverSortingTests.debug.xcconfig"; path = "Target Support Files/Pods-MoverSorting-MoverSortingTests/Pods-MoverSorting-MoverSortingTests.debug.xcconfig"; sourceTree = "<group>"; };
+		DA8C4206CF890B6E31589BA6 /* Pods-MoverSorting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverSorting.debug.xcconfig"; path = "Target Support Files/Pods-MoverSorting/Pods-MoverSorting.debug.xcconfig"; sourceTree = "<group>"; };
+		E70B5BD14A33EDD59475D54B /* Pods-MoverSorting-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverSorting-tvOS.release.xcconfig"; path = "Target Support Files/Pods-MoverSorting-tvOS/Pods-MoverSorting-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		ED1ED166AB822CCB71DF67CE /* libPods-MoverSorting-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MoverSorting-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		F10EC14F24F137BF00E909DC /* MoverWarehouse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MoverWarehouse.entitlements; path = MoverWarehouse/MoverWarehouse.entitlements; sourceTree = "<group>"; };
+		F10EC14F24F137BF00E909DC /* MoverSorting.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MoverSorting.entitlements; path = MoverSorting/MoverSorting.entitlements; sourceTree = "<group>"; };
 		F14CAC1D24F15D6200CA719E /* clearly.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = clearly.mp3; sourceTree = "<group>"; };
 		F163444224F1608D00FED234 /* notification.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = notification.mp3; sourceTree = "<group>"; };
 		F163444424F160AA00FED234 /* section.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = section.mp3; sourceTree = "<group>"; };
 		F163444624F160AF00FED234 /* unknown.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = unknown.mp3; sourceTree = "<group>"; };
 		F1BD8CDA24FCE4EA002C1254 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		F1BDB1A224EBC88000B68321 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		F1DE7B0924F16A48006D0AEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = MoverWarehouse/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		FEA56BE43F4AF59CED626D95 /* Pods-MoverWarehouse-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverWarehouse-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-MoverWarehouse-tvOSTests/Pods-MoverWarehouse-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		F1DE7B0924F16A48006D0AEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = MoverSorting/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FEA56BE43F4AF59CED626D95 /* Pods-MoverSorting-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoverSorting-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-MoverSorting-tvOSTests/Pods-MoverSorting-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EC3BCEA912471395840AA8B /* libPods-MoverWarehouse-MoverWarehouseTests.a in Frameworks */,
+				3EC3BCEA912471395840AA8B /* libPods-MoverSorting-MoverSortingTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,7 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D773A24174AE65D03588F51 /* libPods-MoverWarehouse.a in Frameworks */,
+				0D773A24174AE65D03588F51 /* libPods-MoverSorting.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,7 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A8A26D088367BF6E8500ECB2 /* libPods-MoverWarehouse-tvOS.a in Frameworks */,
+				A8A26D088367BF6E8500ECB2 /* libPods-MoverSorting-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,20 +110,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2ECA5737A3689A3DF3567AFA /* libPods-MoverWarehouse-tvOSTests.a in Frameworks */,
+				2ECA5737A3689A3DF3567AFA /* libPods-MoverSorting-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* MoverWarehouseTests */ = {
+		00E356EF1AD99517003FC87E /* MoverSortingTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* MoverWarehouseTests.m */,
+				00E356F21AD99517003FC87E /* MoverSortingTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = MoverWarehouseTests;
+			path = MoverSortingTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -134,12 +134,12 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* MoverWarehouse */ = {
+		13B07FAE1A68108700A75B9A /* MoverSorting */ = {
 			isa = PBXGroup;
 			children = (
 				F1BD8CDA24FCE4EA002C1254 /* main.jsbundle */,
 				F1DE7B0824F16A48006D0AEE /* LaunchScreen.storyboard */,
-				F10EC14F24F137BF00E909DC /* MoverWarehouse.entitlements */,
+				F10EC14F24F137BF00E909DC /* MoverSorting.entitlements */,
 				F1BDB1A224EBC88000B68321 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -147,7 +147,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = MoverWarehouse;
+			name = MoverSorting;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -155,10 +155,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				1795F997747CCEEE239BDF92 /* libPods-MoverWarehouse.a */,
-				BEFFD7A61A3F8F106E55E13B /* libPods-MoverWarehouse-MoverWarehouseTests.a */,
-				893A5779952034F7E4FFFC2B /* libPods-MoverWarehouse-tvOS.a */,
-				ED1ED166AB822CCB71DF67CE /* libPods-MoverWarehouse-tvOSTests.a */,
+				1795F997747CCEEE239BDF92 /* libPods-MoverSorting.a */,
+				BEFFD7A61A3F8F106E55E13B /* libPods-MoverSorting-MoverSortingTests.a */,
+				893A5779952034F7E4FFFC2B /* libPods-MoverSorting-tvOS.a */,
+				ED1ED166AB822CCB71DF67CE /* libPods-MoverSorting-tvOSTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -177,9 +177,9 @@
 				F163444424F160AA00FED234 /* section.mp3 */,
 				F163444224F1608D00FED234 /* notification.mp3 */,
 				F14CAC1D24F15D6200CA719E /* clearly.mp3 */,
-				13B07FAE1A68108700A75B9A /* MoverWarehouse */,
+				13B07FAE1A68108700A75B9A /* MoverSorting */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* MoverWarehouseTests */,
+				00E356EF1AD99517003FC87E /* MoverSortingTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				9BF0804DC2B047038DB0AA0C /* Pods */,
@@ -192,10 +192,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* MoverWarehouse.app */,
-				00E356EE1AD99517003FC87E /* MoverWarehouseTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* MoverWarehouse-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* MoverWarehouse-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* MoverSorting.app */,
+				00E356EE1AD99517003FC87E /* MoverSortingTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* MoverSorting-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* MoverSorting-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -203,14 +203,14 @@
 		9BF0804DC2B047038DB0AA0C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				DA8C4206CF890B6E31589BA6 /* Pods-MoverWarehouse.debug.xcconfig */,
-				8E4CA50E21AABAE1DE16AC4D /* Pods-MoverWarehouse.release.xcconfig */,
-				D1C574952E5466870D799EC2 /* Pods-MoverWarehouse-MoverWarehouseTests.debug.xcconfig */,
-				A19F7B451974499B0C70E555 /* Pods-MoverWarehouse-MoverWarehouseTests.release.xcconfig */,
-				3497BB60EAE321C89E53C50E /* Pods-MoverWarehouse-tvOS.debug.xcconfig */,
-				E70B5BD14A33EDD59475D54B /* Pods-MoverWarehouse-tvOS.release.xcconfig */,
-				6541560F926BE17D6AC8EEF0 /* Pods-MoverWarehouse-tvOSTests.debug.xcconfig */,
-				FEA56BE43F4AF59CED626D95 /* Pods-MoverWarehouse-tvOSTests.release.xcconfig */,
+				DA8C4206CF890B6E31589BA6 /* Pods-MoverSorting.debug.xcconfig */,
+				8E4CA50E21AABAE1DE16AC4D /* Pods-MoverSorting.release.xcconfig */,
+				D1C574952E5466870D799EC2 /* Pods-MoverSorting-MoverSortingTests.debug.xcconfig */,
+				A19F7B451974499B0C70E555 /* Pods-MoverSorting-MoverSortingTests.release.xcconfig */,
+				3497BB60EAE321C89E53C50E /* Pods-MoverSorting-tvOS.debug.xcconfig */,
+				E70B5BD14A33EDD59475D54B /* Pods-MoverSorting-tvOS.release.xcconfig */,
+				6541560F926BE17D6AC8EEF0 /* Pods-MoverSorting-tvOSTests.debug.xcconfig */,
+				FEA56BE43F4AF59CED626D95 /* Pods-MoverSorting-tvOSTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -218,9 +218,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* MoverWarehouseTests */ = {
+		00E356ED1AD99517003FC87E /* MoverSortingTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "MoverWarehouseTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "MoverSortingTests" */;
 			buildPhases = (
 				A7C8D9BC8A3ECEC7F432C6A9 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -233,14 +233,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = MoverWarehouseTests;
-			productName = MoverWarehouseTests;
-			productReference = 00E356EE1AD99517003FC87E /* MoverWarehouseTests.xctest */;
+			name = MoverSortingTests;
+			productName = MoverSortingTests;
+			productReference = 00E356EE1AD99517003FC87E /* MoverSortingTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* MoverWarehouse */ = {
+		13B07F861A680F5B00A75B9A /* MoverSorting */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MoverWarehouse" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MoverSorting" */;
 			buildPhases = (
 				687BB9573C4FB26A91EAAEE5 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -254,14 +254,14 @@
 			);
 			dependencies = (
 			);
-			name = MoverWarehouse;
-			productName = MoverWarehouse;
-			productReference = 13B07F961A680F5B00A75B9A /* MoverWarehouse.app */;
+			name = MoverSorting;
+			productName = MoverSorting;
+			productReference = 13B07F961A680F5B00A75B9A /* MoverSorting.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* MoverWarehouse-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* MoverSorting-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "MoverWarehouse-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "MoverSorting-tvOS" */;
 			buildPhases = (
 				678B74F2023865E0ED82EC87 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -274,14 +274,14 @@
 			);
 			dependencies = (
 			);
-			name = "MoverWarehouse-tvOS";
-			productName = "MoverWarehouse-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* MoverWarehouse-tvOS.app */;
+			name = "MoverSorting-tvOS";
+			productName = "MoverSorting-tvOS";
+			productReference = 2D02E47B1E0B4A5D006451C7 /* MoverSorting-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* MoverWarehouse-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* MoverSorting-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "MoverWarehouse-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "MoverSorting-tvOSTests" */;
 			buildPhases = (
 				4D72E4359632240B452D06D6 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -293,9 +293,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "MoverWarehouse-tvOSTests";
-			productName = "MoverWarehouse-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* MoverWarehouse-tvOSTests.xctest */;
+			name = "MoverSorting-tvOSTests";
+			productName = "MoverSorting-tvOSTests";
+			productReference = 2D02E4901E0B4A5D006451C7 /* MoverSorting-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -325,7 +325,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "MoverWarehouse" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "MoverSorting" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -338,10 +338,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* MoverWarehouse */,
-				00E356ED1AD99517003FC87E /* MoverWarehouseTests */,
-				2D02E47A1E0B4A5D006451C7 /* MoverWarehouse-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* MoverWarehouse-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* MoverSorting */,
+				00E356ED1AD99517003FC87E /* MoverSortingTests */,
+				2D02E47A1E0B4A5D006451C7 /* MoverSorting-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* MoverSorting-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -421,7 +421,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MoverWarehouse/Pods-MoverWarehouse-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-MoverSorting/Pods-MoverSorting-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseMLVisionTextModel/GoogleMVTextDetectorResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
@@ -432,7 +432,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MoverWarehouse/Pods-MoverWarehouse-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MoverSorting/Pods-MoverSorting-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4D72E4359632240B452D06D6 /* [CP] Check Pods Manifest.lock */ = {
@@ -450,7 +450,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MoverWarehouse-tvOSTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-MoverSorting-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -472,7 +472,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MoverWarehouse-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-MoverSorting-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -494,7 +494,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MoverWarehouse-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-MoverSorting-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -507,7 +507,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MoverWarehouse-MoverWarehouseTests/Pods-MoverWarehouse-MoverWarehouseTests-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-MoverSorting-MoverSortingTests/Pods-MoverSorting-MoverSortingTests-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseMLVisionTextModel/GoogleMVTextDetectorResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
@@ -518,7 +518,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MoverWarehouse-MoverWarehouseTests/Pods-MoverWarehouse-MoverWarehouseTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MoverSorting-MoverSortingTests/Pods-MoverSorting-MoverSortingTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A7C8D9BC8A3ECEC7F432C6A9 /* [CP] Check Pods Manifest.lock */ = {
@@ -536,7 +536,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MoverWarehouse-MoverWarehouseTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-MoverSorting-MoverSortingTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -588,7 +588,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* MoverWarehouseTests.m in Sources */,
+				00E356F31AD99517003FC87E /* MoverSortingTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,7 +614,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DCD954D1E0B4F2C00145EB5 /* MoverWarehouseTests.m in Sources */,
+				2DCD954D1E0B4F2C00145EB5 /* MoverSortingTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -623,12 +623,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* MoverWarehouse */;
+			target = 13B07F861A680F5B00A75B9A /* MoverSorting */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* MoverWarehouse-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* MoverSorting-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -647,14 +647,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1C574952E5466870D799EC2 /* Pods-MoverWarehouse-MoverWarehouseTests.debug.xcconfig */;
+			baseConfigurationReference = D1C574952E5466870D799EC2 /* Pods-MoverSorting-MoverSortingTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = MoverWarehouseTests/Info.plist;
+				INFOPLIST_FILE = MoverSortingTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -664,17 +664,17 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoverWarehouse.app/MoverWarehouse";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoverSorting.app/MoverSorting";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A19F7B451974499B0C70E555 /* Pods-MoverWarehouse-MoverWarehouseTests.release.xcconfig */;
+			baseConfigurationReference = A19F7B451974499B0C70E555 /* Pods-MoverSorting-MoverSortingTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = MoverWarehouseTests/Info.plist;
+				INFOPLIST_FILE = MoverSortingTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -684,17 +684,17 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoverWarehouse.app/MoverWarehouse";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoverSorting.app/MoverSorting";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DA8C4206CF890B6E31589BA6 /* Pods-MoverWarehouse.debug.xcconfig */;
+			baseConfigurationReference = DA8C4206CF890B6E31589BA6 /* Pods-MoverSorting.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = MoverWarehouse/MoverWarehouse.entitlements;
+				CODE_SIGN_ENTITLEMENTS = MoverSorting/MoverSorting.entitlements;
 				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 35Z6GA6BM7;
 				ENABLE_BITCODE = NO;
@@ -702,7 +702,7 @@
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
 				);
-				INFOPLIST_FILE = MoverWarehouse/Info.plist;
+				INFOPLIST_FILE = MoverSorting/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -710,7 +710,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = az.mover.warehouse.ios;
-				PRODUCT_NAME = MoverWarehouse;
+				PRODUCT_NAME = MoverSorting;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -719,14 +719,14 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8E4CA50E21AABAE1DE16AC4D /* Pods-MoverWarehouse.release.xcconfig */;
+			baseConfigurationReference = 8E4CA50E21AABAE1DE16AC4D /* Pods-MoverSorting.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = MoverWarehouse/MoverWarehouse.entitlements;
+				CODE_SIGN_ENTITLEMENTS = MoverSorting/MoverSorting.entitlements;
 				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 35Z6GA6BM7;
-				INFOPLIST_FILE = MoverWarehouse/Info.plist;
+				INFOPLIST_FILE = MoverSorting/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -734,7 +734,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = az.mover.warehouse.ios;
-				PRODUCT_NAME = MoverWarehouse;
+				PRODUCT_NAME = MoverSorting;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -742,7 +742,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3497BB60EAE321C89E53C50E /* Pods-MoverWarehouse-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 3497BB60EAE321C89E53C50E /* Pods-MoverSorting-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -753,14 +753,14 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "MoverWarehouse-tvOS/Info.plist";
+				INFOPLIST_FILE = "MoverSorting-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.MoverWarehouse-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.MoverSorting-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -770,7 +770,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E70B5BD14A33EDD59475D54B /* Pods-MoverWarehouse-tvOS.release.xcconfig */;
+			baseConfigurationReference = E70B5BD14A33EDD59475D54B /* Pods-MoverSorting-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -781,14 +781,14 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "MoverWarehouse-tvOS/Info.plist";
+				INFOPLIST_FILE = "MoverSorting-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.MoverWarehouse-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.MoverSorting-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -798,7 +798,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6541560F926BE17D6AC8EEF0 /* Pods-MoverWarehouse-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = 6541560F926BE17D6AC8EEF0 /* Pods-MoverSorting-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -808,24 +808,24 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "MoverWarehouse-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "MoverSorting-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.MoverWarehouse-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.MoverSorting-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoverWarehouse-tvOS.app/MoverWarehouse-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoverSorting-tvOS.app/MoverSorting-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FEA56BE43F4AF59CED626D95 /* Pods-MoverWarehouse-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = FEA56BE43F4AF59CED626D95 /* Pods-MoverSorting-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -835,17 +835,17 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "MoverWarehouse-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "MoverSorting-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.MoverWarehouse-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.MoverSorting-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoverWarehouse-tvOS.app/MoverWarehouse-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoverSorting-tvOS.app/MoverSorting-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -966,7 +966,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "MoverWarehouseTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "MoverSortingTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -975,7 +975,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MoverWarehouse" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MoverSorting" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -984,7 +984,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "MoverWarehouse-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "MoverSorting-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -993,7 +993,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "MoverWarehouse-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "MoverSorting-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -1002,7 +1002,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "MoverWarehouse" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "MoverSorting" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

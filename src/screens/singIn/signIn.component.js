@@ -55,7 +55,7 @@ const SignInScreen = ({postSignInAction, isLoading}) => {
         style={SignInStyles.keyboardContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <Text category="h3" style={SignInStyles.title}>
-          {'Welcome to\n Mover Warehouse'}
+          {'Welcome to\n Mover Sorting'}
         </Text>
         <Layout style={{width: '100%'}}>
           <Input

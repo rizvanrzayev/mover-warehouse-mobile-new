@@ -15,9 +15,9 @@
                   <BuildableReference
                      BuildableIdentifier = "primary"
                      BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-                     BuildableName = "MoverWarehouse.app"
-                     BlueprintName = "MoverWarehouse"
-                     ReferencedContainer = "container:MoverWarehouse.xcodeproj">
+                     BuildableName = "MoverSorting.app"
+                     BlueprintName = "MoverSorting"
+                     ReferencedContainer = "container:MoverSorting.xcodeproj">
                   </BuildableReference>
                </EnvironmentBuildable>
             </ActionContent>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "MoverWarehouse.app"
-               BlueprintName = "MoverWarehouse"
-               ReferencedContainer = "container:MoverWarehouse.xcodeproj">
+               BuildableName = "MoverSorting.app"
+               BlueprintName = "MoverSorting"
+               ReferencedContainer = "container:MoverSorting.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -51,9 +51,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "MoverWarehouseTests.xctest"
-               BlueprintName = "MoverWarehouseTests"
-               ReferencedContainer = "container:MoverWarehouse.xcodeproj">
+               BuildableName = "MoverSortingTests.xctest"
+               BlueprintName = "MoverSortingTests"
+               ReferencedContainer = "container:MoverSorting.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -73,9 +73,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "MoverWarehouse.app"
-            BlueprintName = "MoverWarehouse"
-            ReferencedContainer = "container:MoverWarehouse.xcodeproj">
+            BuildableName = "MoverSorting.app"
+            BlueprintName = "MoverSorting"
+            ReferencedContainer = "container:MoverSorting.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -90,9 +90,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "MoverWarehouse.app"
-            BlueprintName = "MoverWarehouse"
-            ReferencedContainer = "container:MoverWarehouse.xcodeproj">
+            BuildableName = "MoverSorting.app"
+            BlueprintName = "MoverSorting"
+            ReferencedContainer = "container:MoverSorting.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
