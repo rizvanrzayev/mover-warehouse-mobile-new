@@ -1,4 +1,4 @@
-package com.moversorting;
+package az.mover.warehouse.android;
 
 import com.facebook.react.ReactActivity;
 

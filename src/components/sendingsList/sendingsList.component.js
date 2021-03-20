@@ -35,7 +35,7 @@ const SendingsList = ({data = [], isLoading, onRefresh, onPressItem}) => {
   };
 
   const renderItem = ({item}) => {
-    const {count, id, created_at} = item;
+    const {count, id, sending_date} = item;
     return (
       <Card
         header={(props) => ItemHeader(props, item)}
@@ -45,7 +45,7 @@ const SendingsList = ({data = [], isLoading, onRefresh, onPressItem}) => {
         onPress={() => onPressItem?.(id)}>
         <Text>
           Bağlama sayı: <Text category="s1">{count}</Text> -{' '}
-          {moment(created_at).format('DD MM YYYY')}
+          {moment(sending_date).format('DD MM YYYY')}
         </Text>
       </Card>
     );

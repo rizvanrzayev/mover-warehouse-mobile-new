@@ -11,6 +11,7 @@ import MenuButton from 'components/menuButton/menuButton.component';
 import Scanner from 'components/scanner/scanner.component';
 import SendingsList from 'components/sendingsList/sendingsList.component';
 import ShelfTopContent from 'components/shelfTopContent/shelfTopContent.component';
+import SignOutButton from 'components/signOutButton/signOutButton.component';
 import {ApiClient, API_ROUTES} from 'config/Api';
 import {isCourierSack, isParcel} from 'helpers/Common';
 import React, {useCallback} from 'react';
@@ -194,6 +195,7 @@ const NewShelfOrdersScreen = ({
         subtitle="Bağlama, paket, çuval"
         alignment="center"
         accessoryLeft={MenuButton}
+        accessoryRight={SignOutButton}
       />
       <Divider />
       {renderContent()}

@@ -12,7 +12,9 @@ import {showMessage} from 'react-native-flash-message';
 import {connect} from 'react-redux';
 import {errorSound, successSound} from 'helpers/Sounds';
 import NewSackingOrdersScreenStyles from './newSackingOrders.styles';
-import {isOrder, isCourierSack, isParcel} from 'helpers/Common';
+// import {isOrder, isCourierSack, isParcel} from 'helpers/Common';
+import SignOutButton from 'components/signOutButton/signOutButton.component';
+import {isOrder, isParcel, isCourierSack} from 'helpers/Common';
 
 const NewSackingOrdersScreen = ({
   fetchSendingsList,
@@ -56,17 +58,16 @@ const NewSackingOrdersScreen = ({
       }
 
       const payload = {};
-
       payload.barcode = barcode;
 
       if (selectedSackId) {
         payload.sack_id = selectedSackId;
       }
-
+      console.log('selectedSackId: ', selectedSackId);
       let response;
       try {
         // COURIER SACKS
-        if (isCourierSack(barcode)) {
+        if (!isOrder(barcode) && !isParcel(barcode)) {
           response = await ApiClient.get(`${API_ROUTES.sorterSack}/${barcode}`);
         } else if (isCourierSack(selectedSackId) && selectedSackId) {
           response = await ApiClient.post(
@@ -75,13 +76,15 @@ const NewSackingOrdersScreen = ({
           );
         } else {
           payload.sending_id = selectedSendingId;
-          response = await ApiClient.post(API_ROUTES.sackAdd, payload);
+          response = await ApiClient.post(API_ROUTES.sackAddNew, payload);
         }
       } catch (e) {}
 
-      const {status, success, sack_id, sack, message} = response.data;
-      if ((status || success) && (sack_id || sack?.id)) {
-        setSelectedSackId(sack_id || `${sack?.id}-446`);
+      const {status, success, sack, message} = response.data;
+      if ((status || success) && sack?.id) {
+        setSelectedSackId(
+          isCourierSack(barcode) ? `${sack?.id}-446` : `${sack?.id}`,
+        );
       }
       showMessage({
         message,
@@ -127,6 +130,7 @@ const NewSackingOrdersScreen = ({
         title="Çuvalla"
         alignment="center"
         accessoryLeft={MenuButton}
+        accessoryRight={SignOutButton}
       />
       <Divider />
       {useMemo(() => renderContent(), [renderContent])}

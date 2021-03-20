@@ -2,6 +2,7 @@ import {useIsFocused} from '@react-navigation/native';
 import {Divider, Text, TopNavigation} from '@ui-kitten/components';
 import MenuButton from 'components/menuButton/menuButton.component';
 import Scanner from 'components/scanner/scanner.component';
+import SignOutButton from 'components/signOutButton/signOutButton.component';
 import {ApiClient} from 'config/Api';
 import React from 'react';
 import {SafeAreaView} from 'react-native';
@@ -46,6 +47,7 @@ const NewPackagingOrdersScreen = ({navigation}) => {
         title="Bağlamaları paketlə"
         alignment="center"
         accessoryLeft={MenuButton}
+        accessoryRight={SignOutButton}
       />
       <Divider />
       {isFocused && <Scanner onScan={onScan} topContent={renderTopContent} />}

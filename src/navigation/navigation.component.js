@@ -33,6 +33,7 @@ import NewShelfOrdersScreen from 'screens/newShelfOrders/newShelfOrders.componen
 import NewPackagingOrdersScreen from 'screens/newPackagingOrders/newPackagingOrders.component';
 import NewPackagingOrdersCreateScreen from 'screens/newPackagingOrdersCreate/newPackagingOrdersCreate.component';
 import NewSackingOrdersScreen from 'screens/newSackingOrders/newSackingOrders.component';
+import NewSortingScreen from 'screens/newSorting/newSorting.component';
 
 const {
   Navigator: DrawerNavigator,
@@ -74,6 +75,12 @@ const NewSackingOrdersStack = () => (
   </Navigator>
 );
 
+const NewSortingStack = () => (
+  <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
+    <Screen name="NewSorting" component={NewSortingScreen} />
+  </Navigator>
+);
+
 // CODE_PUSH UPDATE COMPONENT DEPLOYMENT KEY
 const deploymentKey =
   Platform.OS === 'ios'
@@ -88,38 +95,6 @@ const SettingsStack = () => (
         <UpdateScreen {...screenProps} deploymentKey={deploymentKey} />
       )}
     </Screen>
-  </Navigator>
-);
-
-const WarehouseStack = () => (
-  <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
-    <Screen name="Warehouse" component={WarehouseScreen} />
-  </Navigator>
-);
-
-const UserDetailStack = () => (
-  <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
-    <Screen name="UserDetail" component={UserDetailScreen} />
-    <Screen name="EditUserDetails" component={EditUserDetailsScreen} />
-  </Navigator>
-);
-
-const SendingsStack = () => (
-  <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
-    <Screen name="Sendings" component={SendingsScreen} />
-    <Screen name="SendingsSackSorting" component={SendingsSackSortingScreen} />
-  </Navigator>
-);
-
-const WarehouseSendingsStack = () => (
-  <Navigator headerMode="none" screenOptions={{animationEnabled: false}}>
-    <Screen name="WarehouseSendings" component={WarehouseSendingsScreen} />
-    <Screen
-      name="WarehouseSendingsDetails"
-      component={WarehouseSendingsDetailsScreen}
-    />
-    <Screen name="OpenWarehouseSack" component={OpenWarehouseSackScreen} />
-    <Screen name="Warehouse" component={WarehouseScreen} />
   </Navigator>
 );
 
@@ -151,35 +126,15 @@ const HomeNavigator = ({permissions}) => {
           options={{unmountOnBlur: true, title: 'Bağlamaları çuvalla'}}
         />
         <DrawerScreen
+          name="NewSorting"
+          component={NewSortingStack}
+          options={{title: 'Çeşidlə', unmountOnBlur: true}}
+        />
+        <DrawerScreen
           name="Settings"
           component={SettingsStack}
           options={{title: 'Ayarlar', unmountOnBlur: true}}
         />
-        {/* <DrawerScreen
-          name="Home"
-          component={HomeStack}
-          options={{title: 'Növbələr'}}
-        />
-        <DrawerScreen
-          name="Warehouse"
-          component={WarehouseStack}
-          options={{unmountOnBlur: true, title: 'Bağlamaları rəflə'}}
-        />
-        <DrawerScreen
-          name="UserDetail"
-          component={UserDetailStack}
-          options={{title: 'İstifadəçi məlumatları', unmountOnBlur: true}}
-        />
-        <DrawerScreen
-          name="Sendings"
-          component={SendingsStack}
-          options={{title: 'Göndərişlər', unmountOnBlur: true}}
-        />
-        <DrawerScreen
-          name="WarehouseSendings"
-          component={WarehouseSendingsStack}
-          options={{title: 'Göndərişi rəflə', unmountOnBlur: true}}
-        /> */}
       </DrawerNavigator>
     </Connection>
   );

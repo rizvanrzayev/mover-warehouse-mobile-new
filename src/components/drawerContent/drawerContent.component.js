@@ -42,6 +42,10 @@ const DrawerContent = (props) => {
           />
         </Permissions>
         <DrawerItem
+          title="Çeşidlə"
+          onPress={(_, event) => onPressItem('NewSorting', event)}
+        />
+        <DrawerItem
           title="Ayarlar"
           onPress={(_, event) => onPressItem('Settings', event)}
         />

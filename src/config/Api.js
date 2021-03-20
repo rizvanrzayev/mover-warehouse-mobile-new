@@ -37,10 +37,12 @@ export const API_ROUTES = {
   removePackage: 'sorter/remove-package',
   endPackaging: 'sorter/end-packing',
   sackAdd: 'sorter/sacks/add',
+  sackAddNew: 'logistics/sorting/sack/add/order',
   shelvingCreate: 'shelving/create',
   shelvingParcel: 'shelving/parcel',
   sorterSack: 'sack',
   sorterSacking: 'sorter/sacking',
+  eachCustomer: 'sorter/each-customer',
 };
 
 const notAuthRequiredUrls = ['worker/login'];
