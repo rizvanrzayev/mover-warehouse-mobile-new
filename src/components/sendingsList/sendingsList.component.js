@@ -29,7 +29,9 @@ const SendingsList = ({data = [], isLoading, onRefresh, onPressItem}) => {
           {backgroundColor: theme['color-info-default']},
           SendingsListStyles.itemFooterContainer,
         ]}>
-        <Text category="h6" status="control">{`${weight} kq`}</Text>
+        <Text category="h6" status="control">{`${Number(weight).toFixed(
+          2,
+        )} kq`}</Text>
       </View>
     );
   };

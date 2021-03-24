@@ -43,6 +43,8 @@ export const API_ROUTES = {
   sorterSack: 'sack',
   sorterSacking: 'sorter/sacking',
   eachCustomer: 'sorter/each-customer',
+  openBox: 'sorter/open-box',
+  completeBox: 'sorter/complete-box',
 };
 
 const notAuthRequiredUrls = ['worker/login'];

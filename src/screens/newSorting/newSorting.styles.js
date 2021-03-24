@@ -12,6 +12,7 @@ const NewSortingScreenStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 10,
   },
   sendingsContainer: {
     flex: 1,
@@ -25,7 +26,9 @@ const NewSortingScreenStyles = StyleSheet.create({
     alignItems: 'center',
   },
   orderViewContent: {
-    padding: 10,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
   },
   cameraContainer: {
     flex: 0,
@@ -35,6 +38,31 @@ const NewSortingScreenStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  orderInfoContainer: {
+    flex: 0.7,
+    width: '100%',
+    marginTop: 10,
+  },
+  sackInfoContainer: {
+    flex: 0.3,
+    width: '100%',
+  },
+  boxInfo: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  noSortedContainer: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  completeButton: {
+    marginTop: 10,
+    width: '100%',
   },
 });
 

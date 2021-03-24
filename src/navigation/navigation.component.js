@@ -107,7 +107,7 @@ const HomeNavigator = ({permissions}) => {
       <DrawerNavigator
         backBehavior="none"
         headerMode="none"
-        initialRouteName={hasPermissions('queue') ? 'Home' : 'Sendings'}
+        initialRouteName={hasPermissions('queue') ? 'Home' : 'NewSorting'}
         screenOptions={{animationEnabled: false}}
         drawerContent={(props) => <DrawerContent {...props} />}>
         <DrawerScreen
