@@ -131,7 +131,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "az.mover.warehouse.android"
+        applicationId "az.mover.sorting.android"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

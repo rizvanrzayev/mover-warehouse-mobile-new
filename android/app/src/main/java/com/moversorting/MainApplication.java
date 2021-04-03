@@ -1,4 +1,4 @@
-package az.mover.warehouse.android;
+package az.mover.sorting.android;
 
 import android.app.Application;
 import android.content.Context;
@@ -92,7 +92,7 @@ public class MainApplication extends Application implements ReactApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-                Class<?> aClass = Class.forName("az.mover.warehouse.android.ReactNativeFlipper");
+                Class<?> aClass = Class.forName("az.mover.sorting.android.ReactNativeFlipper");
                 aClass
                         .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
                         .invoke(null, context, reactInstanceManager);

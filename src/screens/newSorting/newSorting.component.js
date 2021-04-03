@@ -14,6 +14,7 @@ import {ApiClient, API_ROUTES} from 'config/Api';
 import {isOrder} from 'helpers/Common';
 import {clearlySound, errorSound, successSound} from 'helpers/Sounds';
 import React from 'react';
+import {useLayoutEffect} from 'react';
 import {Alert, SafeAreaView, View} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import {connect} from 'react-redux';
@@ -30,6 +31,10 @@ const NewSortingScreen = ({
   const [box, setBox] = React.useState(null);
   const [isLoadingSortData, setIsLoadingSortData] = React.useState(false);
   const [canComplete, setCanComplete] = React.useState(true);
+
+  useLayoutEffect(() => {
+    fetchSendingsList();
+  }, [fetchSendingsList]);
 
   const fetchOrderSortData = async (orderBarcode) => {
     setIsLoadingSortData(true);
@@ -54,6 +59,25 @@ const NewSortingScreen = ({
       if (order) {
         setSortedOrderData({order, messageData: message_data, status, message});
       }
+    } catch (e) {
+    } finally {
+      setIsLoadingSortData(false);
+    }
+  };
+
+  const getOrderBox = async (barcode) => {
+    setIsLoadingSortData(true);
+    try {
+      const response = await ApiClient.get(`${API_ROUTES.orderBox}/${barcode}`);
+      const {status, message, box: newBox, is_open} = response.data;
+      if (newBox) {
+        setBox(newBox);
+      }
+      setCanComplete(status);
+      showMessage({
+        message,
+        type: status ? 'success' : 'danger',
+      });
     } catch (e) {
     } finally {
       setIsLoadingSortData(false);
@@ -154,8 +178,8 @@ const NewSortingScreen = ({
     if (box === null) {
       return (
         <View style={NewSortingScreenStyles.topContent}>
-          <Text category="h3" status="info">
-            Çuval oxudun
+          <Text category="h3" status="info" style={{textAlign: 'center'}}>
+            Çuval və ya çuvaldakı bağlamanı oxudun
           </Text>
         </View>
       );
@@ -184,6 +208,12 @@ const NewSortingScreen = ({
       return;
     }
     const checkIsOrder = isOrder(barcode);
+
+    if (!box && checkIsOrder) {
+      getOrderBox(barcode);
+      return;
+    }
+
     if (checkIsOrder) {
       fetchOrderSortData(barcode);
     } else {

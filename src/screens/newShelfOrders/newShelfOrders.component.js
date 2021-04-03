@@ -81,9 +81,6 @@ const NewShelfOrdersScreen = ({
           payload,
         );
 
-        console.log(payload);
-        console.log(response.data);
-
         const {
           success,
           message,

@@ -1,4 +1,4 @@
-package az.mover.warehouse.android;
+package az.mover.sorting.android;
 
 import androidx.annotation.NonNull;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;

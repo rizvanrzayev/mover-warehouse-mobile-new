@@ -45,6 +45,7 @@ export const API_ROUTES = {
   eachCustomer: 'sorter/each-customer',
   openBox: 'sorter/open-box',
   completeBox: 'sorter/complete-box',
+  orderBox: 'sorter/find-box',
 };
 
 const notAuthRequiredUrls = ['worker/login'];
